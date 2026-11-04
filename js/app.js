@@ -51,9 +51,12 @@ function result(){if(st.a.acid=='low'&&LOWMAP[st.a.body]){var L=LOWMAP[st.a.body
  app.innerHTML=h+'<button class="btn2" onclick="location.hash=\'#/quiz/1\'">처음부터 다시</button><button class="btn2" onclick="location.hash=\'#/list\'">전체 원두 보기</button></div>'}
 function list(f){var h=top('전체 원두')+'<div class="pad"><div class="chips">';
  ['전체','과일','꽃','초콜릿'].forEach(function(c){h+='<button class="chip'+((f||'전체')==c?' on':'')+'" data-c="'+c+'">'+c+'</button>'});h+='</div>';
- for(var s=1;s<=4;s++){var bs=B.filter(function(b){return b.roadmapStep==s&&(!f||f=='전체'||b.characters.indexOf(f)>=0)});if(!bs.length)continue;
-  h+='<div class="sec st'+s+'">STEP '+s+' · '+STEPS[s][0]+'</div><div class="muted" style="margin:-6px 0 10px">'+STEPS[s][1]+'</div>';bs.forEach(function(b){h+=card(b)})}
- app.innerHTML=h+'</div>';app.querySelectorAll('.chip').forEach(function(el){el.onclick=function(){st.filter=el.dataset.c;list(st.filter)}})}
+ var bs=B.filter(function(b){return !f||f=='전체'||b.characters.indexOf(f)>=0}).sort(function(x,y){return x.acidityRank-y.acidityRank});
+ h+='<div class="sec">산미 순서로 보기 <span class="muted" style="font-weight:600">('+bs.length+'개)</span></div><div class="adir"><span>← 신맛 강함</span><span>신맛 약함 →</span></div><div class="agrad"><i id="apos"></i></div>';
+ h+='<div class="slider" id="sl">';bs.forEach(function(b){h+='<button class="scard" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><span class="srank">산미 '+b.acidityRank+'위</span><img src="'+b.image+'" alt="" loading="lazy"><b>'+esc(b.name)+'</b><span class="skw">'+esc(b.keywords.slice(0,2).join(' · '))+'</span><span class="schar">'+esc(b.characters.join(' · '))+'</span></button>'});
+ h+='</div><p class="muted" style="text-align:center;margin-top:6px">옆으로 밀어서 더 보기</p></div>';app.innerHTML=h;
+ app.querySelectorAll('.chip').forEach(function(el){el.onclick=function(){st.filter=el.dataset.c;list(st.filter)}});
+ var sl=document.getElementById('sl'),ap=document.getElementById('apos');function up(){var m=sl.scrollWidth-sl.clientWidth;var w=Math.max(8,sl.clientWidth/sl.scrollWidth*100);ap.style.width=w+'%';ap.style.left=(m>0?sl.scrollLeft/m*(100-w):0)+'%'}sl.addEventListener('scroll',up,{passive:true});up()}
 function bars(v,max){var s='<div class="bar">';for(var i=1;i<=max;i++)s+='<i class="'+(v!=null&&i<=v?'on':'')+'"></i>';return s+'</div><em>'+(v==null?'-':v+'/'+max)+'</em>'}
 function info(b){var h='<div class="card"><div class="sec" style="margin-top:0">로스팅 레벨</div><div class="roast">';
  for(var i=1;i<=7;i++)h+='<i class="'+(i==b.roast.position?'on':'')+'" style="background:'+ROAST[i-1]+'"></i>';
