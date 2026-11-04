@@ -10,7 +10,17 @@ function band(r){return r<=7?'high':r<=14?'mid':'low'}
 function top(t){return '<div class="top"><button class="back" onclick="history.length>1?history.back():location.hash=\'\'">← 뒤로</button><h1>'+esc(t)+'</h1></div>'}
 function tc(b){for(var g in CHO)if(CHO[g].indexOf(b.id)>=0)return g;return b.characters[0]}
 function card(b,extra){return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+b.image+'" alt="" loading="lazy"><div>'+(extra&&extra.rank?'<span class="rank">'+extra.rank+'</span>':'')+'<b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span>'+(extra&&extra.why?'<span class="why">'+esc(extra.why)+'</span>':'')+'</div></button>'}
-function buy(b,cls){var u=b.purchaseUrl;return /^https?:\/\//.test(u||'')?'<a class="buy '+(cls||'')+'" href="'+esc(u)+'" target="_blank" rel="noopener">구매하기</a>':'<span class="buy off '+(cls||'')+'" aria-disabled="true">구매 링크 준비 중</span>'}
+function popts(b){var p=(b.purchase||[]).slice();if(!p.length&&b.purchaseUrl)p=[{weight:'구매',url:b.purchaseUrl}];return p}
+function okurl(u){return /^https?:\/\//.test(u||'')}
+function buy(b,cls){return popts(b).length?'<button type="button" class="buy '+(cls||'')+'" data-buy="'+b.id+'">구매하기</button>':'<span class="buy off '+(cls||'')+'" aria-disabled="true">구매 링크 준비 중</span>'}
+function closeSheet(){var s=document.getElementById('sheet');if(s)s.remove();document.removeEventListener('keydown',escK)}
+function escK(e){if(e.key==='Escape')closeSheet()}
+function openSheet(b){closeSheet();var d=document.createElement('div');d.id='sheet';d.className='sheetwrap';d.setAttribute('data-char',tc(b));
+ var h='<div class="sheet" role="dialog" aria-modal="true" aria-label="중량 선택"><div class="grab"></div><button class="sx" aria-label="닫기">✕</button><div class="stitle">중량을 선택해 주세요</div><div class="sname">'+esc(b.name)+'</div>';
+ popts(b).forEach(function(o){h+=okurl(o.url)?'<a class="wopt" href="'+esc(o.url)+'" target="_blank" rel="noopener"><b>'+esc(o.weight)+'</b><span>구매 페이지 →</span></a>':'<span class="wopt off" aria-disabled="true"><b>'+esc(o.weight)+'</b><span>링크 준비 중</span></span>'});
+ d.innerHTML=h+'</div>';document.body.appendChild(d);
+ d.onclick=function(e){if(e.target===d||e.target.closest('.sx'))closeSheet()};document.addEventListener('keydown',escK);d.querySelector('.sx').focus()}
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-buy]');if(t){e.preventDefault();e.stopPropagation();openSheet(byId(t.getAttribute('data-buy')))}},true);
 function stopTimer(){if(timer){clearInterval(timer.h);timer=null}}
 function home(){app.innerHTML='<div class="brand"><div class="logo">GEU NYANG COFFEE</div><h1>그냥커피</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
 '<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">내 취향으로 찾기<small>2가지 질문으로 원두 추천 받기</small></button>'+
@@ -89,7 +99,7 @@ function detail(id,tab){var b=byId(id);if(!b){home();return}tab=tab||'info';
  if(tab=='pos')app.querySelectorAll('.lad').forEach(function(l){var x=l.querySelector('.me');if(x)l.scrollTop=x.offsetTop-l.clientHeight/2+x.offsetHeight/2});
  app.querySelectorAll('[data-tab]').forEach(function(el){el.onclick=function(){stopTimer();history.replaceState(null,'','#/bean/'+id+(el.dataset.tab!='info'?'/'+el.dataset.tab:''));route()}});
  if(tab=='recipe')bindRecipe(b)}
-function route(){stopTimer();app.classList.remove('hasbar');app.removeAttribute('data-char');var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
+function route(){stopTimer();closeSheet();app.classList.remove('hasbar');app.removeAttribute('data-char');var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
  if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='list')list(st.filter);
  else if(p[0]=='bean'){if(st.last!=p[1])st.ri=0;st.last=p[1];detail(decodeURIComponent(p[1]),p[2])}else home()}
 window.addEventListener('hashchange',route);route();

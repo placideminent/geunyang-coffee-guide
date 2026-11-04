@@ -90,3 +90,12 @@ button{font:inherit;color:inherit;cursor:pointer}
 .gbh{font-weight:800;color:var(--acc-ink);padding:6px 0 2px;font-size:15px}
 .gbr{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}.gbr:last-child{border-bottom:0}
 .gbr span{width:56px;flex:none;color:var(--sub)}.gbr b{font-weight:600}
+button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
+.sheetwrap{position:fixed;inset:0;background:rgba(30,26,22,.45);z-index:50;display:flex;align-items:flex-end;justify-content:center;animation:fd .2s}
+.sheet{position:relative;width:100%;max-width:480px;background:var(--card);border-radius:22px 22px 0 0;padding:14px 18px calc(22px + env(safe-area-inset-bottom));animation:su .25s ease-out}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
+.sx{position:absolute;right:10px;top:10px;width:44px;height:44px;border:0;background:none;font-size:20px;color:var(--sub);border-radius:50%}
+.stitle{font-size:20px;font-weight:800}.sname{color:var(--acc-ink);font-weight:700;margin:2px 0 14px}
+.wopt{display:flex;justify-content:space-between;align-items:center;min-height:56px;padding:0 18px;border-radius:14px;margin-bottom:10px;background:var(--acc);color:var(--on-acc);text-decoration:none;font-size:17px}
+.wopt span{font-size:14px;font-weight:600}.wopt.off{background:var(--acc2);color:var(--sub);cursor:not-allowed}.wopt.off b{color:var(--ink);opacity:.6}
+@keyframes su{from{transform:translateY(100%)}to{transform:none}}@keyframes fd{from{opacity:0}to{opacity:1}}
