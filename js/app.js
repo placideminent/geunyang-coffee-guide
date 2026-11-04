@@ -24,6 +24,7 @@ document.addEventListener('click',function(e){var t=e.target.closest&&e.target.c
 function stopTimer(){if(timer){clearInterval(timer.h);timer=null}}
 function home(){app.innerHTML='<div class="brand"><div class="logo">GEU NYANG COFFEE</div><h1>그냥커피</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
 '<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">내 취향으로 찾기<small>2가지 질문으로 원두 추천 받기</small></button>'+
+'<button class="bigbtn rmbtn" onclick="location.hash=\'#/roadmap\'">추천 테이스팅 로드맵<small>STEP 1부터 순서대로 마셔보는 원두 코스</small></button>'+
 '<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기<small>20가지 원두 한눈에 보기</small></button></div>'}
 function prog(n){var s='<div class="progress">';for(var i=1;i<=2;i++)s+='<i class="'+(i<=n?'on':'')+'"></i>';return s+'</div><div class="muted">질문 '+n+' / 2</div>'}
 function opt(k,v,b,s,num){return '<button class="opt'+(st.a[k]==v?' sel':'')+'" data-k="'+k+'" data-v="'+v+'">'+(num?'<span class="num">'+num+'</span>':'')+'<div><b>'+esc(b)+'</b>'+(s?'<span>'+esc(s)+'</span>':'')+'</div></button>'}
@@ -99,8 +100,13 @@ function detail(id,tab){var b=byId(id);if(!b){home();return}tab=tab||'info';
  if(tab=='pos')app.querySelectorAll('.lad').forEach(function(l){var x=l.querySelector('.me');if(x)l.scrollTop=x.offsetTop-l.clientHeight/2+x.offsetHeight/2});
  app.querySelectorAll('[data-tab]').forEach(function(el){el.onclick=function(){stopTimer();history.replaceState(null,'','#/bean/'+id+(el.dataset.tab!='info'?'/'+el.dataset.tab:''));route()}});
  if(tab=='recipe')bindRecipe(b)}
+function roadmap(){var h=top('추천 테이스팅 로드맵')+'<div class="pad"><p class="q">테이스팅 로드맵</p><p class="qsub">1단계부터 순서대로 마셔보세요. 익숙한 맛에서 특별한 맛으로 넓혀가요.</p>';
+ for(var s=1;s<=4;s++){h+='<div class="rmstep s'+s+'"><div class="rmhead"><span class="rmnum">'+s+'</span><div><b>STEP '+s+' · '+esc(STEPS[s][0])+'</b><span>'+esc(STEPS[s][1])+'</span></div></div>';
+  var ids=RM[s].filter(byId);B.forEach(function(b){if(b.roadmapStep==s&&ids.indexOf(b.id)<0)ids.push(b.id)});
+  ids.forEach(function(id,i){h+=card(byId(id),{rank:s+'-'+(i+1)})});h+='</div>'+(s<4?'<div class="rmarrow" aria-hidden="true">↓</div>':'')}
+ app.innerHTML=h+'<button class="btn2" onclick="location.hash=\'\'">홈으로</button></div>'}
 function route(){stopTimer();closeSheet();app.classList.remove('hasbar');app.removeAttribute('data-char');var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
- if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='list')list(st.filter);
+ if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='list')list(st.filter);
  else if(p[0]=='bean'){if(st.last!=p[1])st.ri=0;st.last=p[1];detail(decodeURIComponent(p[1]),p[2])}else home()}
 window.addEventListener('hashchange',route);route();
 window.__recommend=recommend;window.__LOWMAP=LOWMAP;
