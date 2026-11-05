@@ -147,7 +147,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/geisha-natural.jpg"
  },
  {
   "id": "bishala",
@@ -297,7 +298,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/bishala.jpg"
  },
  {
   "id": "muntasha",
@@ -447,7 +449,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/muntasha.jpg"
  },
  {
   "id": "alaskana",
@@ -599,7 +602,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/alaskana.jpg"
  },
  {
   "id": "yirga-natural",
@@ -749,7 +753,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/yirga-natural.jpg"
  },
  {
   "id": "peach-sorbet",
@@ -902,7 +907,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/peach-sorbet.jpg"
  },
  {
   "id": "yirga-washed-medium",
@@ -1052,7 +1058,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/yirga-washed-medium.jpg"
  },
  {
   "id": "geisha-dios",
@@ -1204,7 +1211,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/geisha-dios.jpg"
  },
  {
   "id": "geisha-washed",
@@ -1354,7 +1362,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/geisha-washed.jpg"
  },
  {
   "id": "colombia-highend",
@@ -1504,7 +1513,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "15~35일"
-  }
+  },
+  "thumb": "img/thumbs/colombia-highend.jpg"
  },
  {
   "id": "colombia-magdalena",
@@ -1654,7 +1664,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "10~30일"
-  }
+  },
+  "thumb": "img/thumbs/colombia-magdalena.jpg"
  },
  {
   "id": "kenya-kiangundo",
@@ -1805,7 +1816,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "10~30일"
-  }
+  },
+  "thumb": "img/thumbs/kenya-kiangundo.jpg"
  },
  {
   "id": "yirga-washed-mediumdark",
@@ -1955,7 +1967,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "10~30일"
-  }
+  },
+  "thumb": "img/thumbs/yirga-washed-mediumdark.jpg"
  },
  {
   "id": "mary-glow",
@@ -2101,7 +2114,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "10~30일"
-  }
+  },
+  "thumb": "img/thumbs/mary-glow.jpg"
  },
  {
   "id": "ember",
@@ -2251,7 +2265,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "10~30일"
-  }
+  },
+  "thumb": "img/thumbs/ember.jpg"
  },
  {
   "id": "guatemala-mediumdark",
@@ -2401,7 +2416,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "10~30일"
-  }
+  },
+  "thumb": "img/thumbs/guatemala-mediumdark.jpg"
  },
  {
   "id": "brazil-caramelado",
@@ -2551,7 +2567,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "10~30일"
-  }
+  },
+  "thumb": "img/thumbs/brazil-caramelado.jpg"
  },
  {
   "id": "mocha-mousse",
@@ -2701,7 +2718,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "10~30일"
-  }
+  },
+  "thumb": "img/thumbs/mocha-mousse.jpg"
  },
  {
   "id": "mood-indigo",
@@ -2856,7 +2874,8 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 7~25일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "7~25일"
-  }
+  },
+  "thumb": "img/thumbs/mood-indigo.jpg"
  },
  {
   "id": "guatemala-dark",
@@ -3006,6 +3025,7 @@
    "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 7~25일까지가 가장 맛있습니다",
    "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
    "best": "7~25일"
-  }
+  },
+  "thumb": "img/thumbs/guatemala-dark.jpg"
  }
 ]

@@ -9,7 +9,8 @@ function byId(id){for(var i=0;i<B.length;i++)if(B[i].id===id)return B[i]}
 function band(r){return r<=7?'high':r<=14?'mid':'low'}
 function top(t){return '<div class="top"><button class="back" onclick="history.length>1?history.back():location.hash=\'\'">← 뒤로</button><h1>'+esc(t)+'</h1></div>'}
 function tc(b){for(var g in CHO)if(CHO[g].indexOf(b.id)>=0)return g;return b.characters[0]}
-function card(b,extra){return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+b.image+'" alt="" loading="lazy"><div>'+(extra&&extra.rank?'<span class="rank">'+extra.rank+'</span>':'')+'<b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span>'+(extra&&extra.why?'<span class="why">'+esc(extra.why)+'</span>':'')+'</div></button>'}
+function imgOf(b){return b.thumb||b.image}
+function card(b,extra){return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+imgOf(b)+'" alt="" loading="lazy"><div>'+(extra&&extra.rank?'<span class="rank">'+extra.rank+'</span>':'')+'<b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span>'+(extra&&extra.why?'<span class="why">'+esc(extra.why)+'</span>':'')+'</div></button>'}
 function popts(b){var p=(b.purchase||[]).slice();if(!p.length&&b.purchaseUrl)p=[{weight:'구매',url:b.purchaseUrl}];return p}
 function okurl(u){return /^https?:\/\//.test(u||'')}
 function buy(b,cls){return popts(b).length?'<button type="button" class="buy '+(cls||'')+'" data-buy="'+b.id+'">구매하기</button>':'<span class="buy off '+(cls||'')+'" aria-disabled="true">구매 링크 준비 중</span>'}
@@ -54,7 +55,7 @@ function list(f){var h=top('전체 원두')+'<div class="pad"><div class="chips"
  ['전체','과일','꽃','초콜릿'].forEach(function(c){h+='<button class="chip'+((f||'전체')==c?' on':'')+'" data-c="'+c+'">'+c+'</button>'});h+='</div>';
  var bs=B.filter(function(b){return !f||f=='전체'||b.characters.indexOf(f)>=0}).sort(function(x,y){return x.acidityRank-y.acidityRank});
  h+='<div class="sec">산미 순서로 보기 <span class="muted" style="font-weight:600">('+bs.length+'개)</span></div><div class="adir"><span>← 신맛 강함</span><span>신맛 약함 →</span></div><div class="agrad"><i id="apos"></i></div>';
- h+='<div class="slider" id="sl">';bs.forEach(function(b){h+='<button class="scard" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><span class="srank">산미 '+b.acidityRank+'위</span><img src="'+b.image+'" alt="" loading="lazy"><b>'+esc(b.name)+'</b><span class="skw">'+esc(b.keywords.slice(0,2).join(' · '))+'</span><span class="schar">'+esc(b.characters.join(' · '))+'</span></button>'});
+ h+='<div class="slider" id="sl">';bs.forEach(function(b){h+='<button class="scard" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><span class="srank">산미 '+b.acidityRank+'위</span><img src="'+imgOf(b)+'" alt="" loading="lazy"><b>'+esc(b.name)+'</b><span class="skw">'+esc(b.keywords.slice(0,2).join(' · '))+'</span><span class="schar">'+esc(b.characters.join(' · '))+'</span></button>'});
  h+='</div><p class="muted" style="text-align:center;margin-top:6px">옆으로 밀어서 더 보기</p></div>';app.innerHTML=h;
  app.querySelectorAll('.chip').forEach(function(el){el.onclick=function(){st.filter=el.dataset.c;list(st.filter)}});
  var sl=document.getElementById('sl'),ap=document.getElementById('apos');function up(){var m=sl.scrollWidth-sl.clientWidth;var w=Math.max(8,sl.clientWidth/sl.scrollWidth*100);ap.style.width=w+'%';ap.style.left=(m>0?sl.scrollLeft/m*(100-w):0)+'%'}sl.addEventListener('scroll',up,{passive:true});up()}
@@ -121,7 +122,7 @@ function recipesHome(){app.innerHTML=top('레시피 탐색')+'<div class="pad"><
  '<button class="opt" onclick="location.hash=\'#/recipes/handdrip\'"><span class="num micon"><img src="'+MICON.handdrip+'" alt=""></span><div><b>핸드드립 레시피</b><span>V60 등 드리퍼로 내리기</span></div></button>'+
  '<button class="opt" onclick="location.hash=\'#/recipes/espresso\'"><span class="num micon"><img src="'+MICON.espresso+'" alt=""></span><div><b>에스프레소 레시피</b><span>에스프레소 · 아메리카노</span></div></button></div>'}
 function rcount(b,m){return (b.recipes||[]).filter(function(r){return r.method==m}).length}
-function rcard(b,m){var n=rcount(b,m);return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/recipe/'+b.id+'/'+m+'\'"><img src="'+b.image+'" alt="" loading="lazy"><div><b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span><span class="why">'+(n?'레시피 '+n+'개'+((b.recipes||[]).some(function(r){return r.method==m&&r.sample})?' (샘플)':''):'레시피 준비 중')+'</span></div></button>'}
+function rcard(b,m){var n=rcount(b,m);return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/recipe/'+b.id+'/'+m+'\'"><img src="'+imgOf(b)+'" alt="" loading="lazy"><div><b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span><span class="why">'+(n?'레시피 '+n+'개'+((b.recipes||[]).some(function(r){return r.method==m&&r.sample})?' (샘플)':''):'레시피 준비 중')+'</span></div></button>'}
 function recipesList(m,tab){if(!MNAME[m]){recipesHome();return}tab=tab||'bean';
  var h=top(MNAME[m])+'<div class="pad"><div class="tabs" style="margin-top:0"><button class="'+(tab=='bean'?'on':'')+'" onclick="location.replace(\'#/recipes/'+m+'/bean\')">원두별 탐색</button><button class="'+(tab=='feature'?'on':'')+'" onclick="location.replace(\'#/recipes/'+m+'/feature\')">특징별 탐색</button></div>';
  if(tab=='bean'){h+='<p class="muted">원두를 누르면 '+MNAME[m]+'를 볼 수 있어요</p>';B.slice().sort(function(x,y){return x.acidityRank-y.acidityRank}).forEach(function(b){h+=rcard(b,m)})}
@@ -129,7 +130,7 @@ function recipesList(m,tab){if(!MNAME[m]){recipesHome();return}tab=tab||'bean';
   Object.keys(C).forEach(function(key){var c=C[key],n=(c[m]||[]).length;h+='<button class="opt catopt" onclick="location.hash=\'#/catrecipe/'+key+'/'+m+'\'"><span class="num roastic">'+RICON[key.split('-')[0]]+'</span><div><b>'+esc(c.name)+'</b><span>'+(n?'레시피 '+n+'개':'레시피 준비 중')+'</span></div></button>'})}
  app.innerHTML=h+'</div>'}
 function recipeView(id,m){var b=byId(id);if(!b||!MNAME[m]){home();return}var v={};for(var k in b)v[k]=b[k];v.recipes=(b.recipes||[]).filter(function(r){return r.method==m});
- app.innerHTML=top(MNAME[m])+'<div class="pad" data-char="'+tc(b)+'"><button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+b.image+'" alt=""><div><b>'+esc(b.name)+'</b><span>원두 상세 보기 →</span></div></button>'+recipe(v,st.ri)+'</div>';
+ app.innerHTML=top(MNAME[m])+'<div class="pad" data-char="'+tc(b)+'"><button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+imgOf(b)+'" alt=""><div><b>'+esc(b.name)+'</b><span>원두 상세 보기 →</span></div></button>'+recipe(v,st.ri)+'</div>';
  st.reRecipe=function(){recipeView(id,m)};bindRecipe(v)}
 function catRecipeView(key,m){var c=(window.CATRECIPES||{})[key];if(!c||!MNAME[m]){location.hash='#/recipes';return}
  var v={id:'cat-'+key,name:c.name,recipes:(c[m]||[]).map(function(r){var x={};for(var k in r)x[k]=r[k];x.method=m;return x})};
