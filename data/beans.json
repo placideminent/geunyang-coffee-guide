@@ -1261,60 +1261,6 @@
   },
   "recipes": [
    {
-    "id": "americano",
-    "title": "아메리카노 기본 맛",
-    "subtitle": "1shot - 1잔",
-    "method": "espresso",
-    "sample": true,
-    "items": [
-     {
-      "label": "원두량",
-      "value": "11.5g (1shot) / 22.5g (2shot)"
-     },
-     {
-      "label": "추출량",
-      "value": "25g / 25g × 2"
-     },
-     {
-      "label": "추출 시간",
-      "value": "로스팅 7일~ 28초 · 14일~ 25초"
-     },
-     {
-      "label": "물 추가량",
-      "value": "200g"
-     }
-    ],
-    "steps": [],
-    "note": ""
-   },
-   {
-    "id": "americano-strong",
-    "title": "아메리카노 진한 맛",
-    "subtitle": "2shot - 1잔",
-    "method": "espresso",
-    "sample": true,
-    "items": [
-     {
-      "label": "원두량",
-      "value": "18g"
-     },
-     {
-      "label": "추출량",
-      "value": "40g"
-     },
-     {
-      "label": "추출 시간",
-      "value": "로스팅 7일~ 28초 · 14일~ 25초"
-     },
-     {
-      "label": "물 추가량",
-      "value": "250g"
-     }
-    ],
-    "steps": [],
-    "note": ""
-   },
-   {
     "id": "v60",
     "title": "핸드드립 V60",
     "subtitle": "하리오 V60",

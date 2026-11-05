@@ -1,0 +1,131 @@
+{
+ "_doc": "원두 id × 방식(handdrip/espresso) 레시피. 형식은 README 참고. sample:true 는 시연용 샘플.",
+ "recipes": {
+  "geisha-natural": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "bishala": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "muntasha": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "alaskana": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "yirga-natural": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "peach-sorbet": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "yirga-washed-medium": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "geisha-dios": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "geisha-washed": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "colombia-highend": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "colombia-magdalena": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "kenya-kiangundo": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "yirga-washed-mediumdark": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "mary-glow": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "ember": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "guatemala-mediumdark": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "brazil-caramelado": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "mocha-mousse": {
+   "handdrip": [],
+   "espresso": []
+  },
+  "mood-indigo": {
+   "handdrip": [
+    {
+     "id": "v60",
+     "title": "핸드드립 V60",
+     "subtitle": "하리오 V60",
+     "method": "handdrip",
+     "sample": true,
+     "items": [
+      {
+       "label": "원두량",
+       "value": "20g"
+      },
+      {
+       "label": "분쇄도",
+       "value": "800μm"
+      },
+      {
+       "label": "물 온도",
+       "value": "50°C (원본 표기 그대로)"
+      },
+      {
+       "label": "물 양",
+       "value": "160g"
+      }
+     ],
+     "steps": [
+      {
+       "time": 0,
+       "label": "뜸",
+       "text": "30g로 전체 적시고 중앙에 +10g"
+      },
+      {
+       "time": 60,
+       "text": "낮게 중앙 고정해서 40g 붓기"
+      },
+      {
+       "time": 90,
+       "text": "낮게 중앙 고정해서 40g 붓기"
+      },
+      {
+       "time": 120,
+       "text": "낮게 중앙 고정해서 40g 붓기"
+      }
+     ],
+     "note": "전부 다 내려진 커피에 끓는 물 100ml 추가 or 얼음 가득"
+    }
+   ],
+   "espresso": []
+  },
+  "guatemala-dark": {
+   "handdrip": [],
+   "espresso": []
+  }
+ }
+}

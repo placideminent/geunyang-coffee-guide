@@ -25,7 +25,8 @@ function stopTimer(){if(timer){clearInterval(timer.h);timer=null}}
 function home(){app.innerHTML='<div class="brand"><div class="logo">GEU NYANG COFFEE</div><h1>그냥커피</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
 '<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">내 취향으로 찾기<small>2가지 질문으로 원두 추천 받기</small></button>'+
 '<button class="bigbtn rmbtn" onclick="location.hash=\'#/roadmap\'">추천 테이스팅 로드맵<small>STEP 1부터 순서대로 마셔보는 원두 코스</small></button>'+
-'<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기<small>20가지 원두 한눈에 보기</small></button></div>'}
+'<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기<small>20가지 원두 한눈에 보기</small></button>'+
+'<div class="hrow"><button class="bigbtn half" onclick="location.hash=\'#/recipes\'">레시피 탐색<small>핸드드립 · 에스프레소</small></button><button class="bigbtn half" onclick="location.hash=\'#/know-how\'">커피 노하우<small>보관 · 분쇄도</small></button></div></div>'}
 function prog(n){var s='<div class="progress">';for(var i=1;i<=2;i++)s+='<i class="'+(i<=n?'on':'')+'"></i>';return s+'</div><div class="muted">질문 '+n+' / 2</div>'}
 function opt(k,v,b,s,num){return '<button class="opt'+(st.a[k]==v?' sel':'')+'" data-k="'+k+'" data-v="'+v+'">'+(num?'<span class="num">'+num+'</span>':'')+'<div><b>'+esc(b)+'</b>'+(s?'<span>'+esc(s)+'</span>':'')+'</div></button>'}
 // 산미 '싫어해요' 분기: 고정 추천 (여기서 수정)
@@ -75,7 +76,7 @@ function recipe(b,ri){var R=b.recipes||[];if(!R.length)return '<div class="card 
  if(r.steps&&r.steps.length){h+='<ol class="steps">';r.steps.forEach(function(s,i){h+='<li data-t="'+s.time+'"><span class="t">'+fmt(s.time)+'</span><span>'+(s.label?'<b>('+esc(s.label)+')</b> ':'')+esc(s.text)+'</span></li>'});
   h+='</ol><div class="timer"><div class="clock" id="clk">00:00</div><button class="go" id="tgo">시작</button><button id="trs">리셋</button></div>'}
  if(r.note)h+='<p class="desc" style="margin-top:14px">💡 '+esc(r.note)+'</p>';return h+'</div>'}
-function bindRecipe(b){app.querySelectorAll('[data-r]').forEach(function(el){el.onclick=function(){stopTimer();st.ri=+el.dataset.r;detail(b.id,'recipe')}});
+function bindRecipe(b){app.querySelectorAll('[data-r]').forEach(function(el){el.onclick=function(){stopTimer();st.ri=+el.dataset.r;(st.reRecipe||function(){detail(b.id,'recipe')})()}});
  var go=document.getElementById('tgo');if(!go)return;var t=0,run=false,clk=document.getElementById('clk'),lis=app.querySelectorAll('.steps li');
  function paint(){clk.textContent=fmt(t);var cur=-1;lis.forEach(function(li,i){if(t>=+li.dataset.t)cur=i});lis.forEach(function(li,i){li.className=(run||t>0)?(i==cur?'cur':i<cur?'done':''):''})}
  go.onclick=function(){if(run){stopTimer();run=false;go.textContent='계속'}else{run=true;go.textContent='일시정지';timer={h:setInterval(function(){t++;paint()},1000)}}paint()};
@@ -108,8 +109,34 @@ function roadmap(){var h=top('추천 테이스팅 로드맵')+'<div class="pad">
   var ids=RM[s].filter(byId);B.forEach(function(b){if(b.roadmapStep==s&&ids.indexOf(b.id)<0)ids.push(b.id)});
   ids.forEach(function(id,i){h+=card(byId(id),{rank:s+'-'+(i+1)})});h+='</div>'+(s<4?'<div class="rmarrow" aria-hidden="true">↓</div>':'')}
  app.innerHTML=h+'<button class="btn2" onclick="location.hash=\'\'">홈으로</button></div>'}
-function route(){stopTimer();closeSheet();app.classList.remove('hasbar');app.removeAttribute('data-char');var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
- if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='list')list(st.filter);
+var MNAME={handdrip:'핸드드립 레시피',espresso:'에스프레소 레시피'};
+function roastLabel(p){return p==null?null:p<=2?'약배전':p<=4?'중배전':p==5?'중강배전':'강배전'}
+function procLabel(b){var ps=(b.greenBean||[]).map(function(g){return g['가공법']});if(!ps.length||ps.some(function(x){return !x}))return null;
+ var u=ps.filter(function(x,i){return ps.indexOf(x)==i});u.sort();return u.length==1?u[0]:u.join(' + ')+' 블렌드'}
+function recipesHome(){app.innerHTML=top('레시피 탐색')+'<div class="pad"><p class="q">어떤 방식으로 내리시나요?</p><p class="qsub">추출 방식을 골라주세요</p>'+
+ '<button class="opt" onclick="location.hash=\'#/recipes/handdrip\'"><span class="num">☕</span><div><b>핸드드립 레시피</b><span>V60 등 드리퍼로 내리기</span></div></button>'+
+ '<button class="opt" onclick="location.hash=\'#/recipes/espresso\'"><span class="num">⚡</span><div><b>에스프레소 레시피</b><span>에스프레소 · 아메리카노</span></div></button></div>'}
+function rcount(b,m){return (b.recipes||[]).filter(function(r){return r.method==m}).length}
+function rcard(b,m){var n=rcount(b,m);return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/recipe/'+b.id+'/'+m+'\'"><img src="'+b.image+'" alt="" loading="lazy"><div><b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span><span class="why">'+(n?'레시피 '+n+'개'+((b.recipes||[]).some(function(r){return r.method==m&&r.sample})?' (샘플)':''):'레시피 준비 중')+'</span></div></button>'}
+function recipesList(m,tab){if(!MNAME[m]){recipesHome();return}tab=tab||'bean';
+ var h=top(MNAME[m])+'<div class="pad"><div class="tabs" style="margin-top:0"><button class="'+(tab=='bean'?'on':'')+'" onclick="location.replace(\'#/recipes/'+m+'/bean\')">원두별 탐색</button><button class="'+(tab=='feature'?'on':'')+'" onclick="location.replace(\'#/recipes/'+m+'/feature\')">특징별 탐색</button></div>';
+ if(tab=='bean'){h+='<p class="muted">원두를 누르면 '+MNAME[m]+'를 볼 수 있어요</p>';B.slice().sort(function(x,y){return x.acidityRank-y.acidityRank}).forEach(function(b){h+=rcard(b,m)})}
+ else{var G={},U=[],RO=['약배전','중배전','중강배전','강배전'];B.forEach(function(b){var r=roastLabel(b.roast&&b.roast.position),p=procLabel(b);if(!r||!p){U.push(b);return}var k=r+' · '+p;(G[k]=G[k]||{r:r,p:p,l:[]}).l.push(b)});
+  var ks=Object.keys(G).sort(function(a,c){return RO.indexOf(G[a].r)-RO.indexOf(G[c].r)||a.localeCompare(c,'ko')});
+  h+='<p class="muted">배전도 × 가공법 카테고리 · 카테고리별 레시피는 준비 중이에요</p>';
+  ks.forEach(function(k){h+='<div class="sec">'+esc(k)+' <span class="muted">('+G[k].l.length+')</span></div>';G[k].l.forEach(function(b){h+=rcard(b,m)})});
+  if(U.length){h+='<div class="sec">가공법 정보 확인 중 <span class="muted">('+U.length+')</span></div><p class="muted" style="margin-top:-6px">상세페이지에 구성 원두의 가공법이 모두 적혀 있지 않은 블렌드예요</p>';U.forEach(function(b){h+=rcard(b,m)})}}
+ app.innerHTML=h+'</div>'}
+function recipeView(id,m){var b=byId(id);if(!b||!MNAME[m]){home();return}var v={};for(var k in b)v[k]=b[k];v.recipes=(b.recipes||[]).filter(function(r){return r.method==m});
+ app.innerHTML=top(MNAME[m])+'<div class="pad" data-char="'+tc(b)+'"><button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+b.image+'" alt=""><div><b>'+esc(b.name)+'</b><span>원두 상세 보기 →</span></div></button>'+recipe(v,st.ri)+'</div>';
+ st.reRecipe=function(){recipeView(id,m)};bindRecipe(v)}
+function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x){return x.id==id})[0];if(!it){location.hash='#/know-how';return}
+  var h=top(it.title)+'<div class="pad"><p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>';
+  h+=(it.body&&it.body.length)?it.body.map(function(p){return '<p class="desc">'+esc(p)+'</p>'}).join(''):'<div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';app.innerHTML=h+'</div>';return}
+ var h=top('커피 노하우')+'<div class="pad"><p class="q">커피 노하우</p><p class="qsub">알고 싶은 주제를 골라주세요</p>';
+ K.forEach(function(x){h+='<button class="opt" onclick="location.hash=\'#/know-how/'+x.id+'\'"><span class="num">'+esc(x.icon||'•')+'</span><div><b>'+esc(x.title)+'</b>'+(x.body&&x.body.length?'':'<span>준비 중</span>')+'</div></button>'});app.innerHTML=h+'</div>'}
+function route(){st.reRecipe=null;stopTimer();closeSheet();app.classList.remove('hasbar');app.removeAttribute('data-char');var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
+ if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='recipes'){if(p[1])recipesList(p[1],p[2]);else recipesHome()}else if(p[0]=='recipe')recipeView(decodeURIComponent(p[1]),p[2]);else if(p[0]=='know-how')knowhow(p[1]);else if(p[0]=='list')list(st.filter);
  else if(p[0]=='bean'){if(st.last!=p[1])st.ri=0;st.last=p[1];detail(decodeURIComponent(p[1]),p[2])}else home()}
 window.addEventListener('hashchange',route);route();
 window.__recommend=recommend;window.__LOWMAP=LOWMAP;
