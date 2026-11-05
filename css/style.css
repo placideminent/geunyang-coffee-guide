@@ -114,3 +114,4 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .schar{margin-top:6px;font-size:12px;font-weight:700;background:var(--acc2);color:var(--acc-ink);border-radius:999px;padding:2px 9px}
 .hrow{display:flex;gap:12px}.bigbtn.half{flex:1;font-size:18px;padding:22px 16px}
 .opt .num.roastic{width:44px;height:44px;background:var(--bg)}.roastic svg{display:block}
+.opt .num.micon{width:52px;height:52px;background:var(--acc2)}.micon img{width:34px;height:34px;display:block}
