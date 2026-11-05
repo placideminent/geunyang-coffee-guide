@@ -1,5 +1,5 @@
 {
- "_doc": "원두 id × 방식(handdrip/espresso) 레시피. 형식은 README 참고. sample:true 는 시연용 샘플.",
+ "_doc": "recipes: 원두 id × 방식(handdrip/espresso) 레시피 / categories: 배전도·가공법 카테고리 × 방식 레시피(다른 원두를 가진 사용자용). 형식은 README 참고. sample:true 는 시연용 샘플.",
  "recipes": {
   "geisha-natural": {
    "handdrip": [],
@@ -124,6 +124,38 @@
    "espresso": []
   },
   "guatemala-dark": {
+   "handdrip": [],
+   "espresso": []
+  }
+ },
+ "categories": {
+  "light-washed": {
+   "name": "약배전·워시드",
+   "handdrip": [],
+   "espresso": []
+  },
+  "light-natural": {
+   "name": "약배전·내추럴",
+   "handdrip": [],
+   "espresso": []
+  },
+  "medium-washed": {
+   "name": "중배전·워시드",
+   "handdrip": [],
+   "espresso": []
+  },
+  "medium-natural": {
+   "name": "중배전·내추럴",
+   "handdrip": [],
+   "espresso": []
+  },
+  "dark-washed": {
+   "name": "강배전·워시드",
+   "handdrip": [],
+   "espresso": []
+  },
+  "dark-natural": {
+   "name": "강배전·내추럴",
    "handdrip": [],
    "espresso": []
   }
