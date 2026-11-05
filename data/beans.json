@@ -31,7 +31,84 @@
    "더치 콜드 브루": 5,
    "카페라떼 베리에이션": 1
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "750µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "50℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 120,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 끓는 물 100g 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "40g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "25초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/geisha-natural.jpg",
   "source": "파나마게이샤내추럴.jpg",
   "characters": [
@@ -65,7 +142,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "bishala",
@@ -99,7 +181,84 @@
    "더치 콜드 브루": 3,
    "카페라떼 베리에이션": 2
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "190g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "29초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/bishala.jpg",
   "source": "에티오피아 비샬라.jpg",
   "characters": [
@@ -133,7 +292,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "muntasha",
@@ -167,7 +331,84 @@
    "더치 콜드 브루": 5,
    "카페라떼 베리에이션": 2
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "750µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "50℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 120,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 끓는 물 100g 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "40g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "25초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/muntasha.jpg",
   "source": "에티오피아문타샤.jpg",
   "characters": [
@@ -201,7 +442,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "alaskana",
@@ -235,7 +481,84 @@
    "더치 콜드 브루": 5,
    "카페라떼 베리에이션": 1
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "80℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g으로 원두 전체 적시고 중앙에 +10g"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 120,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 얼음 가득 or 끓는 물 0~70g 추가",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "25초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/alaskana.jpg",
   "source": "알래스카나.jpg",
   "characters": [
@@ -271,7 +594,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "yirga-natural",
@@ -305,7 +633,84 @@
    "더치 콜드 브루": 5,
    "카페라떼 베리에이션": 1
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "750µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "50℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 120,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 끓는 물 100g 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "25초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/yirga-natural.jpg",
   "source": "예가체프 내추럴.jpg",
   "characters": [
@@ -339,7 +744,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "peach-sorbet",
@@ -373,7 +783,84 @@
    "더치 콜드 브루": 4,
    "카페라떼 베리에이션": 1
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "750µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "50℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 120,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 끓는 물 100g 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "25초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/peach-sorbet.jpg",
   "source": "피치소르베.jpg",
   "characters": [
@@ -410,7 +897,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "yirga-washed-medium",
@@ -444,7 +936,84 @@
    "더치 콜드 브루": 5,
    "카페라떼 베리에이션": 2
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "190g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "29초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/yirga-washed-medium.jpg",
   "source": "예가체프워시드 중배전.jpg",
   "characters": [
@@ -478,7 +1047,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "geisha-dios",
@@ -512,7 +1086,84 @@
    "더치 콜드 브루": 4,
    "카페라떼 베리에이션": 1
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "190g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "29초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/geisha-dios.jpg",
   "source": "파나마게이샤디오스.jpg",
   "characters": [
@@ -548,7 +1199,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "geisha-washed",
@@ -582,7 +1238,84 @@
    "더치 콜드 브루": 5,
    "카페라떼 베리에이션": 2
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "190g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "29초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/geisha-washed.jpg",
   "source": "파나마게이샤 워시드.jpg",
   "characters": [
@@ -616,7 +1349,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "colombia-highend",
@@ -650,7 +1388,84 @@
    "더치 콜드 브루": 3,
    "카페라떼 베리에이션": 2
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "190g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "29초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/colombia-highend.jpg",
   "source": "콜롬비아하이엔드.jpg",
   "characters": [
@@ -684,7 +1499,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 15~35일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "15~35일"
+  }
  },
  {
   "id": "colombia-magdalena",
@@ -718,7 +1538,84 @@
    "더치 콜드 브루": 1,
    "카페라떼 베리에이션": 2
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "190g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "29초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/colombia-magdalena.jpg",
   "source": "콜롬비아 막달레나.jpg",
   "characters": [
@@ -752,7 +1649,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "10~30일"
+  }
  },
  {
   "id": "kenya-kiangundo",
@@ -786,7 +1688,84 @@
    "더치 콜드 브루": 2,
    "카페라떼 베리에이션": 2
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "190g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 50g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "45g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "29초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/kenya-kiangundo.jpg",
   "source": "케냐 키안군도.jpg",
   "characters": [
@@ -821,7 +1800,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "10~30일"
+  }
  },
  {
   "id": "yirga-washed-mediumdark",
@@ -855,7 +1839,84 @@
    "더치 콜드 브루": 4,
    "카페라떼 베리에이션": 4
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "43g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "26초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/yirga-washed-mediumdark.jpg",
   "source": "예가체프워시드중강배전.jpg",
   "characters": [
@@ -889,7 +1950,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "10~30일"
+  }
  },
  {
   "id": "mary-glow",
@@ -923,7 +1989,84 @@
    "더치 콜드 브루": 2,
    "카페라떼 베리에이션": 3
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "43g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "26초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/mary-glow.jpg",
   "source": "메리글로우.jpg",
   "characters": [
@@ -953,7 +2096,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "10~30일"
+  }
  },
  {
   "id": "ember",
@@ -987,7 +2135,84 @@
    "더치 콜드 브루": 3,
    "카페라떼 베리에이션": 5
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g으로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "43g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "26초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/ember.jpg",
   "source": "엠버블렌드.jpg",
   "characters": [
@@ -1021,7 +2246,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "10~30일"
+  }
  },
  {
   "id": "guatemala-mediumdark",
@@ -1055,7 +2285,84 @@
    "더치 콜드 브루": 4,
    "카페라떼 베리에이션": 5
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "43g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "26초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/guatemala-mediumdark.jpg",
   "source": "과테말라 키체 중강배전.jpg",
   "characters": [
@@ -1089,7 +2396,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "10~30일"
+  }
  },
  {
   "id": "brazil-caramelado",
@@ -1123,7 +2435,84 @@
    "더치 콜드 브루": 3,
    "카페라떼 베리에이션": 4
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "43g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "26초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/brazil-caramelado.jpg",
   "source": "브라질 카라멜라도.jpg",
   "characters": [
@@ -1157,7 +2546,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "10~30일"
+  }
  },
  {
   "id": "mocha-mousse",
@@ -1191,7 +2585,84 @@
    "더치 콜드 브루": 2,
    "카페라떼 베리에이션": 4
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "950µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g 부은 후 타이머 ON"
+     },
+     {
+      "time": 30,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 뜨거운 물 70g(±50g) 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "43g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "26초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/mocha-mousse.jpg",
   "source": "모카무스.jpg",
   "characters": [
@@ -1225,7 +2696,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 10~30일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "10~30일"
+  }
  },
  {
   "id": "mood-indigo",
@@ -1264,8 +2740,6 @@
     "id": "v60",
     "title": "핸드드립 V60",
     "subtitle": "하리오 V60",
-    "method": "handdrip",
-    "sample": true,
     "items": [
      {
       "label": "원두량",
@@ -1273,11 +2747,11 @@
      },
      {
       "label": "분쇄도",
-      "value": "800μm"
+      "value": "800µm"
      },
      {
       "label": "물 온도",
-      "value": "50°C (원본 표기 그대로)"
+      "value": "50℃"
      },
      {
       "label": "물 양",
@@ -1288,7 +2762,7 @@
      {
       "time": 0,
       "label": "뜸",
-      "text": "30g로 전체 적시고 중앙에 +10g"
+      "text": "30g로 원두 전체 적시고 중앙에 +10g"
      },
      {
       "time": 60,
@@ -1303,7 +2777,40 @@
       "text": "낮게 중앙 고정해서 40g 붓기"
      }
     ],
-    "note": "전부 다 내려진 커피에 끓는 물 100ml 추가 or 얼음 가득"
+    "note": "전부 다 내려진 커피에 끓는 물 100g 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "40g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "25초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
    }
   ],
   "image": "img/mood-indigo.jpg",
@@ -1344,7 +2851,12 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 7~25일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "7~25일"
+  }
  },
  {
   "id": "guatemala-dark",
@@ -1378,7 +2890,84 @@
    "더치 콜드 브루": 5,
    "카페라떼 베리에이션": 5
   },
-  "recipes": [],
+  "recipes": [
+   {
+    "id": "v60",
+    "title": "핸드드립 V60",
+    "subtitle": "하리오 V60",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "20g"
+     },
+     {
+      "label": "분쇄도",
+      "value": "800µm"
+     },
+     {
+      "label": "물 온도",
+      "value": "50℃"
+     },
+     {
+      "label": "물 양",
+      "value": "160g"
+     }
+    ],
+    "steps": [
+     {
+      "time": 0,
+      "label": "뜸",
+      "text": "30g로 원두 전체 적시고 중앙에 +10g"
+     },
+     {
+      "time": 60,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 90,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     },
+     {
+      "time": 120,
+      "text": "낮게 중앙 고정해서 40g 붓기"
+     }
+    ],
+    "note": "전부 다 내려진 커피에 끓는 물 100g 추가 or 얼음 가득",
+    "method": "handdrip"
+   },
+   {
+    "id": "espresso",
+    "title": "에스프레소",
+    "subtitle": "에스프레소 & 아메리카노",
+    "items": [
+     {
+      "label": "원두량",
+      "value": "18g"
+     },
+     {
+      "label": "물 온도",
+      "value": "90℃"
+     },
+     {
+      "label": "추출량",
+      "value": "40g"
+     },
+     {
+      "label": "추출 시간",
+      "value": "25초"
+     },
+     {
+      "label": "아메리카노 HOT",
+      "value": "230g"
+     },
+     {
+      "label": "아메리카노 ICE",
+      "value": "물 160g + 얼음 가득"
+     }
+    ],
+    "method": "espresso"
+   }
+  ],
   "image": "img/guatemala-dark.jpg",
   "source": "과테말라 키체 강배전.jpg",
   "characters": [
@@ -1412,6 +3001,11 @@
     "weight": "1kg",
     "url": ""
    }
-  ]
+  ],
+  "aging": {
+   "text": "로스팅 날짜 기준 최소 5일 이후부터 제대로된 향이 발현되며 7~25일까지가 가장 맛있습니다",
+   "groundNote": "분쇄된 커피는 바로 드셔도 됩니다",
+   "best": "7~25일"
+  }
  }
 ]

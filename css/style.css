@@ -1,6 +1,6 @@
 :root{--bg:#F0EFEB;--card:#FAF9F6;--ink:#3A3835;--sub:#67635C;--line:#DDDBD5;--acc:#A9B8A0;--acc-strong:#8FA285;--acc-ink:#536149;--on-acc:#2F332B;--acc2:#E2E8DC;--acc3:#EEF2EA;--peach:#EED9CC;--blush:#EBD8DE;--cream:#F5EBCD;--sky:#D4E4F1;--lilac:#D9D1DA;--grey:#D4D4D4;--r:18px}
 *{box-sizing:border-box}html,body{margin:0;background:#E6E4DF}
-body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word;text-wrap:pretty}
 .wrap{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:40px}
 button{font:inherit;color:inherit;cursor:pointer}
 .top{position:sticky;top:0;z-index:5;background:rgba(240,239,235,.95);backdrop-filter:blur(6px);display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);min-height:56px}
@@ -37,7 +37,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .meter em{font-style:normal;color:var(--sub);font-size:13px;width:28px;text-align:right}
 .roast{display:flex;gap:4px;margin:10px 0 4px}.roast i{flex:1;height:14px;border-radius:4px;opacity:.35}.roast i.on{opacity:1;outline:3px solid var(--acc-strong);outline-offset:1px}
 .roastlbl{display:flex;justify-content:space-between;font-size:13px;color:var(--sub)}
-.kv{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kv div{background:var(--bg);border-radius:12px;padding:12px}.kv small{display:block;color:var(--sub);font-size:13px}.kv b{font-size:16px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kv div{background:var(--bg);border-radius:12px;padding:12px}.kv small{display:block;color:var(--sub);font-size:13px}.kv b{font-size:16px;word-break:keep-all;overflow-wrap:anywhere}
 .steps{list-style:none;padding:0;margin:14px 0 0}.steps li{display:flex;gap:12px;padding:12px;border-radius:12px;margin-bottom:6px;background:var(--bg);transition:.2s}
 .steps li.cur{background:var(--acc);color:var(--on-acc)}.steps li.done{opacity:.5}.steps .t{font-weight:800;width:54px;flex:none;font-variant-numeric:tabular-nums}
 .timer{text-align:center;margin-top:16px}.timer .clock{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums}
@@ -115,3 +115,12 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .hrow{display:flex;gap:12px}.bigbtn.half{flex:1;font-size:18px;padding:22px 16px}
 .opt .num.roastic{width:44px;height:44px;background:var(--bg)}.roastic svg{display:block}
 .opt .num.micon{width:52px;height:52px;background:var(--acc2)}.micon img{width:34px;height:34px;display:block}
+
+/* 숙성 안내 */
+.card.aging{background:linear-gradient(180deg,var(--cream),var(--card));border:1px solid var(--line)}
+.card.aging .desc{font-size:14px;line-height:1.55;color:var(--ink)}
+.desc.tip{color:var(--sub);font-size:13.5px}
+
+/* ko wrap */
+.wrap,.card,.desc,.q,.qsub,.opt,.bean,.chip,.tag,.kv b,.kv small,.steps li,.possum,.dname,.den,.why,.muted,.bigbtn,.btn2,.buybar button,.rs,.rmstep,.aging{word-break:keep-all;overflow-wrap:break-word}
+.kv b{overflow-wrap:anywhere}

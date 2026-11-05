@@ -59,7 +59,7 @@ function list(f){var h=top('전체 원두')+'<div class="pad"><div class="chips"
  app.querySelectorAll('.chip').forEach(function(el){el.onclick=function(){st.filter=el.dataset.c;list(st.filter)}});
  var sl=document.getElementById('sl'),ap=document.getElementById('apos');function up(){var m=sl.scrollWidth-sl.clientWidth;var w=Math.max(8,sl.clientWidth/sl.scrollWidth*100);ap.style.width=w+'%';ap.style.left=(m>0?sl.scrollLeft/m*(100-w):0)+'%'}sl.addEventListener('scroll',up,{passive:true});up()}
 function bars(v,max){var s='<div class="bar">';for(var i=1;i<=max;i++)s+='<i class="'+(v!=null&&i<=v?'on':'')+'"></i>';return s+'</div><em>'+(v==null?'-':v+'/'+max)+'</em>'}
-function info(b){var h='<div class="card"><div class="sec" style="margin-top:0">로스팅 레벨</div><div class="roast">';
+function info(b){var h=agingCard(b)+'<div class="card"><div class="sec" style="margin-top:0">로스팅 레벨</div><div class="roast">';
  for(var i=1;i<=7;i++)h+='<i class="'+(i==b.roast.position?'on':'')+'" style="background:'+ROAST[i-1]+'"></i>';
  h+='</div><div class="roastlbl"><span>약</span><span>중</span><span>강</span></div><div class="muted" style="margin-top:6px">TIME '+esc(b.roast.time||'-')+'</div></div>';
  h+='<div class="card"><div class="sec" style="margin-top:0">맛 밸런스</div>';for(var k in b.meters)h+='<div class="meter"><label>'+k+'</label>'+bars(b.meters[k],5)+'</div>';
@@ -69,13 +69,15 @@ function info(b){var h='<div class="card"><div class="sec" style="margin-top:0">
   ['재배지','생산자','원두','가공법','품종','고도'].forEach(function(f){if(g[f])h+='<div class="gbr"><span>'+f+'</span><b>'+esc(g[f])+'</b></div>'});h+='</div>'});
  h+='</div>';return h}
 function fmt(t){return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
-function recipe(b,ri){var R=b.recipes||[];if(!R.length)return '<div class="card empty"><div class="ico">☕️</div><b>레시피 준비 중</b><p>곧 이 원두에 맞는 추출 레시피를 알려드릴게요.</p></div>';
- ri=Math.min(ri||0,R.length-1);var r=R[ri],h='<div class="chips">';R.forEach(function(x,i){h+='<button class="chip'+(i==ri?' on':'')+'" data-r="'+i+'">'+esc(x.title)+'</button>'});
+function agingCard(b){var a=b&&b.aging;if(!a)return '';return '<div class="card aging"><div class="sec" style="margin-top:0"><span class="sn">☕</span> 숙성 안내</div><p class="desc" style="margin:0">'+esc(a.text||'')+(a.groundNote?' <span class="muted">*'+esc(a.groundNote)+'</span>':'')+'</p></div>'}
+function recipe(b,ri){var R=b.recipes||[];if(!R.length)return agingCard(b)+'<div class="card empty"><div class="ico">☕️</div><b>레시피 준비 중</b><p>곧 이 원두에 맞는 추출 레시피를 알려드릴게요.</p></div>';
+ ri=Math.min(ri||0,R.length-1);var r=R[ri],h=agingCard(b)+'<div class="chips">';R.forEach(function(x,i){var lab=(x.method=='handdrip'||/^핸드드립/.test(x.title||''))?'핸드드립':x.title;h+='<button class="chip'+(i==ri?' on':'')+'" data-r="'+i+'">'+esc(lab)+'</button>'});
  h+='</div><div class="card">'+(r.sample?'<div class="sample">※ 샘플 레시피입니다 (화면 시연용, 추후 정식 데이터로 교체 예정)</div>':'')+'<b style="font-size:19px">'+esc(r.title)+'</b> <span class="muted">'+esc(r.subtitle||'')+'</span><div class="kv" style="margin-top:12px">';
  (r.items||[]).forEach(function(it){h+='<div><small>'+esc(it.label)+'</small><b>'+esc(it.value==null?'-':it.value)+'</b></div>'});h+='</div>';
  if(r.steps&&r.steps.length){h+='<ol class="steps">';r.steps.forEach(function(s,i){h+='<li data-t="'+s.time+'"><span class="t">'+fmt(s.time)+'</span><span>'+(s.label?'<b>('+esc(s.label)+')</b> ':'')+esc(s.text)+'</span></li>'});
   h+='</ol><div class="timer"><div class="clock" id="clk">00:00</div><button class="go" id="tgo">시작</button><button id="trs">리셋</button></div>'}
- if(r.note)h+='<p class="desc" style="margin-top:14px">💡 '+esc(r.note)+'</p>';return h+'</div>'}
+ if(r.tip)h+='<p class="desc tip" style="margin-top:14px">⏱ '+esc(r.tip)+'</p>';
+ if(r.note)h+='<p class="desc" style="margin-top:10px">💡 '+esc(r.note)+'</p>';return h+'</div>'}
 function bindRecipe(b){app.querySelectorAll('[data-r]').forEach(function(el){el.onclick=function(){stopTimer();st.ri=+el.dataset.r;(st.reRecipe||function(){detail(b.id,'recipe')})()}});
  var go=document.getElementById('tgo');if(!go)return;var t=0,run=false,clk=document.getElementById('clk'),lis=app.querySelectorAll('.steps li');
  function paint(){clk.textContent=fmt(t);var cur=-1;lis.forEach(function(li,i){if(t>=+li.dataset.t)cur=i});lis.forEach(function(li,i){li.className=(run||t>0)?(i==cur?'cur':i<cur?'done':''):''})}
