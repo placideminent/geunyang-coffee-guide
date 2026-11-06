@@ -23,11 +23,12 @@ function openSheet(b){closeSheet();var d=document.createElement('div');d.id='she
  d.onclick=function(e){if(e.target===d||e.target.closest('.sx'))closeSheet()};document.addEventListener('keydown',escK);d.querySelector('.sx').focus()}
 document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-buy]');if(t){e.preventDefault();e.stopPropagation();openSheet(byId(t.getAttribute('data-buy')))}},true);
 function stopTimer(){if(timer){clearInterval(timer.h);timer=null}}
-function home(){app.innerHTML='<div class="brand"><div class="logo">GEU NYANG COFFEE</div><h1>그냥커피</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
-'<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">내 취향으로 찾기<small>2가지 질문으로 원두 추천 받기</small></button>'+
+function home(){app.innerHTML='<div class="brand"><h1>그냥커피 원두 가이드</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
+'<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">취향 원두 찾기<small>2가지 질문으로 원두 추천 받기</small></button>'+
 '<button class="bigbtn rmbtn" onclick="location.hash=\'#/roadmap\'">추천 테이스팅 로드맵<small>STEP 1부터 순서대로 마셔보는 원두 코스</small></button>'+
 '<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기<small>20가지 원두 한눈에 보기</small></button>'+
-'<div class="hrow"><button class="bigbtn half" onclick="location.hash=\'#/recipes\'">레시피 탐색<small>핸드드립 · 에스프레소</small></button><button class="bigbtn half" onclick="location.hash=\'#/know-how\'">커피 노하우<small>보관 · 분쇄도</small></button></div></div>'}
+'<button class="bigbtn" onclick="location.hash=\'#/recipes\'">레시피 탐색<small>핸드드립 · 에스프레소</small></button>'+
+'<button class="bigbtn" onclick="location.hash=\'#/know-how\'">커피 노하우<small>보관 · 분쇄도</small></button></div>'}
 function prog(n){var s='<div class="progress">';for(var i=1;i<=2;i++)s+='<i class="'+(i<=n?'on':'')+'"></i>';return s+'</div><div class="muted">질문 '+n+' / 2</div>'}
 function opt(k,v,b,s,num){return '<button class="opt'+(st.a[k]==v?' sel':'')+'" data-k="'+k+'" data-v="'+v+'">'+(num?'<span class="num">'+num+'</span>':'')+'<div><b>'+esc(b)+'</b>'+(s?'<span>'+esc(s)+'</span>':'')+'</div></button>'}
 // 산미 '싫어해요' 분기: 고정 추천 (여기서 수정)
@@ -133,7 +134,7 @@ function recipeView(id,m){var b=byId(id);if(!b||!MNAME[m]){home();return}var v={
  app.innerHTML=top(MNAME[m])+'<div class="pad" data-char="'+tc(b)+'"><button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+imgOf(b)+'" alt=""><div><b>'+esc(b.name)+'</b><span>원두 상세 보기 →</span></div></button>'+recipe(v,st.ri)+'</div>';
  st.reRecipe=function(){recipeView(id,m)};bindRecipe(v)}
 function catRecipeView(key,m){var c=(window.CATRECIPES||{})[key];if(!c||!MNAME[m]){location.hash='#/recipes';return}
- var v={id:'cat-'+key,name:c.name,recipes:(c[m]||[]).map(function(r){var x={};for(var k in r)x[k]=r[k];x.method=m;return x})};
+ var v={id:'cat-'+key,name:c.name,aging:c.aging,recipes:(c[m]||[]).map(function(r){var x={};for(var k in r)x[k]=r[k];x.method=m;return x})};
  app.innerHTML=top(MNAME[m])+'<div class="pad"><p class="q">'+esc(c.name)+'</p><p class="qsub">'+esc(c.name)+' 원두를 위한 '+MNAME[m]+'</p>'+recipe(v,st.ri)+'</div>';
  st.reRecipe=function(){catRecipeView(key,m)};bindRecipe(v)}
 function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x){return x.id==id})[0];if(!it){location.hash='#/know-how';return}
