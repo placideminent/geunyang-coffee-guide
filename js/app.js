@@ -34,20 +34,31 @@ function opt(k,v,b,s,num){return '<button class="opt'+(st.a[k]==v?' sel':'')+'" 
 // 산미 '싫어해요' 분기: 고정 추천 (여기서 수정)
 var LOWMAP={strong:{label:'진한 맛',beans:[['mood-indigo','산미가 적고 다크 초코의 쌉싸름함과 카라멜의 단맛, 은은한 스모키 향을 좋아하시는 분께'],['guatemala-dark','산미가 적고 고급 훈연 향과 묵직한 바디감, 다크 초코의 깊은 향을 좋아하시는 분께']]},
  soft:{label:'부드러운 맛',beans:[['brazil-caramelado','약한 신맛에 땅콩 카라멜·초코 쿠키의 달콤 고소함을 부드럽게 즐기고 싶은 분께'],['mocha-mousse','신맛·쓴맛이 적고 매끄러운 바디감과 달콤 고소한 코코아 향을 원하시는 분께'],['guatemala-mediumdark','흑설탕·다크초코의 단맛과 고급스런 훈연 향, 약한 신맛의 호불호 없는 올라운더를 찾는 분께']]}};
+// 산미 '좋아해요' 분기: 과일/꽃만, 고정 순위
+var HIGHMAP={'과일':{label:'과일향',beans:[['muntasha','밝고 상큼한 산미와 복숭아·살구의 달콤한 과일 향을 좋아하시는 분께'],['geisha-natural','화려한 과일 향과 와인처럼 풍부한 산미를 즐기고 싶은 분께'],['yirga-natural','베리류의 상큼함과 꽃 향이 어우러진 내추럴 산미를 원하시는 분께'],['peach-sorbet','복숭아처럼 달콤상큼한 과일 캐릭터의 블렌드를 찾는 분께']]},
+ '꽃':{label:'꽃향',beans:[['bishala','밝은 산미와 화사한 꽃 향, 자몽·자두의 상큼함을 좋아하시는 분께'],['yirga-washed-medium','자스민 꽃과 샤인 머스캣처럼 우아한 꽃·과일 향을 원하시는 분께'],['geisha-washed','섬세한 꽃 향과 시트러스 산미의 클래식 게이샤를 찾는 분께'],['geisha-dios','오렌지 사탕·자스민처럼 화사한 꽃 향의 프리미엄 게이샤를 원하시는 분께']]}};
+// 산미 '은은한 정도' 분기: 산미/고소함 밸런스 선택
+var MIDMAP={acid2nutty1:{label:'산미 2단계 + 고소함 1단계',beans:[['colombia-highend','은은한 산미를 조금 더 느끼며 클린하고 화사한 컵을 원하시는 분께'],['colombia-magdalena','청사과·화이트 와인처럼 산뜻하면서도 부담 없는 산미를 좋아하시는 분께'],['geisha-washed','은은한 산미 위에 섬세한 꽃 향을 더하고 싶은 분께']]},
+ acid1nutty2:{label:'산미 1단계 + 고소함 2단계',beans:[['kenya-kiangundo','은은한 산미와 군고구마·다크초콜릿의 고소함을 함께 즐기고 싶은 분께'],['yirga-washed-mediumdark','달고나·군고구마처럼 고소함이 앞서는 중강배전을 원하시는 분께'],['mary-glow','아카시아 꿀·군고구마의 달콤 고소함에 산미는 살짝만 원하는 분께']]}};
 function quiz(n){var h=top('취향 찾기')+'<div class="pad">'+prog(n);
  if(n==1){h+='<p class="q">커피의 산미(신맛)는<br>어떠세요?</p><p class="qsub">새콤한 맛에 대한 취향이에요</p>';for(var k in ACID)h+=opt('acid',k,ACID[k][0],ACID[k][1])}
  if(n==2&&st.a.acid=='low'){h+='<p class="q">진한 맛이 좋으세요,<br>부드러운 맛이 좋으세요?</p><p class="qsub">산미가 적은 커피 중에서 골라드릴게요</p>'+opt('body','strong','진한 맛','다크 초콜릿·훈연 향의 묵직한 맛')+opt('body','soft','부드러운 맛','카라멜·코코아의 달콤 고소한 맛')}
+ else if(n==2&&st.a.acid=='mid'){h+='<p class="q">어떤 밸런스가<br>좋으세요?</p><p class="qsub">은은한 산미 안에서 산미와 고소함의 비중을 골라주세요</p>'+opt('mid','acid2nutty1','산미 2단계 + 고소함 1단계','산미를 조금 더, 고소함은 살짝')+opt('mid','acid1nutty2','산미 1단계 + 고소함 2단계','고소함을 조금 더, 산미는 살짝')}
+ else if(n==2&&st.a.acid=='high'){h+='<p class="q">어떤 향이 좋으세요?</p><p class="qsub">커피의 전체적인 캐릭터예요</p>'+opt('ch','과일','과일향',CH['과일'])+opt('ch','꽃','꽃향',CH['꽃'])}
  else if(n==2){h+='<p class="q">어떤 향이 좋으세요?</p><p class="qsub">커피의 전체적인 캐릭터예요</p>';for(var c in CH)h+=opt('ch',c,c=='any'?'상관없어요':c,c=='any'?'모두 좋아요':CH[c])}
  app.innerHTML=h+'</div>';
- app.querySelectorAll('.opt').forEach(function(el){el.onclick=function(){var k=el.dataset.k,v=el.dataset.v;st.a[k]=v;if(k=='acid'){delete st.a.ch;delete st.a.body}location.hash=n<2?'#/quiz/'+(n+1):'#/result'}})}
+ app.querySelectorAll('.opt').forEach(function(el){el.onclick=function(){var k=el.dataset.k,v=el.dataset.v;st.a[k]=v;if(k=='acid'){delete st.a.ch;delete st.a.body;delete st.a.mid}location.hash=n<2?'#/quiz/'+(n+1):'#/result'}})}
 function recommend(a){var c=ACID[a.acid]?(ACID[a.acid][2][0]+ACID[a.acid][2][1])/2:10.5;
  return B.map(function(b){var s=0,why=[];
   if(a.acid&&band(b.acidityRank)==a.acid){s+=2;why.push('산미 '+ACID[a.acid][0].replace('해요','하는 분께').replace('은은한 정도','은은하게'))}
   if(a.ch&&a.ch!='any'&&b.characters.indexOf(a.ch)>=0){s+=2;why.push(a.ch+' 캐릭터')}
   return {b:b,s:s,d:Math.abs(b.acidityRank-c),why:why}}).sort(function(x,y){return y.s-x.s||x.d-y.d}).slice(0,3)}
-function result(){if(st.a.acid=='low'&&LOWMAP[st.a.body]){var L=LOWMAP[st.a.body],hh=top('추천 결과')+'<div class="pad"><p class="q">당신을 위한 원두 '+L.beans.length+'가지</p><p class="qsub">산미 싫어해요 · '+L.label+'</p>';
-  L.beans.forEach(function(x,i){var b=byId(x[0]);hh+='<div class="rcard" data-char="'+tc(b)+'">'+card(b,{rank:(i+1)+'순위',why:'추천 이유: '+x[1]})+buy(b,'sm')+'</div>'});
-  app.innerHTML=hh+'<button class="btn2" onclick="location.hash=\'#/quiz/1\'">처음부터 다시</button><button class="btn2" onclick="location.hash=\'#/list\'">전체 원두 보기</button></div>';return}
+function fixedResult(sub,beans){var hh=top('추천 결과')+'<div class="pad"><p class="q">당신을 위한 원두 '+beans.length+'가지</p><p class="qsub">'+esc(sub)+'</p>';
+ beans.forEach(function(x,i){var b=byId(x[0]);hh+='<div class="rcard" data-char="'+tc(b)+'">'+card(b,{rank:(i+1)+'순위',why:'추천 이유: '+x[1]})+buy(b,'sm')+'</div>'});
+ app.innerHTML=hh+'<button class="btn2" onclick="location.hash=\'#/quiz/1\'">처음부터 다시</button><button class="btn2" onclick="location.hash=\'#/list\'">전체 원두 보기</button></div>'}
+function result(){if(st.a.acid=='low'&&LOWMAP[st.a.body]){var L=LOWMAP[st.a.body];fixedResult('산미 싫어해요 · '+L.label,L.beans);return}
+ if(st.a.acid=='high'&&HIGHMAP[st.a.ch]){var H=HIGHMAP[st.a.ch];fixedResult('산미 좋아해요 · '+H.label,H.beans);return}
+ if(st.a.acid=='mid'&&MIDMAP[st.a.mid]){var M=MIDMAP[st.a.mid];fixedResult('산미 은은한 정도 · '+M.label,M.beans);return}
  if(!st.a.acid||!st.a.ch){location.hash='#/quiz/1';return}var r=recommend(st.a);
  var h=top('추천 결과')+'<div class="pad"><p class="q">당신을 위한 원두 '+r.length+'가지</p><p class="qsub">'+'산미 '+esc(ACID[st.a.acid][0])+' · '+esc(st.a.ch=='any'?'향 상관없음':st.a.ch)+'</p>';
  r.forEach(function(x,i){h+='<div class="rcard" data-char="'+tc(x.b)+'">'+card(x.b,{rank:(i+1)+'순위',why:'추천 이유: '+(x.why.length?x.why.join(' · ')+'에 맞아요':'선택하신 산미 취향과 가장 가까워요')})+buy(x.b,'sm')+'</div>';});
@@ -146,5 +157,5 @@ function route(){st.reRecipe=null;stopTimer();closeSheet();app.classList.remove(
  if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='recipes'){if(p[1])recipesList(p[1],p[2]);else recipesHome()}else if(p[0]=='recipe')recipeView(decodeURIComponent(p[1]),p[2]);else if(p[0]=='catrecipe')catRecipeView(p[1],p[2]);else if(p[0]=='know-how')knowhow(p[1]);else if(p[0]=='list')list(st.filter);
  else if(p[0]=='bean'){if(st.last!=p[1])st.ri=0;st.last=p[1];detail(decodeURIComponent(p[1]),p[2])}else home()}
 window.addEventListener('hashchange',route);route();
-window.__recommend=recommend;window.__LOWMAP=LOWMAP;
+window.__recommend=recommend;window.__LOWMAP=LOWMAP;window.__HIGHMAP=HIGHMAP;window.__MIDMAP=MIDMAP;
 })();
