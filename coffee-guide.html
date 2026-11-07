@@ -40,7 +40,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .bar{flex:1;display:flex;gap:4px}.bar i{flex:1;height:10px;border-radius:5px;background:var(--line)}.bar i.on{background:var(--acc-strong)}
 .meter em{font-style:normal;color:var(--sub);font-size:13px;width:28px;text-align:right}
 .roast{display:flex;gap:4px;margin:10px 0 4px}.roast i{flex:1;height:14px;border-radius:4px;opacity:.35}.roast i.on{opacity:1;outline:3px solid var(--acc-strong);outline-offset:1px}
-.roastlbl{display:flex;justify-content:space-between;font-size:13px;color:var(--sub)}
+.roastlbl{position:relative;height:18px;font-size:13px;line-height:18px;color:var(--sub)}.roastlbl span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+/* 7칸(gap 4px): 1·2칸 경계 = 칸폭+2px, 6·7칸 경계 = 100%-(칸폭+2px) */
+.roastlbl span:nth-child(1){left:calc((100% - 24px)/7 + 2px)}.roastlbl span:nth-child(2){left:50%}.roastlbl span:nth-child(3){left:calc(100% - (100% - 24px)/7 - 2px)}
 .kv{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kv div{background:var(--bg);border-radius:12px;padding:12px}.kv small{display:block;color:var(--sub);font-size:13px}.kv b{font-size:16px;word-break:keep-all;overflow-wrap:anywhere}
 .steps{list-style:none;padding:0;margin:14px 0 0}.steps li{display:flex;gap:12px;padding:12px;border-radius:12px;margin-bottom:6px;background:var(--bg);transition:.2s}
 .steps li.cur{background:var(--acc);color:var(--on-acc)}.steps li.done{opacity:.5}.steps .t{font-weight:800;width:54px;flex:none;font-variant-numeric:tabular-nums}
