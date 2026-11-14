@@ -33,7 +33,7 @@ function prog(n){var s='<div class="progress">';for(var i=1;i<=2;i++)s+='<i clas
 function opt(k,v,b,s,num){return '<button class="opt'+(st.a[k]==v?' sel':'')+'" data-k="'+k+'" data-v="'+v+'">'+(num?'<span class="num">'+num+'</span>':'')+'<div><b>'+esc(b)+'</b>'+(s?'<span>'+esc(s)+'</span>':'')+'</div></button>'}
 // 산미 '싫어해요' 분기: 고정 추천 (여기서 수정)
 var LOWMAP={strong:{label:'진한 맛',beans:[['mood-indigo','산미가 적고 다크 초코의 쌉싸름함과 카라멜의 단맛, 은은한 스모키 향을 좋아하시는 분께'],['guatemala-dark','산미가 적고 고급 훈연 향과 묵직한 바디감, 다크 초코의 깊은 향을 좋아하시는 분께']]},
- soft:{label:'부드러운 맛',beans:[['brazil-caramelado','약한 신맛에 땅콩 카라멜·초코 쿠키의 달콤 고소함을 부드럽게 즐기고 싶은 분께'],['mocha-mousse','신맛·쓴맛이 적고 매끄러운 바디감과 달콤 고소한 코코아 향을 원하시는 분께'],['guatemala-mediumdark','흑설탕·다크초코의 단맛과 고급스런 훈연 향, 약한 신맛의 호불호 없는 올라운더를 찾는 분께']]}};
+ soft:{label:'부드러운 맛',beans:[['guatemala-mediumdark','흑설탕·다크초코의 단맛과 고급스런 훈연 향, 약한 신맛의 호불호 없는 올라운더를 찾는 분께'],['brazil-caramelado','약한 신맛에 땅콩 카라멜·초코 쿠키의 달콤 고소함을 부드럽게 즐기고 싶은 분께'],['mocha-mousse','신맛·쓴맛이 적고 매끄러운 바디감과 달콤 고소한 코코아 향을 원하시는 분께']]}};
 // 산미 '좋아해요' 분기: 과일/꽃만, 고정 순위
 var HIGHMAP={'과일':{label:'과일향',beans:[['muntasha','밝고 상큼한 산미와 복숭아·살구의 달콤한 과일 향을 좋아하시는 분께'],['geisha-natural','화려한 과일 향과 와인처럼 풍부한 산미를 즐기고 싶은 분께'],['yirga-natural','베리류의 상큼함과 꽃 향이 어우러진 내추럴 산미를 원하시는 분께'],['peach-sorbet','복숭아처럼 달콤상큼한 과일 캐릭터의 블렌드를 찾는 분께']]},
  '꽃':{label:'꽃향',beans:[['bishala','밝은 산미와 화사한 꽃 향, 자몽·자두의 상큼함을 좋아하시는 분께'],['yirga-washed-medium','자스민 꽃과 샤인 머스캣처럼 우아한 꽃·과일 향을 원하시는 분께'],['geisha-washed','섬세한 꽃 향과 시트러스 산미의 클래식 게이샤를 찾는 분께'],['geisha-dios','오렌지 사탕·자스민처럼 화사한 꽃 향의 프리미엄 게이샤를 원하시는 분께']]}};
@@ -76,7 +76,7 @@ function info(b){var h=agingCard(b)+'<div class="card"><div class="sec" style="m
  for(var i=1;i<=7;i++)h+='<i class="'+(i==b.roast.position?'on':'')+'" style="background:'+ROAST[i-1]+'"></i>';
  h+='</div><div class="roastlbl"><span>약</span><span>중</span><span>강</span></div><div class="muted" style="margin-top:6px">TIME '+esc(b.roast.time||'-')+'</div></div>';
  h+='<div class="card"><div class="sec" style="margin-top:0">맛 밸런스</div>';for(var k in b.meters)h+='<div class="meter"><label>'+k+'</label>'+bars(b.meters[k],5)+'</div>';
- h+='</div><div class="card"><div class="sec" style="margin-top:0">이렇게 즐겨보세요</div>';for(var m in b.menus)h+='<div class="meter menu"><label style="width:150px">'+m+'</label>'+bars(b.menus[m],5)+'</div>';
+ h+='</div><div class="card"><div class="sec" style="margin-top:0">메뉴 추천도</div>';for(var m in b.menus)h+='<div class="meter menu"><label style="width:150px">'+m+'</label>'+bars(b.menus[m],5)+'</div>';
  h+='</div><div class="card"><div class="sec" style="margin-top:0">생두 특징</div>';
  var gb=b.greenBean||[];gb.forEach(function(g){h+='<div class="gb">'+(gb.length>1||b.group=='blend'?'<div class="gbh">'+esc(g['국가'])+'</div>':'');
   ['재배지','생산자','원두','가공법','품종','고도'].forEach(function(f){if(g[f])h+='<div class="gbr"><span>'+f+'</span><b>'+esc(g[f])+'</b></div>'});h+='</div>'});
@@ -148,11 +148,29 @@ function catRecipeView(key,m){var c=(window.CATRECIPES||{})[key];if(!c||!MNAME[m
  var v={id:'cat-'+key,name:c.name,aging:c.aging,recipes:(c[m]||[]).map(function(r){var x={};for(var k in r)x[k]=r[k];x.method=m;return x})};
  app.innerHTML=top(MNAME[m])+'<div class="pad"><p class="q">'+esc(c.name)+'</p><p class="qsub">'+esc(c.name)+' 원두를 위한 '+MNAME[m]+'</p>'+recipe(v,st.ri)+'</div>';
  st.reRecipe=function(){catRecipeView(key,m)};bindRecipe(v)}
+function khReady(x){return (x.sections&&x.sections.length)||(x.body&&x.body.length)}
+function khEm(s,em){var t=esc(s||'');if(!em)return t;var e=esc(em);return t.split(e).join('<b>'+e+'</b>')}
+function khSections(it){var h='';
+ (it.sections||[]).forEach(function(sec,si){
+  h+='<section class="kh-panel kh-panel-'+(si+1)+'"><h2 class="kh-secq"><span class="kh-badge">'+(si+1==1?'①':'②')+'</span><span>'+esc(sec.title)+'</span></h2>';
+  if(sec.highlight){h+='<div class="kh-hl"><p class="kh-hlt">'+sec.highlight.title.map(function(l){return esc(l)}).join('<br>')+'</p>';
+   if(sec.highlight.sub)h+='<p class="kh-hls">'+esc(sec.highlight.sub)+'</p>';h+='</div>'}
+  if(sec.pair){h+='<div class="kh-grid">';sec.pair.forEach(function(c){h+='<div class="card kh-stat"><div class="kh-st">'+esc(c.title)+'</div><div class="kh-sv">'+esc(c.value)+'</div><div class="muted">'+esc(c.sub||'')+'</div></div>'});h+='</div>'}
+  if(sec.tips){h+='<div class="kh-grid">';sec.tips.forEach(function(c){h+='<div class="card kh-stat">'+(c.icon?'<div class="kh-ico">'+esc(c.icon)+'</div>':'')+'<div class="kh-st">'+esc(c.title)+'</div><div class="muted">'+esc(c.sub||'')+'</div></div>'});h+='</div>'}
+  if(sec.note){h+='<div class="kh-note"><div class="kh-nl">'+esc(sec.note.label||'참고')+'</div><p>'+khEm(sec.note.text,sec.note.em)+'</p></div>'}
+  if(sec.guides){sec.guides.forEach(function(c){h+='<div class="card kh-guide"><div class="muted kh-gk">'+esc(c.kicker)+'</div><b class="kh-gt">'+esc(c.title)+'</b>'+(c.text?'<p class="desc">'+esc(c.text)+'</p>':'');
+   if(c.footer)h+='<p class="kh-gf">'+c.footer.split('\n').map(function(l){return esc(l)}).join('<br>')+'</p>';h+='</div>'})}
+  h+='</section>'});
+ if(it.footer)h+='<p class="kh-foot">'+khEm(it.footer,it.footerEm)+'</p>';
+ return h}
 function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x){return x.id==id})[0];if(!it){location.hash='#/know-how';return}
-  var h=top(it.title)+'<div class="pad"><p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>';
-  h+=(it.body&&it.body.length)?it.body.map(function(p){return '<p class="desc">'+esc(p)+'</p>'}).join(''):'<div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';app.innerHTML=h+'</div>';return}
+  var h=top(it.title)+'<div class="pad">';
+  if(it.sections&&it.sections.length)h+=khSections(it);
+  else if(it.body&&it.body.length)h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+it.body.map(function(p){return '<p class="desc">'+esc(p)+'</p>'}).join('');
+  else h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p><div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';
+  app.innerHTML=h+'</div>';return}
  var h=top('커피 노하우')+'<div class="pad"><p class="q">커피 노하우</p><p class="qsub">알고 싶은 주제를 골라주세요</p>';
- K.forEach(function(x){h+='<button class="opt" onclick="location.hash=\'#/know-how/'+x.id+'\'"><span class="num">'+esc(x.icon||'•')+'</span><div><b>'+esc(x.title)+'</b>'+(x.body&&x.body.length?'':'<span>준비 중</span>')+'</div></button>'});app.innerHTML=h+'</div>'}
+ K.forEach(function(x){h+='<button class="opt" onclick="location.hash=\'#/know-how/'+x.id+'\'"><span class="num">'+esc(x.icon||'•')+'</span><div><b>'+esc(x.title)+'</b>'+(khReady(x)?'':'<span>준비 중</span>')+'</div></button>'});app.innerHTML=h+'</div>'}
 function route(){st.reRecipe=null;stopTimer();closeSheet();app.classList.remove('hasbar');app.removeAttribute('data-char');var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
  if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='recipes'){if(p[1])recipesList(p[1],p[2]);else recipesHome()}else if(p[0]=='recipe')recipeView(decodeURIComponent(p[1]),p[2]);else if(p[0]=='catrecipe')catRecipeView(p[1],p[2]);else if(p[0]=='know-how')knowhow(p[1]);else if(p[0]=='list')list(st.filter);
  else if(p[0]=='bean'){if(st.last!=p[1])st.ri=0;st.last=p[1];detail(decodeURIComponent(p[1]),p[2])}else home()}
