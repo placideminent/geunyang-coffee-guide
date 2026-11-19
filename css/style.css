@@ -9,7 +9,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .pad{padding:20px}
 .brand{text-align:center;padding:64px 20px 28px}.brand .logo{color:var(--acc-ink);font-weight:800;letter-spacing:.08em;font-size:15px}
 .brand h1{font-size:32px;margin:8px 0 6px}.brand p{color:var(--sub);margin:0}
-.bigbtn{display:block;width:100%;text-align:left;border:0;border-radius:var(--r);padding:26px 22px;margin:0 0 14px;background:var(--card);box-shadow:0 2px 10px rgba(0,0,0,.05);font-size:21px;font-weight:700}
+.bigbtn{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;width:100%;text-align:left;border:0;border-radius:var(--r);padding:26px 22px;margin:0 0 14px;background:var(--card);box-shadow:0 2px 10px rgba(0,0,0,.05);font-size:21px;font-weight:700;min-height:112px}
 .bigbtn small{display:block;font-size:15px;font-weight:400;color:var(--sub);margin-top:4px}
 .bigbtn.primary{background:var(--acc);color:var(--on-acc)}.bigbtn.primary small{color:var(--on-acc)}
 .progress{display:flex;gap:6px;margin:4px 0 22px}.progress i{flex:1;height:6px;border-radius:3px;background:var(--line)}.progress i.on{background:var(--acc)}

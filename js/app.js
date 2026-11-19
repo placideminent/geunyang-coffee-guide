@@ -24,11 +24,11 @@ function openSheet(b){closeSheet();var d=document.createElement('div');d.id='she
 document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-buy]');if(t){e.preventDefault();e.stopPropagation();openSheet(byId(t.getAttribute('data-buy')))}},true);
 function stopTimer(){if(timer){clearInterval(timer.h);timer=null}}
 function home(){app.innerHTML='<div class="brand"><h1>그냥커피 원두 가이드</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
-'<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">취향 원두 찾기<small>2가지 질문으로 원두 추천 받기</small></button>'+
-'<button class="bigbtn rmbtn" onclick="location.hash=\'#/roadmap\'">추천 테이스팅 로드맵<small>STEP 1부터 순서대로 마셔보는 원두 코스</small></button>'+
-'<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기<small>20가지 원두 한눈에 보기</small></button>'+
-'<button class="bigbtn" onclick="location.hash=\'#/recipes\'">레시피 탐색<small>핸드드립 · 에스프레소</small></button>'+
-'<button class="bigbtn" onclick="location.hash=\'#/know-how\'">커피 노하우<small>보관 · 분쇄도</small></button></div>'}
+'<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">내 취향 원두 찾기</button>'+
+'<button class="bigbtn rmbtn" onclick="location.hash=\'#/roadmap\'">추천 테이스팅 로드맵<small>다양한 원두의 향미를 온전히 즐기기 위한<br>원두 순서 추천</small></button>'+
+'<button class="bigbtn" onclick="location.hash=\'#/recipes\'">원두별 레시피<small>핸드드립 · 에스프레소</small></button>'+
+'<button class="bigbtn" onclick="location.hash=\'#/know-how\'">커피 노하우<small>보관 · 분쇄도</small></button>'+
+'<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기</button></div>'}
 function prog(n){var s='<div class="progress">';for(var i=1;i<=2;i++)s+='<i class="'+(i<=n?'on':'')+'"></i>';return s+'</div><div class="muted">질문 '+n+' / 2</div>'}
 function opt(k,v,b,s,num){return '<button class="opt'+(st.a[k]==v?' sel':'')+'" data-k="'+k+'" data-v="'+v+'">'+(num?'<span class="num">'+num+'</span>':'')+'<div><b>'+esc(b)+'</b>'+(s?'<span>'+esc(s)+'</span>':'')+'</div></button>'}
 // 산미 '싫어해요' 분기: 고정 추천 (여기서 수정)
@@ -142,7 +142,7 @@ var MNAME={handdrip:'핸드드립 레시피',espresso:'에스프레소 레시피
 function roastLabel(p){return p==null?null:p<=2?'약배전':p<=4?'중배전':p==5?'중강배전':'강배전'}
 function procLabel(b){var ps=(b.greenBean||[]).map(function(g){return g['가공법']});if(!ps.length||ps.some(function(x){return !x}))return null;
  var u=ps.filter(function(x,i){return ps.indexOf(x)==i});u.sort();return u.length==1?u[0]:u.join(' + ')+' 블렌드'}
-function recipesHome(){app.innerHTML=top('레시피 탐색')+'<div class="pad"><p class="q">어떤 방식으로 내리시나요?</p><p class="qsub">추출 방식을 골라주세요</p>'+
+function recipesHome(){app.innerHTML=top('원두별 레시피')+'<div class="pad"><p class="q">어떤 방식으로 내리시나요?</p><p class="qsub">추출 방식을 골라주세요</p>'+
  '<button class="opt" onclick="location.hash=\'#/recipes/handdrip\'"><span class="num micon"><img src="'+MICON.handdrip+'" alt=""></span><div><b>핸드드립 레시피</b><span>V60 등 드리퍼로 내리기</span></div></button>'+
  '<button class="opt" onclick="location.hash=\'#/recipes/espresso\'"><span class="num micon"><img src="'+MICON.espresso+'" alt=""></span><div><b>에스프레소 레시피</b><span>에스프레소 · 아메리카노</span></div></button></div>'}
 function rcount(b,m){return (b.recipes||[]).filter(function(r){return r.method==m}).length}
