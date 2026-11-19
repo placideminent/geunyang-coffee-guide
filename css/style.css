@@ -147,7 +147,7 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .kh-sv{font-size:32px;font-weight:800;color:var(--acc-ink);margin:6px 0 2px;line-height:1.1}
 .kh-panel-1 .kh-sv{color:#7A6324}
 .kh-ico{font-size:26px;margin-bottom:6px;color:var(--acc-ink)}
-.kh-note{text-align:center;padding:8px 6px 4px;margin:4px 0 0;border:0}
+.kh-note{text-align:center;padding:8px 6px 4px;margin:4px 0 0;border:0}.kh-note + .kh-guide{margin-top:32px}
 .kh-nl{color:var(--acc-ink);font-weight:700;font-size:15px;margin-bottom:8px}
 .kh-panel-1 .kh-nl,.kh-panel-1 .kh-note b{color:#7A6324}
 .kh-note p{margin:0;color:var(--ink)}
@@ -156,5 +156,5 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .kh-gt{display:block;font-size:18px;margin-bottom:8px}
 .kh-guide .desc{margin:0}
 .kh-gf{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line);font-weight:800}
-.kh-foot{text-align:center;color:var(--sub);margin:4px 8px 8px;padding-top:0;border:0}
+.kh-foot{text-align:center;color:var(--ink);margin:8px 0 8px;padding:18px 16px;border:0;background:var(--acc3);border-radius:var(--r);font-size:16px;font-weight:600;line-height:1.55}
 .kh-foot b,.kh-note b{color:var(--acc-ink);font-weight:800;white-space:nowrap}

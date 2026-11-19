@@ -11,7 +11,7 @@ function top(t){return '<div class="top"><button class="back" onclick="history.l
 function tc(b){for(var g in CHO)if(CHO[g].indexOf(b.id)>=0)return g;return b.characters[0]}
 function imgOf(b){return b.thumb||b.image}
 function card(b,extra){return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+imgOf(b)+'" alt="" loading="lazy"><div>'+(extra&&extra.rank?'<span class="rank">'+extra.rank+'</span>':'')+'<b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span>'+(extra&&extra.why?'<span class="why">'+esc(extra.why)+'</span>':'')+'</div></button>'}
-function popts(b){var p=(b.purchase||[]).slice();if(!p.length&&b.purchaseUrl)p=[{weight:'구매',url:b.purchaseUrl}];return p}
+function popts(b){var p=(b.purchase||[]).filter(function(o){return okurl(o.url)});if(!p.length&&okurl(b.purchaseUrl))p=[{weight:'구매',url:b.purchaseUrl}];return p}
 function okurl(u){return /^https?:\/\//.test(u||'')}
 function buy(b,cls){return popts(b).length?'<button type="button" class="buy '+(cls||'')+'" data-buy="'+b.id+'">구매하기</button>':'<span class="buy off '+(cls||'')+'" aria-disabled="true">구매 링크 준비 중</span>'}
 function closeSheet(){var s=document.getElementById('sheet');if(s)s.remove();document.removeEventListener('keydown',escK)}
@@ -158,10 +158,10 @@ function khSections(it){var h='';
   if(sec.pair){h+='<div class="kh-grid">';sec.pair.forEach(function(c){h+='<div class="card kh-stat"><div class="kh-st">'+esc(c.title)+'</div><div class="kh-sv">'+esc(c.value)+'</div><div class="muted">'+esc(c.sub||'')+'</div></div>'});h+='</div>'}
   if(sec.tips){h+='<div class="kh-grid">';sec.tips.forEach(function(c){h+='<div class="card kh-stat">'+(c.icon?'<div class="kh-ico">'+esc(c.icon)+'</div>':'')+'<div class="kh-st">'+esc(c.title)+'</div><div class="muted">'+esc(c.sub||'')+'</div></div>'});h+='</div>'}
   if(sec.note){h+='<div class="kh-note"><div class="kh-nl">'+esc(sec.note.label||'참고')+'</div><p>'+khEm(sec.note.text,sec.note.em)+'</p></div>'}
-  if(sec.guides){sec.guides.forEach(function(c){h+='<div class="card kh-guide"><div class="muted kh-gk">'+esc(c.kicker)+'</div><b class="kh-gt">'+esc(c.title)+'</b>'+(c.text?'<p class="desc">'+esc(c.text)+'</p>':'');
+  if(sec.guides){sec.guides.forEach(function(c){h+='<div class="card kh-guide"><div class="muted kh-gk">'+esc(c.kicker)+'</div><b class="kh-gt">'+esc(c.title)+'</b>'+(c.text?'<p class="desc">'+c.text.split('\n').map(function(l){return esc(l)}).join('<br>')+'</p>':'');
    if(c.footer)h+='<p class="kh-gf">'+c.footer.split('\n').map(function(l){return esc(l)}).join('<br>')+'</p>';h+='</div>'})}
   h+='</section>'});
- if(it.footer)h+='<p class="kh-foot">'+khEm(it.footer,it.footerEm)+'</p>';
+ if(it.footer)h+='<p class="kh-foot">'+it.footer.split('\n').map(function(l){return khEm(l,it.footerEm)}).join('<br>')+'</p>';
  return h}
 function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x){return x.id==id})[0];if(!it){location.hash='#/know-how';return}
   var h=top(it.title)+'<div class="pad">';
