@@ -25,7 +25,7 @@ document.addEventListener('click',function(e){var t=e.target.closest&&e.target.c
 function stopTimer(){if(timer){clearInterval(timer.h);timer=null}}
 function home(){app.innerHTML='<div class="brand"><h1>그냥커피 원두 가이드</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
 '<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">내 취향 원두 찾기</button>'+
-'<button class="bigbtn rmbtn" onclick="location.hash=\'#/roadmap\'">추천 테이스팅 로드맵<small>다양한 원두의 향미를 온전히 즐기기 위한<br>원두 순서 추천</small></button>'+
+'<button class="bigbtn rmbtn" onclick="location.hash=\'#/roadmap\'">추천 테이스팅 로드맵<small>다양한 원두의 향미를 온전히 즐기기 위한 순서 추천</small></button>'+
 '<button class="bigbtn" onclick="location.hash=\'#/recipes\'">원두별 레시피<small>핸드드립 · 에스프레소</small></button>'+
 '<button class="bigbtn" onclick="location.hash=\'#/know-how\'">커피 노하우<small>보관 · 분쇄도</small></button>'+
 '<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기</button></div>'}
