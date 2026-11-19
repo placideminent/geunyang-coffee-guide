@@ -124,7 +124,7 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .desc.tip{color:var(--sub);font-size:13.5px}
 
 /* ko wrap */
-.wrap,.card,.desc,.q,.qsub,.opt,.bean,.chip,.tag,.kv b,.kv small,.steps li,.possum,.dname,.den,.why,.muted,.bigbtn,.btn2,.buybar button,.rs,.rmstep,.aging,.kh-secq,.kh-hl,.kh-st,.kh-guide,.kh-foot,.kh-note,.kh-panel{word-break:keep-all;overflow-wrap:break-word}
+.wrap,.card,.desc,.q,.qsub,.opt,.bean,.chip,.tag,.kv b,.kv small,.steps li,.possum,.dname,.den,.why,.muted,.bigbtn,.btn2,.buybar button,.rs,.rmstep,.aging,.kh-secq,.kh-hl,.kh-st,.kh-guide,.kh-foot,.kh-note,.kh-panel,.bsearch,.bempty,.rcard{word-break:keep-all;overflow-wrap:break-word}
 .kv b{overflow-wrap:anywhere}
 
 .kh-panel{border-radius:22px;padding:22px 16px 20px;margin:0 0 24px}
@@ -158,3 +158,13 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .kh-gf{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line);font-weight:800}
 .kh-foot{text-align:center;color:var(--ink);margin:8px 0 8px;padding:18px 16px;border:0;background:var(--acc3);border-radius:var(--r);font-size:16px;font-weight:600;line-height:1.55}
 .kh-foot b,.kh-note b{color:var(--acc-ink);font-weight:800;white-space:nowrap}
+
+.bsearch{position:relative;margin:10px 0 14px}
+.bsearch input{width:100%;box-sizing:border-box;border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:12px 44px 12px 16px;font-size:16px;line-height:1.4;color:var(--ink);min-height:48px;outline:none;-webkit-appearance:none;appearance:none;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.bsearch input:focus{border-color:var(--acc)}
+.bsearch input::placeholder{color:var(--sub)}
+.bsearch input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none}
+.bsearch-x{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;border:0;background:transparent;border-radius:50%;color:var(--sub);font-size:22px;line-height:1;padding:0}
+.bsearch-x:active{background:var(--acc2)}
+.bempty{text-align:center;padding:40px 16px;color:var(--sub);font-size:16px}
+.rcard .bean{width:100%}

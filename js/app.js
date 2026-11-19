@@ -54,23 +54,35 @@ function recommend(a){var c=ACID[a.acid]?(ACID[a.acid][2][0]+ACID[a.acid][2][1])
   if(a.ch&&a.ch!='any'&&b.characters.indexOf(a.ch)>=0){s+=2;why.push(a.ch+' 캐릭터')}
   return {b:b,s:s,d:Math.abs(b.acidityRank-c),why:why}}).sort(function(x,y){return y.s-x.s||x.d-y.d}).slice(0,3)}
 function fixedResult(sub,beans){var hh=top('추천 결과')+'<div class="pad"><p class="q">당신을 위한 원두 '+beans.length+'가지</p><p class="qsub">'+esc(sub)+'</p>';
- beans.forEach(function(x,i){var b=byId(x[0]);hh+='<div class="rcard" data-char="'+tc(b)+'">'+card(b,{rank:(i+1)+'순위',why:'추천 이유: '+x[1]})+buy(b,'sm')+'</div>'});
+ beans.forEach(function(x,i){var b=byId(x[0]);hh+='<div class="rcard" data-char="'+tc(b)+'">'+card(b,{rank:(i+1)+'순위',why:'추천 이유: '+x[1]})+'</div>'});
  app.innerHTML=hh+'<button class="btn2" onclick="location.hash=\'#/quiz/1\'">처음부터 다시</button><button class="btn2" onclick="location.hash=\'#/list\'">전체 원두 보기</button></div>'}
 function result(){if(st.a.acid=='low'&&LOWMAP[st.a.body]){var L=LOWMAP[st.a.body];fixedResult('산미 싫어해요 · '+L.label,L.beans);return}
  if(st.a.acid=='high'&&HIGHMAP[st.a.ch]){var H=HIGHMAP[st.a.ch];fixedResult('산미 좋아해요 · '+H.label,H.beans);return}
  if(st.a.acid=='mid'&&MIDMAP[st.a.mid]){var M=MIDMAP[st.a.mid];fixedResult('산미 은은한 정도 · '+M.label,M.beans);return}
  if(!st.a.acid||!st.a.ch){location.hash='#/quiz/1';return}var r=recommend(st.a);
  var h=top('추천 결과')+'<div class="pad"><p class="q">당신을 위한 원두 '+r.length+'가지</p><p class="qsub">'+'산미 '+esc(ACID[st.a.acid][0])+' · '+esc(st.a.ch=='any'?'향 상관없음':st.a.ch)+'</p>';
- r.forEach(function(x,i){h+='<div class="rcard" data-char="'+tc(x.b)+'">'+card(x.b,{rank:(i+1)+'순위',why:'추천 이유: '+(x.why.length?x.why.join(' · ')+'에 맞아요':'선택하신 산미 취향과 가장 가까워요')})+buy(x.b,'sm')+'</div>';});
+ r.forEach(function(x,i){h+='<div class="rcard" data-char="'+tc(x.b)+'">'+card(x.b,{rank:(i+1)+'순위',why:'추천 이유: '+(x.why.length?x.why.join(' · ')+'에 맞아요':'선택하신 산미 취향과 가장 가까워요')})+'</div>';});
  app.innerHTML=h+'<button class="btn2" onclick="location.hash=\'#/quiz/1\'">처음부터 다시</button><button class="btn2" onclick="location.hash=\'#/list\'">전체 원두 보기</button></div>'}
-function list(f){var h=top('전체 원두')+'<div class="pad"><div class="chips">';
- ['전체','과일','꽃','초콜릿'].forEach(function(c){h+='<button class="chip'+((f||'전체')==c?' on':'')+'" data-c="'+c+'">'+c+'</button>'});h+='</div>';
- var bs=B.filter(function(b){return !f||f=='전체'||b.characters.indexOf(f)>=0}).sort(function(x,y){return x.acidityRank-y.acidityRank});
- h+='<div class="sec">산미 순서로 보기 <span class="muted" style="font-weight:600">('+bs.length+'개)</span></div><div class="adir"><span>← 신맛 강함</span><span>신맛 약함 →</span></div><div class="agrad"><i id="apos"></i></div>';
+function normq(s){return String(s||'').toLowerCase().replace(/\s+/g,'')}
+function hay(b){var p=[b.name,b.nameEn,b.origin,b.description].concat(b.keywords||[]).concat(b.characters||[]);
+ (b.greenBean||[]).forEach(function(g){for(var k in g)p.push(g[k])});return normq(p.join(' '))}
+function matches(b,q){q=normq(q);return !q||hay(b).indexOf(q)>=0}
+function searchBox(id,q){return '<div class="bsearch"><input id="'+id+'" type="search" placeholder="원두 이름으로 검색" value="'+esc(q||'')+'" autocomplete="off" enterkeyhint="search" aria-label="원두 이름으로 검색"><button type="button" class="bsearch-x" id="'+id+'x" aria-label="검색어 지우기"'+(q?'':' hidden')+'>×</button></div>'}
+function bindSearch(id,fn){var el=document.getElementById(id),x=document.getElementById(id+'x');if(!el)return;
+ el.addEventListener('input',function(){if(x)x.hidden=!el.value;fn(el.value)});
+ if(x)x.onclick=function(){el.value='';x.hidden=true;fn('');el.focus()}}
+function emptySearch(){return '<div class="bempty">검색 결과가 없어요</div>'}
+function listBody(f,q){var bs=B.filter(function(b){return (!f||f=='전체'||b.characters.indexOf(f)>=0)&&matches(b,q)}).sort(function(x,y){return x.acidityRank-y.acidityRank});
+ if(!bs.length)return emptySearch();
+ var h='<div class="sec">산미 순서로 보기 <span class="muted" style="font-weight:600">('+bs.length+'개)</span></div><div class="adir"><span>← 신맛 강함</span><span>신맛 약함 →</span></div><div class="agrad"><i id="apos"></i></div>';
  h+='<div class="slider" id="sl">';bs.forEach(function(b){h+='<button class="scard" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><span class="srank">산미 '+b.acidityRank+'위</span><img src="'+imgOf(b)+'" alt="" loading="lazy"><b>'+esc(b.name)+'</b><span class="skw">'+esc(b.keywords.slice(0,2).join(' · '))+'</span><span class="schar">'+esc(b.characters.join(' · '))+'</span></button>'});
- h+='</div><p class="muted" style="text-align:center;margin-top:6px">옆으로 밀어서 더 보기</p></div>';app.innerHTML=h;
+ return h+'</div><p class="muted" style="text-align:center;margin-top:6px">옆으로 밀어서 더 보기</p>'}
+function bindSlider(){var sl=document.getElementById('sl'),ap=document.getElementById('apos');if(!sl||!ap)return;function up(){var m=sl.scrollWidth-sl.clientWidth;var w=Math.max(8,sl.clientWidth/sl.scrollWidth*100);ap.style.width=w+'%';ap.style.left=(m>0?sl.scrollLeft/m*(100-w):0)+'%'}sl.addEventListener('scroll',up,{passive:true});up()}
+function list(f){var q=st.listQ||'';var h=top('전체 원두')+'<div class="pad"><div class="chips">';
+ ['전체','과일','꽃','초콜릿'].forEach(function(c){h+='<button class="chip'+((f||'전체')==c?' on':'')+'" data-c="'+c+'">'+c+'</button>'});h+='</div>';
+ h+=searchBox('bq',q)+'<div id="blist">'+listBody(f,q)+'</div></div>';app.innerHTML=h;
  app.querySelectorAll('.chip').forEach(function(el){el.onclick=function(){st.filter=el.dataset.c;list(st.filter)}});
- var sl=document.getElementById('sl'),ap=document.getElementById('apos');function up(){var m=sl.scrollWidth-sl.clientWidth;var w=Math.max(8,sl.clientWidth/sl.scrollWidth*100);ap.style.width=w+'%';ap.style.left=(m>0?sl.scrollLeft/m*(100-w):0)+'%'}sl.addEventListener('scroll',up,{passive:true});up()}
+ bindSearch('bq',function(v){st.listQ=v;document.getElementById('blist').innerHTML=listBody(f,v);bindSlider()});bindSlider()}
 function bars(v,max){var s='<div class="bar">';for(var i=1;i<=max;i++)s+='<i class="'+(v!=null&&i<=v?'on':'')+'"></i>';return s+'</div><em>'+(v==null?'-':v+'/'+max)+'</em>'}
 function info(b){var h=agingCard(b)+'<div class="card"><div class="sec" style="margin-top:0">로스팅 레벨</div><div class="roast">';
  for(var i=1;i<=7;i++)h+='<i class="'+(i==b.roast.position?'on':'')+'" style="background:'+ROAST[i-1]+'"></i>';
@@ -135,12 +147,13 @@ function recipesHome(){app.innerHTML=top('레시피 탐색')+'<div class="pad"><
  '<button class="opt" onclick="location.hash=\'#/recipes/espresso\'"><span class="num micon"><img src="'+MICON.espresso+'" alt=""></span><div><b>에스프레소 레시피</b><span>에스프레소 · 아메리카노</span></div></button></div>'}
 function rcount(b,m){return (b.recipes||[]).filter(function(r){return r.method==m}).length}
 function rcard(b,m){var n=rcount(b,m);return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/recipe/'+b.id+'/'+m+'\'"><img src="'+imgOf(b)+'" alt="" loading="lazy"><div><b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span><span class="why">'+(n?'레시피 '+n+'개'+((b.recipes||[]).some(function(r){return r.method==m&&r.sample})?' (샘플)':''):'레시피 준비 중')+'</span></div></button>'}
+function recipeBeans(m,q){var bs=B.slice().sort(function(x,y){return x.acidityRank-y.acidityRank}).filter(function(b){return matches(b,q)});return bs.length?bs.map(function(b){return rcard(b,m)}).join(''):emptySearch()}
 function recipesList(m,tab){if(!MNAME[m]){recipesHome();return}tab=tab||'bean';
  var h=top(MNAME[m])+'<div class="pad"><div class="tabs" style="margin-top:0"><button class="'+(tab=='bean'?'on':'')+'" onclick="location.replace(\'#/recipes/'+m+'/bean\')">원두별 탐색</button><button class="'+(tab=='feature'?'on':'')+'" onclick="location.replace(\'#/recipes/'+m+'/feature\')">특징별 탐색</button></div>';
- if(tab=='bean'){h+='<p class="muted">원두를 누르면 '+MNAME[m]+'를 볼 수 있어요</p>';B.slice().sort(function(x,y){return x.acidityRank-y.acidityRank}).forEach(function(b){h+=rcard(b,m)})}
+ if(tab=='bean'){var q=st.recQ||'';h+=searchBox('rq',q)+'<p class="muted">원두를 누르면 '+MNAME[m]+'를 볼 수 있어요</p><div id="blist">'+recipeBeans(m,q)+'</div>'}
  else{var C=window.CATRECIPES||{};h+='<p class="muted">가지고 계신 원두의 배전도와 가공법을 골라주세요</p>';
   Object.keys(C).forEach(function(key){var c=C[key],n=(c[m]||[]).length;h+='<button class="opt catopt" onclick="location.hash=\'#/catrecipe/'+key+'/'+m+'\'"><span class="num roastic">'+RICON[key.split('-')[0]]+'</span><div><b>'+esc(c.name)+'</b><span>'+(n?'레시피 '+n+'개':'레시피 준비 중')+'</span></div></button>'})}
- app.innerHTML=h+'</div>'}
+ app.innerHTML=h+'</div>';if(tab=='bean')bindSearch('rq',function(v){st.recQ=v;document.getElementById('blist').innerHTML=recipeBeans(m,v)})}
 function recipeView(id,m){var b=byId(id);if(!b||!MNAME[m]){home();return}var v={};for(var k in b)v[k]=b[k];v.recipes=(b.recipes||[]).filter(function(r){return r.method==m});
  app.innerHTML=top(MNAME[m])+'<div class="pad" data-char="'+tc(b)+'"><button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+imgOf(b)+'" alt=""><div><b>'+esc(b.name)+'</b><span>원두 상세 보기 →</span></div></button>'+recipe(v,st.ri)+'</div>';
  st.reRecipe=function(){recipeView(id,m)};bindRecipe(v)}
