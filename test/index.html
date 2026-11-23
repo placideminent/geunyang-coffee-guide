@@ -1473,6 +1473,8 @@ AR.Detector.prototype.rotate2 = function (src, rotation) {
 */
 (function(){
 var COIN_MM=24, MAX_SRC=5000, MAX_DETECT=1600, MAX_WARP_W=1400, MIN_UM=150, AXIS_MAX=1600;
+/* 선형 크기 보정. 실측이 약 15% 크게 나와 SIZE_CAL=0.87. 용지·동전 경로에 동일하게 적용. MIN_UM 등 임계값은 보정 후 단위. */
+var SIZE_CAL=0.87;
 var FINES_RATIO=0.35, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.2, FINES_VALLEY_HI=0.5, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80, HIST_BIN_UM=100, HIST_CAP_UM=2000;
 /* 균일도 = (전체 입자 양 중앙값, 미분 포함=대표 입자크기)/(미분 제외 개수 중앙값).
    임계값은 잠정값(앱에 업계 기준으로 표시하지 않음). 비율이 1 미만이면 아직 한쪽 임계값을 그대로 적용해 균일로 표시(오해 여지는 보고용으로 남김). */
@@ -2093,6 +2095,8 @@ function analyze(gray,w,h,opt){
     r2=(coin.r+margin)*(coin.r+margin);
     if(!umPerPx) umPerPx=(COIN_MM*1000)/(coin.r*2);
   }
+  var umPerPxRaw=umPerPx;
+  umPerPx=umPerPx*SIZE_CAL;
   var nEli=0;
   for(i=0,y=0;y<h;y++){
     for(x=0;x<w;x++,i++){
@@ -2180,7 +2184,7 @@ function analyze(gray,w,h,opt){
     finesAreaPct:finesAreaPct, finesAreaFrac:finesAreaFrac, reportMode:reportMode, note:note,
     finesCutoffUm:cutoff, areaD50:d50, finesMethod:cutInfo.method, ratioCut:cutInfo.ratioCut,
     rawMean:allStats.mean, rawMedian:allStats.median,
-    umPerPx:umPerPx, threshold:th, coin:coin||null, bins:bins, categories:cats, w:w, h:h
+    umPerPx:umPerPx, umPerPxRaw:umPerPxRaw, sizeCal:SIZE_CAL, threshold:th, coin:coin||null, bins:bins, categories:cats, w:w, h:h
   };
 }
 function drawScaled(img, maxSide){
@@ -2681,8 +2685,8 @@ window.__grind={
     return loadDataURL(url).then(function(c){return afterLoad(c)});
   },
   confirm:function(){return runAnalyze()},
-  state:function(){return {phase:S.phase, mode:S.mode, coin:S.coin, auto:S.auto, sheet:S.sheet, result:S.result&&{mean:S.result.mean,median:S.result.median,countMedian:S.result.countMedian,areaMedian:S.result.areaMedian,countMedianAll:S.result.countMedianAll,areaMedianAll:S.result.areaMedianAll,countMedianCoarse:S.result.countMedianCoarse,areaMedianCoarse:S.result.areaMedianCoarse,uniRatio:S.result.uniRatio,uniLabel:S.result.uniLabel,count:S.result.count,countAll:S.result.countAll,countCoarse:S.result.countCoarse,finesAreaPct:S.result.finesAreaPct,finesCutoffUm:S.result.finesCutoffUm,areaD50:S.result.areaD50,finesMethod:S.result.finesMethod,reportMode:S.result.reportMode,rawMean:S.result.rawMean,rawMedian:S.result.rawMedian,threshold:S.result.threshold,umPerPx:S.result.umPerPx,source:S.result.source,categories:S.result.categories.map(function(c){return c.name})}}},
-  FINES_RATIO:FINES_RATIO, FINES_FLOOR_UM:FINES_FLOOR_UM, FINES_VALLEY_LO:FINES_VALLEY_LO, FINES_VALLEY_HI:FINES_VALLEY_HI
+  state:function(){return {phase:S.phase, mode:S.mode, coin:S.coin, auto:S.auto, sheet:S.sheet, result:S.result&&{mean:S.result.mean,median:S.result.median,countMedian:S.result.countMedian,areaMedian:S.result.areaMedian,countMedianAll:S.result.countMedianAll,areaMedianAll:S.result.areaMedianAll,countMedianCoarse:S.result.countMedianCoarse,areaMedianCoarse:S.result.areaMedianCoarse,uniRatio:S.result.uniRatio,uniLabel:S.result.uniLabel,count:S.result.count,countAll:S.result.countAll,countCoarse:S.result.countCoarse,finesAreaPct:S.result.finesAreaPct,finesCutoffUm:S.result.finesCutoffUm,areaD50:S.result.areaD50,finesMethod:S.result.finesMethod,reportMode:S.result.reportMode,rawMean:S.result.rawMean,rawMedian:S.result.rawMedian,threshold:S.result.threshold,umPerPx:S.result.umPerPx,umPerPxRaw:S.result.umPerPxRaw,sizeCal:S.result.sizeCal,source:S.result.source,categories:S.result.categories.map(function(c){return c.name})}}},
+  FINES_RATIO:FINES_RATIO, FINES_FLOOR_UM:FINES_FLOOR_UM, FINES_VALLEY_LO:FINES_VALLEY_LO, FINES_VALLEY_HI:FINES_VALLEY_HI, SIZE_CAL:SIZE_CAL
 };
 })();
 </script><script>(function(){
