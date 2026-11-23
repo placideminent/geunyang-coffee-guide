@@ -205,6 +205,8 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .g-leg li:nth-child(3) i{background:var(--acc)}
 .g-leg li:nth-child(4) i{background:var(--sky)}
 .g-hist{margin-top:4px}
+.g-hist .g-scale-k{margin:0 0 8px}
+.g-hist .g-dist-k{margin-top:16px}
 .g-bars{display:flex;flex-direction:column;gap:7px}
 .g-bar{display:grid;grid-template-columns:86px 1fr 44px;align-items:center;gap:8px;font-size:13px;color:var(--sub)}
 .g-bl{text-align:right;font-variant-numeric:tabular-nums}
@@ -2116,7 +2118,7 @@ function analyze(gray,w,h,opt){
   for(i=0;i<used.length;i++) used[i].included=true;
   usedStats=statsOf(used);
   var median=usedStats.median;
-  var mean=areaWeightedMean(used)||usedStats.mean;
+  var mean=usedStats.mean;
   var bins=[], edges=histEdges(cutoff);
   for(i=0;i<edges.length-1;i++) bins.push({lo:edges[i], hi:edges[i+1], n:0, area:0, areaPct:0, fines:edges[i+1]<=cutoff+0.5});
   for(i=0;i<n;i++){
@@ -2126,7 +2128,10 @@ function analyze(gray,w,h,opt){
     if(um>=bins[bins.length-1].hi) b=bins.length-1;
     bins[b].n++; bins[b].area+=parts[i].area;
   }
-  for(i=0;i<bins.length;i++) bins[i].areaPct=totalArea?100*bins[i].area/totalArea:0;
+  for(i=0;i<bins.length;i++){
+    bins[i].areaPct=totalArea?100*bins[i].area/totalArea:0;
+    bins[i].countPct=n?100*bins[i].n/n:0;
+  }
   var cats=RANGES.filter(function(r){return mean>=r.lo&&mean<=r.hi});
   return {
     parts:parts, mean:mean, median:median, count:usedStats.count,
@@ -2509,11 +2514,17 @@ function catLine(res){
 }
 function renderResult(){
   var res=S.result;
-  var head=res.count?('평균 약 '+roundum(res.mean)+'µm'):'알갱이를 찾지 못했어요';
-  var sub=res.count?('중앙값 약 '+roundum(res.median)+'µm · 입자 '+res.count+'개'):'알갱이를 찾지 못했어요 — 칸 안에 원두를 더 흩뿌려 주세요';
-  if(res.count&&res.reportMode==='coarse') sub+=' · 미분 제외';
-  if(res.count&&res.source==='sheet') sub+=' · 측정 용지 기준';
-  else if(res.count&&res.source==='coin') sub+=' · 100원 동전 기준';
+  var head=res.count?('약 '+roundum(res.mean)+'µm'):'알갱이를 찾지 못했어요';
+  var sub;
+  if(!res.count){
+    sub='알갱이를 찾지 못했어요 — 칸 안에 원두를 더 흩뿌려 주세요';
+  }else{
+    sub=res.reportMode==='fine'?'평균 입자 크기 (개수 평균)':'평균 입자 크기 (미분 제외, 개수 평균)';
+    sub+=' · 입자 '+res.count+'개';
+    if(res.countAll&&res.countAll!==res.count) sub+=' · 전체 '+res.countAll+'개';
+    if(res.source==='sheet') sub+=' · 측정 용지 기준';
+    else if(res.source==='coin') sub+=' · 100원 동전 기준';
+  }
   var html=gTop('내 분쇄도 측정하기')+'<div class="pad g-page g-result">'+
     '<p class="q">'+head+'</p>'+
     '<p class="qsub">'+sub+'</p>';
@@ -2523,7 +2534,7 @@ function renderResult(){
   }else if(res.reportMode==='few'&&res.note){
     html+='<p class="g-note">'+gEsc(res.note)+'</p>';
   }
-  if(res.count&&res.reportMode!=='fine'&&(res.mean<400||res.median<400)){
+  if(res.count&&res.reportMode!=='fine'&&res.mean<400){
     html+='<p class="g-notice">'+FINE_MEASURE_NOTE+'</p>';
   }
   if(res.count){
@@ -2532,12 +2543,12 @@ function renderResult(){
   }
   if(res.overlay){
     html+='<div class="g-stage card"><img alt="측정된 입자" src="'+res.overlay+'"></div>';
-    var cap=res.source==='sheet'?'초록 원은 평균·중앙값에 포함된 입자입니다':'초록 원은 평균·중앙값에 포함된 입자, 빨간 점선은 동전입니다';
+    var cap=res.source==='sheet'?'초록 원은 평균에 포함된 입자입니다':'초록 원은 평균에 포함된 입자, 빨간 점선은 동전입니다';
     if(res.countFines) cap+='. 연한 표시는 미분('+roundum(res.finesCutoffUm||FINES_FLOOR_UM)+'µm 이하)입니다';
     html+='<p class="muted g-cap">'+cap+'</p>';
   }
   if(res.countAll) html+=histogram(res);
-  html+='<p class="g-caveat">이 결과는 추정치입니다. 주 입자보다 훨씬 작은 미분은 자동으로 평균·중앙값에서 제외하고, 면적 비율로만 보여 줍니다. 뭉친 알갱이는 더 크게 보일 수 있습니다. 측정 용지는 100% 크기로 인쇄하고, 촬영 시 플래시를 켜 주세요.</p>'+
+  html+='<p class="g-caveat">이 결과는 추정치입니다. 주 입자보다 훨씬 작은 미분은 자동으로 개수 평균에서 제외합니다. 아래 분포는 개수와 면적 기준으로 함께 보여 줍니다. 뭉친 알갱이는 더 크게 보일 수 있습니다. 측정 용지는 100% 크기로 인쇄하고, 촬영 시 플래시를 켜 주세요.</p>'+
     '<button type="button" class="bigbtn primary" id="g-retry">다시 측정하기</button>'+
     '</div>';
   appEl().innerHTML=html;
@@ -2559,22 +2570,32 @@ function scaleBar(mean){
   return h+'</ul></div>';
 }
 function histogram(res){
-  var max=1,i;
-  for(i=0;i<res.bins.length;i++) if(res.bins[i].areaPct>max) max=res.bins[i].areaPct;
+  var i, maxA=1, maxN=1;
+  for(i=0;i<res.bins.length;i++){
+    if(res.bins[i].areaPct>maxA) maxA=res.bins[i].areaPct;
+    if(res.bins[i].n>maxN) maxN=res.bins[i].n;
+  }
   var fp=res.finesAreaPct||0;
   var fpTxt=fp<10?fp.toFixed(1):String(Math.round(fp));
   var cutTxt=roundum(res.finesCutoffUm||FINES_FLOOR_UM);
-  var h='<div class="card g-hist"><div class="g-scale-k">입자 크기 분포 (면적 기준)</div>';
-  h+='<p class="g-fines-pct">미분 기준: '+cutTxt+'µm 이하 (자동) · 면적 기준 '+fpTxt+'%</p>';
-  h+='<div class="g-bars">';
-  for(i=0;i<res.bins.length;i++){
-    var b=res.bins[i];
-    var lab=b.hi>=1800?(b.lo+'+'):(b.lo+'–'+b.hi);
-    var pct=Math.max(b.areaPct?6:0, Math.round((b.areaPct/max)*100));
-    var cls=b.fines?' g-fine':'';
-    h+='<div class="g-bar'+cls+'"><span class="g-bl">'+lab+'</span><span class="g-bt"><i style="width:'+pct+'%"></i></span><span class="g-bn">'+Math.round(b.areaPct)+'%</span></div>';
+  function rows(kind){
+    var h='', b, lab, frac, pct, cls, val;
+    for(i=0;i<res.bins.length;i++){
+      b=res.bins[i];
+      lab=b.hi>=1800?(b.lo+'+'):(b.lo+'–'+b.hi);
+      frac=kind==='count'?(b.n/maxN):(b.areaPct/maxA);
+      pct=Math.max((kind==='count'?b.n:b.areaPct)?6:0, Math.round(frac*100));
+      cls=b.fines?' g-fine':'';
+      val=kind==='count'?String(b.n):Math.round(b.areaPct)+'%';
+      h+='<div class="g-bar'+cls+'"><span class="g-bl">'+lab+'</span><span class="g-bt"><i style="width:'+pct+'%"></i></span><span class="g-bn">'+val+'</span></div>';
+    }
+    return h;
   }
-  return h+'</div></div>';
+  var h='<div class="card g-hist">';
+  h+='<p class="g-fines-pct">미분 기준: '+cutTxt+'µm 이하 (자동) · 면적 기준 '+fpTxt+'%</p>';
+  h+='<div class="g-scale-k">입자 개수 기준</div><div class="g-bars">'+rows('count')+'</div>';
+  h+='<div class="g-scale-k g-dist-k">면적 기준</div><div class="g-bars">'+rows('area')+'</div>';
+  return h+'</div>';
 }
 
 window.grindView=grindView;
