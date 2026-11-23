@@ -182,6 +182,9 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 
 /* 내 분쇄도 측정하기 */
 .g-page{padding-bottom:32px}
+.g-picks{position:relative;display:flex;flex-direction:column;gap:10px;margin:8px 0 0}
+.g-picks .bigbtn{margin:0;text-align:center;align-items:center}
+.g-file{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;opacity:0}
 .g-step{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
 .g-step .num{flex:none;width:40px;height:40px;border-radius:50%;background:var(--acc2);color:var(--acc-ink);display:grid;place-items:center;font-weight:800;margin-top:1px}
 .g-step b{display:block;font-size:17px}
@@ -2343,15 +2346,30 @@ function renderGuide(){
       step(2,'원두를 얇게 펼치기','용지 안의 칸에 분쇄된 원두를 조금씩 펼쳐 알갱이가 서로 붙지 않게 해 주세요. 네 귀퉁이 표시와 아래 mm 눈금이 가려지지 않게 해 주세요.')+
       step(3,'플래시를 켜고 촬영','카메라 플래시를 켠 뒤, 용지가 틀어지지 않게 바로 위에서 네 귀퉁이 표시가 모두 나오게 찍어 주세요.')+
     '</div>'+
-    '<input id="g-file" type="file" accept="image/*" capture="environment" hidden>'+
-    '<button type="button" class="bigbtn primary" id="g-pick">사진 촬영 / 불러오기</button>'+
+    '<div class="g-picks">'+
+      '<input id="g-file-cam" class="g-file" type="file" accept="image/*" capture="environment">'+
+      '<input id="g-file-lib" class="g-file" type="file" accept="image/*">'+
+      '<button type="button" class="bigbtn primary" id="g-pick-cam">사진 촬영</button>'+
+      '<button type="button" class="bigbtn" id="g-pick-lib">갤러리에서 선택</button>'+
+    '</div>'+
     '</div>';
-  $('g-pick').onclick=function(){$('g-file').click()};
-  $('g-file').onchange=function(){
-    var f=this.files&&this.files[0]; if(!f) return;
-    enterBusy('사진을 불러오는 중…');
-    loadFile(f).then(afterLoad).catch(function(e){alert(e.message||'이미지를 열 수 없어요'); renderGuide()});
-  };
+  bindFilePicks();
+}
+function bindFilePicks(){
+  function hook(inputId, btnId){
+    var inp=$(inputId), btn=$(btnId);
+    if(!inp||!btn) return;
+    btn.onclick=function(){ inp.value=''; inp.click(); };
+    inp.onchange=function(){
+      var f=this.files&&this.files[0];
+      this.value='';
+      if(!f) return;
+      enterBusy('사진을 불러오는 중…');
+      loadFile(f).then(afterLoad).catch(function(e){alert(e.message||'이미지를 열 수 없어요'); renderGuide()});
+    };
+  }
+  hook('g-file-cam','g-pick-cam');
+  hook('g-file-lib','g-pick-lib');
 }
 function step(n,t,s){return '<div class="card g-step"><span class="num">'+n+'</span><div><b>'+t+'</b><span>'+s+'</span></div></div>'}
 function enterBusy(msg){
