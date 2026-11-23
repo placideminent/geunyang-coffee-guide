@@ -19,6 +19,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .progress{display:flex;gap:6px;margin:4px 0 22px}.progress i{flex:1;height:6px;border-radius:3px;background:var(--line)}.progress i.on{background:var(--acc)}
 .q{font-size:24px;font-weight:800;margin:0 0 6px;line-height:1.35}.qsub{color:var(--sub);margin:0 0 20px}
 .g-meds{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px 8px;margin:0 0 8px}
+.g-uni{margin:0 0 8px;font-size:15px;font-weight:700;color:var(--ink);text-align:center}
+.g-uni span{font-weight:600;color:var(--sub)}
 .g-med{text-align:center;min-width:0;padding:2px 0 0}
 .g-med .g-mk{display:block;font-size:12px;font-weight:700;color:var(--acc-ink);line-height:1.35;margin:0 0 5px;word-break:keep-all}
 .g-med .g-mv{display:block;font-size:20px;font-weight:800;line-height:1.2;letter-spacing:-0.03em}
@@ -1472,6 +1474,8 @@ AR.Detector.prototype.rotate2 = function (src, rotation) {
 (function(){
 var COIN_MM=24, MAX_SRC=5000, MAX_DETECT=1600, MAX_WARP_W=1400, MIN_UM=150, AXIS_MAX=1600;
 var FINES_RATIO=0.35, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.2, FINES_VALLEY_HI=0.5, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80, HIST_BIN_UM=50, HIST_CAP_UM=2000;
+/* 균일도 스팬=(D90-D10)/D50, 미분 제외·면적 기준. 임계값은 잠정값(앱에 업계 기준으로 표시하지 않음). */
+var UNIFORM_SPAN_EVEN=0.4, UNIFORM_SPAN_OK=0.8;
 var FINE_MEASURE_NOTE='모카포트보다 고운 분쇄도(에스프레소 등)는 수치 측정이 어렵습니다.';
 var SHEET={wmm:148.5, hmm:210, markerMm:18, insetMm:12, quietMm:18/7, spanX:106.5, spanY:168, roi:{x:34.5,y:70.5,w:79.5,h:84.0}, ids:{TL:0,TR:1,BR:2,BL:3}};
 var RANGES=[
@@ -1538,16 +1542,24 @@ function statsOf(arr){
   median=n%2?arr[(n-1)>>1].um:(arr[n/2-1].um+arr[n/2].um)/2;
   return {mean:mean, median:median, count:n};
 }
-function areaD50(parts){
+function areaDx(parts, p){
   var i, total=0, acc=0;
   if(!parts||!parts.length) return 0;
   for(i=0;i<parts.length;i++) total+=parts[i].area;
   if(!total) return parts[(parts.length-1)>>1].um;
+  var target=total*p;
   for(i=0;i<parts.length;i++){
     acc+=parts[i].area;
-    if(acc>=total*0.5) return parts[i].um;
+    if(acc>=target) return parts[i].um;
   }
   return parts[parts.length-1].um;
+}
+function areaD50(parts){ return areaDx(parts, 0.5); }
+function uniformityOf(parts){
+  var d10=areaDx(parts, 0.1), d50=areaDx(parts, 0.5), d90=areaDx(parts, 0.9);
+  var span=d50>0?Math.max(0, (d90-d10)/d50):0;
+  var label=span<=UNIFORM_SPAN_EVEN?'균일':(span<=UNIFORM_SPAN_OK?'보통':'불균일');
+  return {d10:d10, d50:d50, d90:d90, span:span, label:label};
 }
 function areaWeightedMean(parts){
   var i, ta=0, s=0;
@@ -2134,6 +2146,7 @@ function analyze(gray,w,h,opt){
   usedStats=statsOf(used);
   var countMedian=usedStats.median;
   var areaMedian=areaD50(used);
+  var uni=used.length?uniformityOf(used):{d10:0,d50:0,d90:0,span:0,label:''};
   var median=countMedian;
   var mean=areaMedian;
   var bins=[], edges=histEdges(n?parts[n-1].um:0);
@@ -2152,6 +2165,7 @@ function analyze(gray,w,h,opt){
   var cats=RANGES.filter(function(r){return mean>=r.lo&&mean<=r.hi});
   return {
     parts:parts, mean:mean, median:median, countMedian:countMedian, areaMedian:areaMedian,
+    span:uni.span, uniLabel:uni.label, d10:uni.d10, d90:uni.d90,
     count:usedStats.count,
     countAll:n, countCoarse:coarse.length, countFines:n-coarse.length,
     finesAreaPct:finesAreaPct, finesAreaFrac:finesAreaFrac, reportMode:reportMode, note:note,
@@ -2548,9 +2562,10 @@ function renderResult(){
     html=gTop('내 분쇄도 측정하기')+'<div class="pad g-page g-result">'+
       '<div class="g-meds">'+
         '<div class="g-med"><span class="g-mk">입자 개수 기준<br>중앙값</span><span class="g-mv">약 '+roundum(res.countMedian)+'µm</span></div>'+
-        '<div class="g-med"><span class="g-mk">면적 기준<br>중앙값</span><span class="g-mv">약 '+roundum(res.areaMedian)+'µm</span></div>'+
-        '<div class="g-med"><span class="g-mk">미분 비율<br>면적 기준</span><span class="g-mv">'+fpTxt+'%</span></div>'+
+        '<div class="g-med"><span class="g-mk">입자 양 기준<br>중앙값</span><span class="g-mv">약 '+roundum(res.areaMedian)+'µm</span></div>'+
+        '<div class="g-med"><span class="g-mk">미분 비율<br>입자 양 기준</span><span class="g-mv">'+fpTxt+'%</span></div>'+
       '</div>'+
+      (res.uniLabel?('<p class="g-uni">균일도: '+res.uniLabel+' <span>(스팬 '+(Math.round(res.span*100)/100).toFixed(2)+')</span></p>'):'')+
       '<p class="qsub">'+sub+'</p>';
   }
   if(res.reportMode==='fine'){
@@ -2573,7 +2588,7 @@ function renderResult(){
     html+='<p class="muted g-cap">'+cap+'</p>';
   }
   if(res.countAll) html+=histogram(res);
-  html+='<p class="g-caveat">이 결과는 추정치입니다. 주 입자보다 훨씬 작은 미분은 자동으로 중앙값에서 제외합니다. 아래 분포는 개수와 면적 기준으로 함께 보여 줍니다. 뭉친 알갱이는 더 크게 보일 수 있습니다. 측정 용지는 100% 크기로 인쇄하고, 촬영 시 플래시를 켜 주세요.</p>'+
+  html+='<p class="g-caveat">이 결과는 추정치입니다. 주 입자보다 훨씬 작은 미분은 자동으로 중앙값과 균일도에서 제외합니다. 아래 분포는 개수와 입자 양 기준으로 함께 보여 줍니다. 뭉친 알갱이는 더 크게 보이거나 균일도가 낮아 보일 수 있습니다. 측정 용지는 100% 크기로 인쇄하고, 촬영 시 플래시를 켜 주세요.</p>'+
     '<button type="button" class="bigbtn primary" id="g-retry">다시 측정하기</button>'+
     '</div>';
   appEl().innerHTML=html;
@@ -2581,7 +2596,7 @@ function renderResult(){
 }
 function scaleBar(mean){
   var pin=Math.max(0,Math.min(100, mean/AXIS_MAX*100));
-  var h='<div class="card g-scale"><div class="g-scale-k">일반 참고 범위</div><p class="g-scale-sub">면적 기준 중앙값으로 표시</p><div class="g-axis">';
+  var h='<div class="card g-scale"><div class="g-scale-k">일반 참고 범위</div><p class="g-scale-sub">입자 양 기준 중앙값으로 표시</p><div class="g-axis">';
   RANGES.forEach(function(r,i){
     var left=r.lo/AXIS_MAX*100, w=(r.hi-r.lo)/AXIS_MAX*100;
     h+='<i class="g-band g-band-'+i+'" style="left:'+left+'%;width:'+w+'%"></i>';
@@ -2633,9 +2648,9 @@ function histogram(res){
     return h+'</div></div></div>';
   }
   var h='<div class="card g-hist">';
-  h+='<p class="g-fines-pct">미분 기준: '+cutTxt+'µm 이하 (자동) · 면적 기준 '+fpTxt+'%</p>';
+  h+='<p class="g-fines-pct">미분 기준: '+cutTxt+'µm 이하 (자동) · 입자 양 기준 '+fpTxt+'%</p>';
   h+='<div class="g-scale-k">입자 개수 기준</div>'+chart('count');
-  h+='<div class="g-scale-k g-dist-k">면적 기준</div>'+chart('area');
+  h+='<div class="g-scale-k g-dist-k">입자 양 기준</div>'+chart('area');
   return h+'</div>';
 }
 
@@ -2657,7 +2672,7 @@ window.__grind={
     return loadDataURL(url).then(function(c){return afterLoad(c)});
   },
   confirm:function(){return runAnalyze()},
-  state:function(){return {phase:S.phase, mode:S.mode, coin:S.coin, auto:S.auto, sheet:S.sheet, result:S.result&&{mean:S.result.mean,median:S.result.median,countMedian:S.result.countMedian,areaMedian:S.result.areaMedian,count:S.result.count,countAll:S.result.countAll,countCoarse:S.result.countCoarse,finesAreaPct:S.result.finesAreaPct,finesCutoffUm:S.result.finesCutoffUm,areaD50:S.result.areaD50,finesMethod:S.result.finesMethod,reportMode:S.result.reportMode,rawMean:S.result.rawMean,rawMedian:S.result.rawMedian,threshold:S.result.threshold,umPerPx:S.result.umPerPx,source:S.result.source,categories:S.result.categories.map(function(c){return c.name})}}},
+  state:function(){return {phase:S.phase, mode:S.mode, coin:S.coin, auto:S.auto, sheet:S.sheet, result:S.result&&{mean:S.result.mean,median:S.result.median,countMedian:S.result.countMedian,areaMedian:S.result.areaMedian,span:S.result.span,uniLabel:S.result.uniLabel,d10:S.result.d10,d90:S.result.d90,count:S.result.count,countAll:S.result.countAll,countCoarse:S.result.countCoarse,finesAreaPct:S.result.finesAreaPct,finesCutoffUm:S.result.finesCutoffUm,areaD50:S.result.areaD50,finesMethod:S.result.finesMethod,reportMode:S.result.reportMode,rawMean:S.result.rawMean,rawMedian:S.result.rawMedian,threshold:S.result.threshold,umPerPx:S.result.umPerPx,source:S.result.source,categories:S.result.categories.map(function(c){return c.name})}}},
   FINES_RATIO:FINES_RATIO, FINES_FLOOR_UM:FINES_FLOOR_UM, FINES_VALLEY_LO:FINES_VALLEY_LO, FINES_VALLEY_HI:FINES_VALLEY_HI
 };
 })();
