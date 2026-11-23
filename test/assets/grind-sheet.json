@@ -9,59 +9,56 @@
     148.5,
     210
   ],
-  "marker_mm": 14,
-  "inset_mm": 12,
+  "marker_mm": 10,
+  "inset_mm": 12.0,
   "centers_mm_in_half": {
     "TL": [
-      19.0,
-      19.0
+      17.0,
+      17.0
     ],
     "TR": [
-      129.5,
-      19.0
+      131.5,
+      17.0
     ],
     "BR": [
-      129.5,
-      191.0
+      131.5,
+      193.0
     ],
     "BL": [
-      19.0,
-      191.0
+      17.0,
+      193.0
     ]
   },
   "marker_span_mm": {
-    "horizontal": 110.5,
-    "vertical": 172.0
+    "horizontal": 114.5,
+    "vertical": 176.0
   },
   "box_mm": {
-    "x": 30.0,
-    "y": 51.0,
-    "w": 88.5,
-    "h": 125.5
+    "x": 25.5,
+    "y": 46.7,
+    "w": 97.5,
+    "h": 135.6
   },
   "roi_mm": {
-    "x": 32.0,
-    "y": 53.0,
-    "w": 84.5,
-    "h": 121.5
+    "x": 27.5,
+    "y": 48.7,
+    "w": 93.5,
+    "h": 131.6
   },
   "scale_mm": {
     "x": 49.25,
-    "y": 183.2,
+    "y": 191.2,
     "w": 50,
     "length_mm": 50,
     "length_cm": 5,
     "ticks_cm": [
       0,
-      1,
-      2,
-      3,
-      4,
       5
-    ]
+    ],
+    "style": "midline, end ticks only, label 5cm"
   },
   "cut_x_mm": 148.5,
-  "quiet_module_mm": 2.0,
+  "quiet_module_mm": 1.4285714285714286,
   "aruco": {
     "dictionary": "ARUCO",
     "ids": {

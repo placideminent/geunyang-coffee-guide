@@ -7,116 +7,116 @@
 
  <g id="half-L">
     <g id="mk-L-TL">
-    <rect x="10" y="10" width="18" height="18" fill="#fff"/>
-    <rect x="12" y="12" width="14" height="14" fill="#111"/>
-    <rect x="14" y="14" width="2" height="2" fill="#fff"/>
-    <rect x="14" y="16" width="2" height="2" fill="#fff"/>
-    <rect x="14" y="18" width="2" height="2" fill="#fff"/>
-    <rect x="14" y="20" width="2" height="2" fill="#fff"/>
-    <rect x="14" y="22" width="2" height="2" fill="#fff"/>
+    <rect x="10.5714" y="10.5714" width="12.8571" height="12.8571" fill="#fff"/>
+    <rect x="12" y="12" width="10" height="10" fill="#111"/>
+    <rect x="13.4286" y="13.4286" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="13.4286" y="14.8571" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="13.4286" y="16.2857" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="13.4286" y="17.7143" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="13.4286" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
     <g id="mk-L-TR">
-    <rect x="120.5" y="10" width="18" height="18" fill="#fff"/>
-    <rect x="122.5" y="12" width="14" height="14" fill="#111"/>
-    <rect x="124.5" y="14" width="2" height="2" fill="#fff"/>
-    <rect x="124.5" y="16" width="2" height="2" fill="#fff"/>
-    <rect x="124.5" y="18" width="2" height="2" fill="#fff"/>
-    <rect x="124.5" y="20" width="2" height="2" fill="#fff"/>
-    <rect x="124.5" y="22" width="2" height="2" fill="#fff"/>
-    <rect x="128.5" y="22" width="2" height="2" fill="#fff"/>
-    <rect x="130.5" y="22" width="2" height="2" fill="#fff"/>
-    <rect x="132.5" y="22" width="2" height="2" fill="#fff"/>
+    <rect x="125.0714" y="10.5714" width="12.8571" height="12.8571" fill="#fff"/>
+    <rect x="126.5" y="12" width="10" height="10" fill="#111"/>
+    <rect x="127.9286" y="13.4286" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="127.9286" y="14.8571" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="127.9286" y="16.2857" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="127.9286" y="17.7143" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="127.9286" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="130.7857" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="132.2143" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="133.6429" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
     <g id="mk-L-BR">
-    <rect x="120.5" y="182" width="18" height="18" fill="#fff"/>
-    <rect x="122.5" y="184" width="14" height="14" fill="#111"/>
-    <rect x="124.5" y="186" width="2" height="2" fill="#fff"/>
-    <rect x="124.5" y="188" width="2" height="2" fill="#fff"/>
-    <rect x="124.5" y="190" width="2" height="2" fill="#fff"/>
-    <rect x="124.5" y="192" width="2" height="2" fill="#fff"/>
-    <rect x="126.5" y="194" width="2" height="2" fill="#fff"/>
-    <rect x="132.5" y="194" width="2" height="2" fill="#fff"/>
+    <rect x="125.0714" y="186.5714" width="12.8571" height="12.8571" fill="#fff"/>
+    <rect x="126.5" y="188" width="10" height="10" fill="#111"/>
+    <rect x="127.9286" y="189.4286" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="127.9286" y="190.8571" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="127.9286" y="192.2857" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="127.9286" y="193.7143" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="129.3571" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="133.6429" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
     <g id="mk-L-BL">
-    <rect x="10" y="182" width="18" height="18" fill="#fff"/>
-    <rect x="12" y="184" width="14" height="14" fill="#111"/>
-    <rect x="14" y="186" width="2" height="2" fill="#fff"/>
-    <rect x="14" y="188" width="2" height="2" fill="#fff"/>
-    <rect x="14" y="190" width="2" height="2" fill="#fff"/>
-    <rect x="14" y="192" width="2" height="2" fill="#fff"/>
-    <rect x="16" y="194" width="2" height="2" fill="#fff"/>
-    <rect x="18" y="194" width="2" height="2" fill="#fff"/>
-    <rect x="20" y="194" width="2" height="2" fill="#fff"/>
+    <rect x="10.5714" y="186.5714" width="12.8571" height="12.8571" fill="#fff"/>
+    <rect x="12" y="188" width="10" height="10" fill="#111"/>
+    <rect x="13.4286" y="189.4286" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="13.4286" y="190.8571" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="13.4286" y="192.2857" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="13.4286" y="193.7143" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="14.8571" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="16.2857" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="17.7143" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
-  <text x="74.25" y="31.8" text-anchor="middle" font-size="6.2" font-weight="800">그냥커피 분쇄도 측정 용지</text>
-  <text x="16.5" y="36.8" font-size="2.4">· 측정 용지 인쇄시 100% 크기로 인쇄하고 배율 맞춤은 꺼주세요</text>
-  <text x="16.5" y="40.25" font-size="2.4">· 칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게)</text>
-  <text x="16.5" y="43.7" font-size="2.4">· 촬영할때 카메라 플래시를 켜고 카메라를 용지와 어긋나지 않게 바로 위에 위치해주세요</text>
-  <text x="16.5" y="47.15" font-size="2.4">· 네 귀퉁이의 표시와 아래 눈금자가 가려지지 않게 촬영해주세요</text>
-  <rect x="30" y="51" width="88.5" height="125.5" fill="none" stroke="#111" stroke-width="0.28" stroke-dasharray="2.2 1.6"/>
-  <text x="74.25" y="181" text-anchor="middle" font-size="3.4" font-weight="800">인쇄 확인용 눈금자</text>
-  <line x1="49.25" y1="183.2" x2="99.25" y2="183.2" stroke="#111" stroke-width="0.5"/>
-  <line x1="49.25" y1="183.2" x2="49.25" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="59.25" y1="183.2" x2="59.25" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="69.25" y1="183.2" x2="69.25" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="79.25" y1="183.2" x2="79.25" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="89.25" y1="183.2" x2="89.25" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="99.25" y1="183.2" x2="99.25" y2="189.4" stroke="#111" stroke-width="0.45"/>
-  <text x="49.25" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">0</text><text x="59.25" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">1</text><text x="69.25" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">2</text><text x="79.25" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">3</text><text x="89.25" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">4</text><text x="99.25" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">5</text>
-  <text x="104.25" y="193.4" font-size="3.0" font-weight="700">cm</text>
-  <text x="74.25" y="197.4" text-anchor="middle" font-size="3.05" font-weight="700">자로 재서 5cm면 바르게 인쇄된 것입니다</text>
+  <text x="74.25" y="27.73" text-anchor="middle" font-size="6.2" font-weight="800">그냥커피 분쇄도 측정 용지</text>
+  <text x="16.5" y="32.73" font-size="2.4">· 측정 용지 인쇄시 100% 크기로 인쇄하고 배율 맞춤은 꺼주세요</text>
+  <text x="16.5" y="36.18" font-size="2.4">· 칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게)</text>
+  <text x="16.5" y="39.63" font-size="2.4">· 촬영할때 카메라 플래시를 켜고 카메라를 용지와 어긋나지 않게 바로 위에 위치해주세요</text>
+  <text x="16.5" y="43.08" font-size="2.4">· 네 귀퉁이의 표시와 아래 눈금자가 가려지지 않게 촬영해주세요</text>
+  <rect x="25.5" y="46.7" width="97.5" height="135.6" fill="none" stroke="#111" stroke-width="0.28" stroke-dasharray="2.2 1.6"/>
+  <text x="74.25" y="185.8" text-anchor="middle" font-size="3.4" font-weight="800">인쇄 확인용 눈금자</text>
+  <line x1="49.25" y1="191.2" x2="99.25" y2="191.2" stroke="#111" stroke-width="0.5"/>
+  <line x1="49.25" y1="188.1" x2="49.25" y2="194.3" stroke="#111" stroke-width="0.5"/>
+  <line x1="99.25" y1="188.1" x2="99.25" y2="194.3" stroke="#111" stroke-width="0.5"/>
+  <text x="101.65" y="192.3" font-size="3.15" font-weight="700">5cm</text>
+  <text x="74.25" y="197.5" text-anchor="middle" font-size="3.05" font-weight="700">자로 재서 5cm면 바르게 인쇄된 것입니다</text>
  </g>
 
  <g id="half-R">
     <g id="mk-R-TL">
-    <rect x="158.5" y="10" width="18" height="18" fill="#fff"/>
-    <rect x="160.5" y="12" width="14" height="14" fill="#111"/>
-    <rect x="162.5" y="14" width="2" height="2" fill="#fff"/>
-    <rect x="162.5" y="16" width="2" height="2" fill="#fff"/>
-    <rect x="162.5" y="18" width="2" height="2" fill="#fff"/>
-    <rect x="162.5" y="20" width="2" height="2" fill="#fff"/>
-    <rect x="162.5" y="22" width="2" height="2" fill="#fff"/>
+    <rect x="159.0714" y="10.5714" width="12.8571" height="12.8571" fill="#fff"/>
+    <rect x="160.5" y="12" width="10" height="10" fill="#111"/>
+    <rect x="161.9286" y="13.4286" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="161.9286" y="14.8571" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="161.9286" y="16.2857" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="161.9286" y="17.7143" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="161.9286" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
     <g id="mk-R-TR">
-    <rect x="269" y="10" width="18" height="18" fill="#fff"/>
-    <rect x="271" y="12" width="14" height="14" fill="#111"/>
-    <rect x="273" y="14" width="2" height="2" fill="#fff"/>
-    <rect x="273" y="16" width="2" height="2" fill="#fff"/>
-    <rect x="273" y="18" width="2" height="2" fill="#fff"/>
-    <rect x="273" y="20" width="2" height="2" fill="#fff"/>
-    <rect x="273" y="22" width="2" height="2" fill="#fff"/>
-    <rect x="277" y="22" width="2" height="2" fill="#fff"/>
-    <rect x="279" y="22" width="2" height="2" fill="#fff"/>
-    <rect x="281" y="22" width="2" height="2" fill="#fff"/>
+    <rect x="273.5714" y="10.5714" width="12.8571" height="12.8571" fill="#fff"/>
+    <rect x="275" y="12" width="10" height="10" fill="#111"/>
+    <rect x="276.4286" y="13.4286" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="276.4286" y="14.8571" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="276.4286" y="16.2857" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="276.4286" y="17.7143" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="276.4286" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="279.2857" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="280.7143" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="282.1429" y="19.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
     <g id="mk-R-BR">
-    <rect x="269" y="182" width="18" height="18" fill="#fff"/>
-    <rect x="271" y="184" width="14" height="14" fill="#111"/>
-    <rect x="273" y="186" width="2" height="2" fill="#fff"/>
-    <rect x="273" y="188" width="2" height="2" fill="#fff"/>
-    <rect x="273" y="190" width="2" height="2" fill="#fff"/>
-    <rect x="273" y="192" width="2" height="2" fill="#fff"/>
-    <rect x="275" y="194" width="2" height="2" fill="#fff"/>
-    <rect x="281" y="194" width="2" height="2" fill="#fff"/>
+    <rect x="273.5714" y="186.5714" width="12.8571" height="12.8571" fill="#fff"/>
+    <rect x="275" y="188" width="10" height="10" fill="#111"/>
+    <rect x="276.4286" y="189.4286" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="276.4286" y="190.8571" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="276.4286" y="192.2857" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="276.4286" y="193.7143" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="277.8571" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="282.1429" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
     <g id="mk-R-BL">
-    <rect x="158.5" y="182" width="18" height="18" fill="#fff"/>
-    <rect x="160.5" y="184" width="14" height="14" fill="#111"/>
-    <rect x="162.5" y="186" width="2" height="2" fill="#fff"/>
-    <rect x="162.5" y="188" width="2" height="2" fill="#fff"/>
-    <rect x="162.5" y="190" width="2" height="2" fill="#fff"/>
-    <rect x="162.5" y="192" width="2" height="2" fill="#fff"/>
-    <rect x="164.5" y="194" width="2" height="2" fill="#fff"/>
-    <rect x="166.5" y="194" width="2" height="2" fill="#fff"/>
-    <rect x="168.5" y="194" width="2" height="2" fill="#fff"/>
+    <rect x="159.0714" y="186.5714" width="12.8571" height="12.8571" fill="#fff"/>
+    <rect x="160.5" y="188" width="10" height="10" fill="#111"/>
+    <rect x="161.9286" y="189.4286" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="161.9286" y="190.8571" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="161.9286" y="192.2857" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="161.9286" y="193.7143" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="163.3571" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="164.7857" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
+    <rect x="166.2143" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
-  <text x="222.75" y="31.8" text-anchor="middle" font-size="6.2" font-weight="800">그냥커피 분쇄도 측정 용지</text>
-  <text x="165" y="36.8" font-size="2.4">· 측정 용지 인쇄시 100% 크기로 인쇄하고 배율 맞춤은 꺼주세요</text>
-  <text x="165" y="40.25" font-size="2.4">· 칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게)</text>
-  <text x="165" y="43.7" font-size="2.4">· 촬영할때 카메라 플래시를 켜고 카메라를 용지와 어긋나지 않게 바로 위에 위치해주세요</text>
-  <text x="165" y="47.15" font-size="2.4">· 네 귀퉁이의 표시와 아래 눈금자가 가려지지 않게 촬영해주세요</text>
-  <rect x="178.5" y="51" width="88.5" height="125.5" fill="none" stroke="#111" stroke-width="0.28" stroke-dasharray="2.2 1.6"/>
-  <text x="222.75" y="181" text-anchor="middle" font-size="3.4" font-weight="800">인쇄 확인용 눈금자</text>
-  <line x1="197.75" y1="183.2" x2="247.75" y2="183.2" stroke="#111" stroke-width="0.5"/>
-  <line x1="197.75" y1="183.2" x2="197.75" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="207.75" y1="183.2" x2="207.75" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="217.75" y1="183.2" x2="217.75" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="227.75" y1="183.2" x2="227.75" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="237.75" y1="183.2" x2="237.75" y2="189.4" stroke="#111" stroke-width="0.45"/><line x1="247.75" y1="183.2" x2="247.75" y2="189.4" stroke="#111" stroke-width="0.45"/>
-  <text x="197.75" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">0</text><text x="207.75" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">1</text><text x="217.75" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">2</text><text x="227.75" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">3</text><text x="237.75" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">4</text><text x="247.75" y="193.4" text-anchor="middle" font-size="3.0" font-weight="700">5</text>
-  <text x="252.75" y="193.4" font-size="3.0" font-weight="700">cm</text>
-  <text x="222.75" y="197.4" text-anchor="middle" font-size="3.05" font-weight="700">자로 재서 5cm면 바르게 인쇄된 것입니다</text>
+  <text x="222.75" y="27.73" text-anchor="middle" font-size="6.2" font-weight="800">그냥커피 분쇄도 측정 용지</text>
+  <text x="165" y="32.73" font-size="2.4">· 측정 용지 인쇄시 100% 크기로 인쇄하고 배율 맞춤은 꺼주세요</text>
+  <text x="165" y="36.18" font-size="2.4">· 칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게)</text>
+  <text x="165" y="39.63" font-size="2.4">· 촬영할때 카메라 플래시를 켜고 카메라를 용지와 어긋나지 않게 바로 위에 위치해주세요</text>
+  <text x="165" y="43.08" font-size="2.4">· 네 귀퉁이의 표시와 아래 눈금자가 가려지지 않게 촬영해주세요</text>
+  <rect x="174" y="46.7" width="97.5" height="135.6" fill="none" stroke="#111" stroke-width="0.28" stroke-dasharray="2.2 1.6"/>
+  <text x="222.75" y="185.8" text-anchor="middle" font-size="3.4" font-weight="800">인쇄 확인용 눈금자</text>
+  <line x1="197.75" y1="191.2" x2="247.75" y2="191.2" stroke="#111" stroke-width="0.5"/>
+  <line x1="197.75" y1="188.1" x2="197.75" y2="194.3" stroke="#111" stroke-width="0.5"/>
+  <line x1="247.75" y1="188.1" x2="247.75" y2="194.3" stroke="#111" stroke-width="0.5"/>
+  <text x="250.15" y="192.3" font-size="3.15" font-weight="700">5cm</text>
+  <text x="222.75" y="197.5" text-anchor="middle" font-size="3.05" font-weight="700">자로 재서 5cm면 바르게 인쇄된 것입니다</text>
  </g>
 
   <line x1="148.5" y1="16" x2="148.5" y2="206" stroke="#111" stroke-width="0.32" stroke-dasharray="2.4 1.5"/>
