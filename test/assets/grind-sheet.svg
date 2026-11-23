@@ -49,17 +49,11 @@
     <rect x="17.7143" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
   <text x="74.25" y="27.73" text-anchor="middle" font-size="6.2" font-weight="800">그냥커피 분쇄도 측정 용지</text>
-  <text x="16.5" y="32.73" font-size="2.4">· 측정 용지 인쇄시 100% 크기로 인쇄하고 배율 맞춤은 꺼주세요</text>
-  <text x="16.5" y="36.18" font-size="2.4">· 칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게)</text>
-  <text x="16.5" y="39.63" font-size="2.4">· 촬영할때 카메라 플래시를 켜고 카메라를 용지와 어긋나지 않게 바로 위에 위치해주세요</text>
-  <text x="16.5" y="43.08" font-size="2.4">· 네 귀퉁이의 표시와 아래 눈금자가 가려지지 않게 촬영해주세요</text>
-  <rect x="25.5" y="46.7" width="97.5" height="135.6" fill="none" stroke="#111" stroke-width="0.28" stroke-dasharray="2.2 1.6"/>
-  <text x="74.25" y="185.8" text-anchor="middle" font-size="3.4" font-weight="800">인쇄 확인용 눈금자</text>
-  <line x1="49.25" y1="191.2" x2="99.25" y2="191.2" stroke="#111" stroke-width="0.5"/>
-  <line x1="49.25" y1="188.1" x2="49.25" y2="194.3" stroke="#111" stroke-width="0.5"/>
-  <line x1="99.25" y1="188.1" x2="99.25" y2="194.3" stroke="#111" stroke-width="0.5"/>
-  <text x="101.65" y="192.3" font-size="3.15" font-weight="700">5cm</text>
-  <text x="74.25" y="197.5" text-anchor="middle" font-size="3.05" font-weight="700">자로 재서 5cm면 바르게 인쇄된 것입니다</text>
+  <text x="25.5" y="32.73" font-size="2.4">· 측정 용지 인쇄시 100% 크기로 인쇄하고 배율 맞춤은 꺼주세요</text>
+  <text x="25.5" y="36.18" font-size="2.4">· 칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게)</text>
+  <text x="25.5" y="39.63" font-size="2.4">· 촬영할때 카메라 플래시를 켜고 카메라를 용지와 어긋나지 않게 바로 위에 위치해주세요</text>
+  <text x="25.5" y="43.08" font-size="2.4">· 네 귀퉁이의 표시가 가려지지 않게 촬영해주세요</text>
+  <rect x="25.5" y="46.7" width="97.5" height="149.3" fill="none" stroke="#111" stroke-width="0.28" stroke-dasharray="2.2 1.6"/>
  </g>
 
  <g id="half-R">
@@ -106,17 +100,11 @@
     <rect x="166.2143" y="195.1429" width="1.4286" height="1.4286" fill="#fff"/>
   </g>
   <text x="222.75" y="27.73" text-anchor="middle" font-size="6.2" font-weight="800">그냥커피 분쇄도 측정 용지</text>
-  <text x="165" y="32.73" font-size="2.4">· 측정 용지 인쇄시 100% 크기로 인쇄하고 배율 맞춤은 꺼주세요</text>
-  <text x="165" y="36.18" font-size="2.4">· 칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게)</text>
-  <text x="165" y="39.63" font-size="2.4">· 촬영할때 카메라 플래시를 켜고 카메라를 용지와 어긋나지 않게 바로 위에 위치해주세요</text>
-  <text x="165" y="43.08" font-size="2.4">· 네 귀퉁이의 표시와 아래 눈금자가 가려지지 않게 촬영해주세요</text>
-  <rect x="174" y="46.7" width="97.5" height="135.6" fill="none" stroke="#111" stroke-width="0.28" stroke-dasharray="2.2 1.6"/>
-  <text x="222.75" y="185.8" text-anchor="middle" font-size="3.4" font-weight="800">인쇄 확인용 눈금자</text>
-  <line x1="197.75" y1="191.2" x2="247.75" y2="191.2" stroke="#111" stroke-width="0.5"/>
-  <line x1="197.75" y1="188.1" x2="197.75" y2="194.3" stroke="#111" stroke-width="0.5"/>
-  <line x1="247.75" y1="188.1" x2="247.75" y2="194.3" stroke="#111" stroke-width="0.5"/>
-  <text x="250.15" y="192.3" font-size="3.15" font-weight="700">5cm</text>
-  <text x="222.75" y="197.5" text-anchor="middle" font-size="3.05" font-weight="700">자로 재서 5cm면 바르게 인쇄된 것입니다</text>
+  <text x="174" y="32.73" font-size="2.4">· 측정 용지 인쇄시 100% 크기로 인쇄하고 배율 맞춤은 꺼주세요</text>
+  <text x="174" y="36.18" font-size="2.4">· 칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게)</text>
+  <text x="174" y="39.63" font-size="2.4">· 촬영할때 카메라 플래시를 켜고 카메라를 용지와 어긋나지 않게 바로 위에 위치해주세요</text>
+  <text x="174" y="43.08" font-size="2.4">· 네 귀퉁이의 표시가 가려지지 않게 촬영해주세요</text>
+  <rect x="174" y="46.7" width="97.5" height="149.3" fill="none" stroke="#111" stroke-width="0.28" stroke-dasharray="2.2 1.6"/>
  </g>
 
   <line x1="148.5" y1="16" x2="148.5" y2="206" stroke="#111" stroke-width="0.32" stroke-dasharray="2.4 1.5"/>
