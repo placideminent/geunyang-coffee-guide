@@ -1456,7 +1456,7 @@ AR.Detector.prototype.rotate2 = function (src, rotation) {
 */
 (function(){
 var COIN_MM=24, MAX_SRC=5000, MAX_DETECT=1600, MAX_WARP_W=1400, MIN_UM=150, AXIS_MAX=1600;
-var FINES_RATIO=0.35, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.2, FINES_VALLEY_HI=0.5, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80;
+var FINES_RATIO=0.5, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.3, FINES_VALLEY_HI=0.7, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80;
 var FINE_MEASURE_NOTE='모카포트보다 고운 분쇄도(에스프레소 등)는 수치 측정이 어렵습니다.';
 var SHEET={wmm:148.5, hmm:210, markerMm:18, insetMm:12, quietMm:18/7, spanX:106.5, spanY:168, roi:{x:34.5,y:70.5,w:79.5,h:84.0}, ids:{TL:0,TR:1,BR:2,BL:3}};
 var RANGES=[
