@@ -1475,7 +1475,10 @@ AR.Detector.prototype.rotate2 = function (src, rotation) {
 var COIN_MM=24, MAX_SRC=5000, MAX_DETECT=1600, MAX_WARP_W=1400, MIN_UM=150, AXIS_MAX=1600;
 /* 선형 크기 보정. 실측이 약 15% 크게 나와 SIZE_CAL=0.87. 용지·동전 경로에 동일하게 적용. MIN_UM 등 임계값은 보정 후 단위. */
 var SIZE_CAL=0.87;
-var FINES_RATIO=0.35, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.2, FINES_VALLEY_HI=0.5, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80, HIST_BIN_UM=100, HIST_CAP_UM=2000;
+var FINES_RATIO=0.35, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.2, FINES_VALLEY_HI=0.5, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80;
+/* 표시용 히스토그램: 로그 구간. 100–2500µm, 24구간, 공비 5^(1/12)≈1.1435
+   (언스페셜티 가이드 눈금 공비 5^(1/4)≈1.4954를 3등분). 약 17구간/decade. */
+var HIST_LOG_MIN=100, HIST_LOG_MAX=2500, HIST_LOG_BINS=24, HIST_LOG_TICKS=[150,300,600,1000,2000];
 /* 균일도 = (전체 입자 양 중앙값, 미분 포함=대표 입자크기)/(미분 제외 개수 중앙값).
    임계값은 잠정값(앱에 업계 기준으로 표시하지 않음). 비율이 1 미만이면 아직 한쪽 임계값을 그대로 적용해 균일로 표시(오해 여지는 보고용으로 남김). */
 var UNIFORM_RATIO_EVEN=1.15, UNIFORM_RATIO_OK=1.4;
@@ -1631,16 +1634,15 @@ function finesCutoffOf(parts){
   }
   return {um:ratioCut, method:'ratio', d50:d50, ratioCut:ratioCut};
 }
-function histEdges(maxUm){
-  var bin=HIST_BIN_UM, cap=HIST_CAP_UM, edges=[], x=0, top;
-  if((maxUm||0)>=cap){
-    for(x=0;x<=cap;x+=bin) edges.push(x);
-    edges.push(cap+bin); // last bin labelled 2000+
-    return edges;
-  }
-  top=Math.max(bin*4, Math.ceil((maxUm||0)/bin)*bin);
-  for(x=0;x<=top;x+=bin) edges.push(x);
+function histEdges(){
+  var n=HIST_LOG_BINS, lo=HIST_LOG_MIN, hi=HIST_LOG_MAX, edges=[], i;
+  for(i=0;i<=n;i++) edges.push(lo*Math.pow(hi/lo, i/n));
   return edges;
+}
+function histTickLeft(v, a, b){
+  if(!(v>0) || !(a>0) || !(b>a)) return 0;
+  var t=(Math.log(v)-Math.log(a))/(Math.log(b)-Math.log(a));
+  return Math.max(0, Math.min(100, t*100));
 }
 function boxBlur(src,w,h,r){
   r=Math.max(1,r|0);
@@ -2160,13 +2162,15 @@ function analyze(gray,w,h,opt){
   var areaMedian=areaMedianAll;
   var median=areaMedianAll;
   var mean=areaMedianAll;
-  var bins=[], edges=histEdges(n?parts[n-1].um:0);
+  var bins=[], edges=histEdges();
   for(i=0;i<edges.length-1;i++) bins.push({lo:edges[i], hi:edges[i+1], n:0, area:0, areaPct:0, fines:edges[i+1]<=cutoff+0.5});
   for(i=0;i<n;i++){
     um=parts[i].um;
-    var b=bins.length-1;
-    for(var j=0;j<bins.length;j++) if(um>=bins[j].lo&&um<bins[j].hi){b=j;break}
+    var b=0;
     if(um>=bins[bins.length-1].hi) b=bins.length-1;
+    else {
+      for(var j=0;j<bins.length;j++) if(um>=bins[j].lo&&um<bins[j].hi){b=j;break}
+    }
     bins[b].n++; bins[b].area+=parts[i].area;
   }
   for(i=0;i<bins.length;i++){
@@ -2621,13 +2625,13 @@ function scaleBar(mean){
   return h+'</ul></div>';
 }
 function histogram(res){
-  var i, maxA=1, maxN=1, bins=res.bins||[], n=bins.length, endUm;
+  var i, maxA=1, maxN=1, bins=res.bins||[], n=bins.length;
   for(i=0;i<n;i++){
     if(bins[i].areaPct>maxA) maxA=bins[i].areaPct;
     if(bins[i].n>maxN) maxN=bins[i].n;
   }
-  var overflow=n && bins[n-1].hi>HIST_CAP_UM;
-  endUm=overflow?HIST_CAP_UM:(n?bins[n-1].hi:HIST_CAP_UM);
+  var axisLo=n?bins[0].lo:HIST_LOG_MIN, axisHi=n?bins[n-1].hi:HIST_LOG_MAX;
+  var overflow=n && res.parts && res.parts.length && res.parts[res.parts.length-1].um>=axisHi-0.5;
   var fp=res.finesAreaPct||0;
   var fpTxt=fp<10?fp.toFixed(1):String(Math.round(fp));
   var cutTxt=roundum(res.finesCutoffUm||FINES_FLOOR_UM);
@@ -2639,22 +2643,18 @@ function histogram(res){
       frac=kind==='count'?(b.n/maxN):(b.areaPct/maxA);
       pct=Math.max(0, Math.round(frac*100));
       cls=b.fines?' g-fine':'';
-      hiLab=b.hi>HIST_CAP_UM?(b.lo+'+'):(b.lo+'–'+b.hi);
+      hiLab=(overflow && i===n-1)?(Math.round(b.lo)+'+'):(Math.round(b.lo)+'–'+Math.round(b.hi));
       ttl=kind==='count'?(hiLab+'µm · '+b.n+'개'):(hiLab+'µm · '+Math.round(b.areaPct)+'%');
       h+='<span class="g-hcol'+cls+'" title="'+ttl+'"><i style="height:'+pct+'%"></i></span>';
     }
     h+='</div><div class="g-haxis">';
-    var last=endUm||HIST_CAP_UM, v, left, cls, lab;
-    for(v=0;v<=last;v+=200){
-      if(overflow && v>=HIST_CAP_UM) break;
-      left=last?Math.min(100, v/last*100):0;
-      cls=left<=0?'g-hstart':(left>=100?'g-hend':'');
+    var ticks=HIST_LOG_TICKS, v, left, cls;
+    for(i=0;i<ticks.length;i++){
+      v=ticks[i];
+      if(v<axisLo-0.5 || v>axisHi+0.5) continue;
+      left=histTickLeft(v, axisLo, axisHi);
+      cls=left<=0.5?'g-hstart':(left>=99.5?'g-hend':'');
       h+='<span class="'+cls+'" style="left:'+left+'%">'+v+'</span>';
-    }
-    if(overflow){
-      h+='<span class="g-hend" style="left:100%">2000+</span>';
-    }else if(last%200!==0){
-      h+='<span class="g-hend" style="left:100%">'+last+'</span>';
     }
     return h+'</div></div></div>';
   }
