@@ -1474,7 +1474,8 @@ AR.Detector.prototype.rotate2 = function (src, rotation) {
 (function(){
 var COIN_MM=24, MAX_SRC=5000, MAX_DETECT=1600, MAX_WARP_W=1400, MIN_UM=150, AXIS_MAX=1600;
 var FINES_RATIO=0.35, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.2, FINES_VALLEY_HI=0.5, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80, HIST_BIN_UM=100, HIST_CAP_UM=2000;
-/* 균일도 = (미분 제외 입자 양 중앙값)/(미분 제외 개수 중앙값). 임계값은 잠정값(앱에 업계 기준으로 표시하지 않음). */
+/* 균일도 = (전체 입자 양 중앙값, 미분 포함=대표 입자크기)/(미분 제외 개수 중앙값).
+   임계값은 잠정값(앱에 업계 기준으로 표시하지 않음). 비율이 1 미만이면 아직 한쪽 임계값을 그대로 적용해 균일로 표시(오해 여지는 보고용으로 남김). */
 var UNIFORM_RATIO_EVEN=1.15, UNIFORM_RATIO_OK=1.4;
 var FINE_MEASURE_NOTE='모카포트보다 고운 분쇄도(에스프레소 등)는 수치 측정이 어렵습니다.';
 var SHEET={wmm:148.5, hmm:210, markerMm:18, insetMm:12, quietMm:18/7, spanX:106.5, spanY:168, roi:{x:34.5,y:70.5,w:79.5,h:84.0}, ids:{TL:0,TR:1,BR:2,BL:3}};
@@ -1555,12 +1556,13 @@ function areaDx(parts, p){
   return parts[parts.length-1].um;
 }
 function areaD50(parts){ return areaDx(parts, 0.5); }
-function uniformityOf(parts){
-  if(!parts||!parts.length) return {ratio:0, label:'', areaMedian:0, countMedian:0};
-  var countMed=statsOf(parts).median, areaMed=areaD50(parts);
-  var ratio=countMed>0?areaMed/countMed:0;
-  var label=ratio<=UNIFORM_RATIO_EVEN?'균일':(ratio<=UNIFORM_RATIO_OK?'보통':'불균일');
-  return {ratio:ratio, label:label, areaMedian:areaMed, countMedian:countMed};
+function uniformityLabel(ratio){
+  return ratio<=UNIFORM_RATIO_EVEN?'균일':(ratio<=UNIFORM_RATIO_OK?'보통':'불균일');
+}
+function uniformityOf(areaMedAll, countMedCoarse){
+  if(!(countMedCoarse>0)) return {ratio:0, label:'', areaMedian:areaMedAll||0, countMedian:0};
+  var ratio=areaMedAll/countMedCoarse;
+  return {ratio:ratio, label:uniformityLabel(ratio), areaMedian:areaMedAll, countMedian:countMedCoarse};
 }
 function areaWeightedMean(parts){
   var i, ta=0, s=0;
@@ -2149,7 +2151,7 @@ function analyze(gray,w,h,opt){
   var areaMedianAll=n?areaD50(parts):0;
   var countMedianCoarse=coarse.length?statsOf(coarse).median:0;
   var areaMedianCoarse=coarse.length?areaD50(coarse):0;
-  var uni=(coarse.length>=MIN_COARSE_COUNT)?uniformityOf(coarse):{ratio:0,label:'',areaMedian:0,countMedian:0};
+  var uni=(coarse.length>=MIN_COARSE_COUNT)?uniformityOf(areaMedianAll, countMedianCoarse):{ratio:0,label:'',areaMedian:0,countMedian:0};
   var countMedian=countMedianCoarse;
   var areaMedian=areaMedianAll;
   var median=areaMedianAll;
@@ -2593,7 +2595,7 @@ function renderResult(){
     html+='<p class="muted g-cap">'+cap+'</p>';
   }
   if(res.countAll) html+=histogram(res);
-  html+='<p class="g-caveat">이 결과는 추정치입니다. 대표 입자크기는 미분을 포함한 입자 양 기준 중앙값입니다. 균일도는 미분을 제외한 입자로 계산합니다. 아래 분포는 개수와 입자 양 기준으로 함께 보여 줍니다. 뭉친 알갱이는 더 크게 보이거나 균일도가 낮아 보일 수 있습니다. 측정 용지는 100% 크기로 인쇄하고, 촬영 시 플래시를 켜 주세요.</p>'+
+  html+='<p class="g-caveat">이 결과는 추정치입니다. 대표 입자크기는 미분을 포함한 입자 양 기준 중앙값입니다. 균일도는 대표 입자크기(미분 포함)를 미분 제외 개수 기준 중앙값으로 나눈 값입니다. 아래 분포는 개수와 입자 양 기준으로 함께 보여 줍니다. 뭉친 알갱이는 더 크게 보이거나 균일도가 낮아 보일 수 있습니다. 측정 용지는 100% 크기로 인쇄하고, 촬영 시 플래시를 켜 주세요.</p>'+
     '<button type="button" class="bigbtn primary" id="g-retry">다시 측정하기</button>'+
     '</div>';
   appEl().innerHTML=html;
