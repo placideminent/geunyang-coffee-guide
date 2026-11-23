@@ -1481,8 +1481,8 @@ var SHEET={wmm:148.5, hmm:210, markerMm:18, insetMm:12, quietMm:18/7, spanX:106.
 var RANGES=[
   {name:'에스프레소', lo:200, hi:400, color:'#EED9CC'},
   {name:'모카포트', lo:360, hi:660, color:'#F5EBCD'},
-  {name:'핸드드립', lo:600, hi:1000, color:'#E2E8DC'},
-  {name:'프렌치프레스', lo:1000, hi:1400, color:'#D4E4F1'}
+  {name:'핸드드립', lo:600, hi:1250, color:'#E2E8DC'},
+  {name:'프렌치프레스', lo:1250, hi:1400, color:'#D4E4F1'}
 ];
 var S={phase:'guide', canvas:null, coin:null, auto:false, result:null, drag:null, mode:null, sheet:null, rectified:null};
 
@@ -2568,7 +2568,7 @@ function renderResult(){
       '<div class="g-meds">'+
         '<div class="g-med"><span class="g-mk">대표 입자크기</span><span class="g-mv">약 '+roundum(res.areaMedianAll||res.areaMedian)+'µm</span></div>'+
         '<div class="g-med"><span class="g-mk">균일도</span><span class="g-mv">'+uniTxt+'</span></div>'+
-        '<div class="g-med"><span class="g-mk">미분 비율<br>입자 양 기준</span><span class="g-mv">'+fpTxt+'%</span></div>'+
+        '<div class="g-med"><span class="g-mk">미분 비율</span><span class="g-mv">'+fpTxt+'%</span></div>'+
       '</div>'+
       (res.uniLabel?'<p class="g-uni-note">1에 가까울수록 더 균일합니다</p>':'')+
       '<p class="qsub">'+sub+'</p>';
