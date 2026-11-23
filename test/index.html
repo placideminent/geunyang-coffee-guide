@@ -1454,7 +1454,7 @@ AR.Detector.prototype.rotate2 = function (src, rotation) {
 */
 (function(){
 var COIN_MM=24, MAX_SRC=5000, MAX_DETECT=1600, MAX_WARP_W=1400, MIN_UM=150, AXIS_MAX=1600;
-var FINES_RATIO=0.5, FINES_FLOOR_UM=150, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80;
+var FINES_RATIO=0.35, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.2, FINES_VALLEY_HI=0.5, MIN_COARSE_COUNT=10, FINES_AREA_FALLBACK=0.80;
 var FINE_MEASURE_NOTE='모카포트보다 고운 분쇄도(에스프레소 등)는 수치 측정이 어렵습니다.';
 var SHEET={wmm:148.5, hmm:210, markerMm:18, insetMm:12, quietMm:18/7, spanX:106.5, spanY:168, roi:{x:34.5,y:70.5,w:79.5,h:84.0}, ids:{TL:0,TR:1,BR:2,BL:3}};
 var RANGES=[
@@ -1592,7 +1592,7 @@ function finesCutoffOf(parts){
   var d50=areaD50(parts);
   var ratioCut=Math.max(FINES_FLOOR_UM, FINES_RATIO*d50);
   var valley=bimodalValley(parts, d50);
-  if(valley && valley>=0.3*d50 && valley<=0.7*d50){
+  if(valley && valley>=FINES_VALLEY_LO*d50 && valley<=FINES_VALLEY_HI*d50){
     return {um:Math.max(FINES_FLOOR_UM, valley), method:'valley', d50:d50, ratioCut:ratioCut};
   }
   return {um:ratioCut, method:'ratio', d50:d50, ratioCut:ratioCut};
@@ -2596,7 +2596,7 @@ window.__grind={
   },
   confirm:function(){return runAnalyze()},
   state:function(){return {phase:S.phase, mode:S.mode, coin:S.coin, auto:S.auto, sheet:S.sheet, result:S.result&&{mean:S.result.mean,median:S.result.median,count:S.result.count,countAll:S.result.countAll,countCoarse:S.result.countCoarse,finesAreaPct:S.result.finesAreaPct,finesCutoffUm:S.result.finesCutoffUm,areaD50:S.result.areaD50,finesMethod:S.result.finesMethod,reportMode:S.result.reportMode,rawMean:S.result.rawMean,rawMedian:S.result.rawMedian,threshold:S.result.threshold,umPerPx:S.result.umPerPx,source:S.result.source,categories:S.result.categories.map(function(c){return c.name})}}},
-  FINES_RATIO:FINES_RATIO, FINES_FLOOR_UM:FINES_FLOOR_UM
+  FINES_RATIO:FINES_RATIO, FINES_FLOOR_UM:FINES_FLOOR_UM, FINES_VALLEY_LO:FINES_VALLEY_LO, FINES_VALLEY_HI:FINES_VALLEY_HI
 };
 })();
 </script><script>(function(){
