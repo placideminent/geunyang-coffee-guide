@@ -219,10 +219,8 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .g-hist .g-dist-k{margin-top:16px}
 .g-fines-pct{margin:0 0 12px;font-size:14px;font-weight:700;color:var(--ink)}
 .g-hscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -2px 2px;padding-bottom:2px}
-.g-hchart{position:relative;min-width:100%;width:max(100%, calc(var(--n,16) * 10px))}
-.g-hcols{position:relative;display:flex;align-items:flex-end;height:76px;gap:1px;border-bottom:1px solid var(--line);padding:0 1px}
-.g-hcurve{position:absolute;left:1px;right:1px;top:0;height:76px;width:auto;overflow:visible;pointer-events:none;z-index:1}
-.g-hcurve path{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:.88}
+.g-hchart{min-width:100%;width:max(100%, calc(var(--n,16) * 10px))}
+.g-hcols{display:flex;align-items:flex-end;height:76px;gap:1px;border-bottom:1px solid var(--line);padding:0 1px}
 .g-hcol{flex:1 0 0;min-width:8px;height:100%;display:flex;align-items:flex-end}
 .g-hcol i{display:block;width:100%;height:0;background:var(--acc-strong);border-radius:2px 2px 0 0;min-height:0}
 .g-hcol.g-fine i{background:#C9A090}
@@ -1649,33 +1647,6 @@ function histTickLeft(v, a, b){
   var t=(Math.log(v)-Math.log(a))/(Math.log(b)-Math.log(a));
   return Math.max(0, Math.min(100, t*100));
 }
-function histSmooth(vals){
-  /* 5-point Gaussian (σ=1 bin), zero-pad at ends. */
-  var w=[0.054488,0.244201,0.40262,0.244201,0.054488], out=[], i, k, j, s;
-  for(i=0;i<vals.length;i++){
-    s=0;
-    for(k=0;k<5;k++){ j=i+k-2; s+=w[k]*((j>=0&&j<vals.length)?vals[j]:0); }
-    out.push(s);
-  }
-  return out;
-}
-function histCurvePath(vals, w, h){
-  var n=vals.length, xs=[], ys=[], i, d, p0x,p0y,p1x,p1y,p2x,p2y,p3x,p3y;
-  if(n<2) return '';
-  for(i=0;i<n;i++){
-    xs.push((i+0.5)/n*w);
-    ys.push(Math.max(0, Math.min(h, h*(1-vals[i]))));
-  }
-  d='M '+xs[0].toFixed(2)+' '+ys[0].toFixed(2);
-  for(i=0;i<n-1;i++){
-    p0x=xs[i?i-1:0]; p0y=ys[i?i-1:0];
-    p1x=xs[i]; p1y=ys[i];
-    p2x=xs[i+1]; p2y=ys[i+1];
-    p3x=xs[Math.min(n-1,i+2)]; p3y=ys[Math.min(n-1,i+2)];
-    d+=' C '+(p1x+(p2x-p0x)/6).toFixed(2)+' '+(p1y+(p2y-p0y)/6).toFixed(2)+', '+(p2x-(p3x-p1x)/6).toFixed(2)+' '+(p2y-(p3y-p1y)/6).toFixed(2)+', '+p2x.toFixed(2)+' '+p2y.toFixed(2);
-  }
-  return d;
-}
 function boxBlur(src,w,h,r){
   r=Math.max(1,r|0);
   var k=2*r+1, n=w*h;
@@ -2683,21 +2654,17 @@ function histogram(res){
   var fpTxt=fp<10?fp.toFixed(1):String(Math.round(fp));
   var cutTxt=roundum(res.finesCutoffUm||FINES_FLOOR_UM);
   function chart(kind){
-    var h='<div class="g-hscroll"><div class="g-hchart" style="--n:'+n+'">', b, frac, pct, cls, ttl, hiLab, fracs=[], sm, path;
+    var h='<div class="g-hscroll"><div class="g-hchart" style="--n:'+n+'">', b, frac, pct, cls, ttl, hiLab;
     h+='<div class="g-hcols">';
     for(i=0;i<n;i++){
       b=bins[i];
       frac=kind==='count'?(b.n/maxN):(b.areaPct/maxA);
-      fracs.push(frac);
       pct=Math.max(0, Math.round(frac*100));
       cls=b.fines?' g-fine':'';
       hiLab=(overflow && i===n-1)?(Math.round(b.lo)+'+'):(Math.round(b.lo)+'–'+Math.round(b.hi));
       ttl=kind==='count'?(hiLab+'µm · '+b.n+'개'):(hiLab+'µm · '+Math.round(b.areaPct)+'%');
       h+='<span class="g-hcol'+cls+'" title="'+ttl+'"><i style="height:'+pct+'%"></i></span>';
     }
-    sm=histSmooth(fracs);
-    path=histCurvePath(sm, 1000, 100);
-    if(path) h+='<svg class="g-hcurve" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true"><path d="'+path+'"/></svg>';
     h+='</div><div class="g-haxis">';
     var ticks=HIST_LOG_TICKS, v, left, cls;
     for(i=0;i<ticks.length;i++){
