@@ -78,15 +78,5 @@
  </g>
 
   <line x1="148.5" y1="22" x2="148.5" y2="204" stroke="#111" stroke-width="0.32" stroke-dasharray="2.4 1.5"/>
-  <g id="scissors" fill="none" stroke="#111" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="145.35" cy="6.4" r="1.85"/>
-    <circle cx="151.65" cy="6.4" r="1.85"/>
-    <path d="M 147.00 7.6 L 148.5 11.2 L 150.00 7.6"/>
-    <path d="M 148.5 11.2 L 147.35 18.8"/>
-    <path d="M 148.5 11.2 L 149.65 18.8"/>
-    <circle cx="148.5" cy="11.2" r="0.55" fill="#111" stroke="none"/>
-  </g>
-  <rect x="138.9" y="19.3" width="19.2" height="4.6" fill="#fff"/>
-  <text x="148.5" y="23.0" text-anchor="middle" font-size="3.15" font-weight="700">자르는 선</text>
 
 </svg>
