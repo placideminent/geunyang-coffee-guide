@@ -216,8 +216,10 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .g-hist .g-dist-k{margin-top:16px}
 .g-fines-pct{margin:0 0 12px;font-size:14px;font-weight:700;color:var(--ink)}
 .g-hscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -2px 2px;padding-bottom:2px}
-.g-hchart{min-width:100%;width:max(100%, calc(var(--n,16) * 10px))}
-.g-hcols{display:flex;align-items:flex-end;height:76px;gap:1px;border-bottom:1px solid var(--line);padding:0 1px}
+.g-hchart{position:relative;min-width:100%;width:max(100%, calc(var(--n,16) * 10px))}
+.g-hcols{position:relative;display:flex;align-items:flex-end;height:76px;gap:1px;border-bottom:1px solid var(--line);padding:0 1px}
+.g-hcurve{position:absolute;left:1px;right:1px;top:0;height:76px;width:auto;overflow:visible;pointer-events:none;z-index:1}
+.g-hcurve path{fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:.88}
 .g-hcol{flex:1 0 0;min-width:8px;height:100%;display:flex;align-items:flex-end}
 .g-hcol i{display:block;width:100%;height:0;background:var(--acc-strong);border-radius:2px 2px 0 0;min-height:0}
 .g-hcol.g-fine i{background:#C9A090}
@@ -1480,15 +1482,15 @@ var FINES_RATIO=0.35, FINES_FLOOR_UM=150, FINES_VALLEY_LO=0.2, FINES_VALLEY_HI=0
    (언스페셜티 가이드 눈금 공비 5^(1/4)≈1.4954를 3등분). 약 17구간/decade. */
 var HIST_LOG_MIN=100, HIST_LOG_MAX=2500, HIST_LOG_BINS=24, HIST_LOG_TICKS=[150,300,600,1000,2000];
 /* 균일도 = (전체 입자 양 중앙값, 미분 포함=대표 입자크기)/(미분 제외 개수 중앙값).
-   임계값은 잠정값(앱에 업계 기준으로 표시하지 않음). 비율이 1 미만이면 아직 한쪽 임계값을 그대로 적용해 균일로 표시(오해 여지는 보고용으로 남김). */
-var UNIFORM_RATIO_EVEN=1.15, UNIFORM_RATIO_OK=1.4;
+   임계값은 잠정값(앱에 업계 기준으로 표시하지 않음). ≤1.3 균일한 편(1 미만 포함), ≤1.6 보통, >1.6 불균일. */
+var UNIFORM_RATIO_EVEN=1.3, UNIFORM_RATIO_OK=1.6;
 var FINE_MEASURE_NOTE='모카포트보다 고운 분쇄도(에스프레소 등)는 수치 측정이 어렵습니다.';
 var SHEET={wmm:148.5, hmm:210, markerMm:18, insetMm:12, quietMm:18/7, spanX:106.5, spanY:168, roi:{x:34.5,y:70.5,w:79.5,h:84.0}, ids:{TL:0,TR:1,BR:2,BL:3}};
 var RANGES=[
   {name:'에스프레소', lo:200, hi:400, color:'#EED9CC'},
   {name:'모카포트', lo:360, hi:660, color:'#F5EBCD'},
   {name:'핸드드립', lo:600, hi:1250, color:'#E2E8DC'},
-  {name:'프렌치프레스', lo:1250, hi:1400, color:'#D4E4F1'}
+  {name:'프렌치프레스', lo:1250, hi:1600, color:'#D4E4F1'}
 ];
 var S={phase:'guide', canvas:null, coin:null, auto:false, result:null, drag:null, mode:null, sheet:null, rectified:null};
 
@@ -1562,7 +1564,7 @@ function areaDx(parts, p){
 }
 function areaD50(parts){ return areaDx(parts, 0.5); }
 function uniformityLabel(ratio){
-  return ratio<=UNIFORM_RATIO_EVEN?'균일':(ratio<=UNIFORM_RATIO_OK?'보통':'불균일');
+  return ratio<=UNIFORM_RATIO_EVEN?'균일한 편':(ratio<=UNIFORM_RATIO_OK?'보통':'불균일');
 }
 function uniformityOf(areaMedAll, countMedCoarse){
   if(!(countMedCoarse>0)) return {ratio:0, label:'', areaMedian:areaMedAll||0, countMedian:0};
@@ -1643,6 +1645,33 @@ function histTickLeft(v, a, b){
   if(!(v>0) || !(a>0) || !(b>a)) return 0;
   var t=(Math.log(v)-Math.log(a))/(Math.log(b)-Math.log(a));
   return Math.max(0, Math.min(100, t*100));
+}
+function histSmooth(vals){
+  /* 5-point Gaussian (σ=1 bin), zero-pad at ends. */
+  var w=[0.054488,0.244201,0.40262,0.244201,0.054488], out=[], i, k, j, s;
+  for(i=0;i<vals.length;i++){
+    s=0;
+    for(k=0;k<5;k++){ j=i+k-2; s+=w[k]*((j>=0&&j<vals.length)?vals[j]:0); }
+    out.push(s);
+  }
+  return out;
+}
+function histCurvePath(vals, w, h){
+  var n=vals.length, xs=[], ys=[], i, d, p0x,p0y,p1x,p1y,p2x,p2y,p3x,p3y;
+  if(n<2) return '';
+  for(i=0;i<n;i++){
+    xs.push((i+0.5)/n*w);
+    ys.push(Math.max(0, Math.min(h, h*(1-vals[i]))));
+  }
+  d='M '+xs[0].toFixed(2)+' '+ys[0].toFixed(2);
+  for(i=0;i<n-1;i++){
+    p0x=xs[i?i-1:0]; p0y=ys[i?i-1:0];
+    p1x=xs[i]; p1y=ys[i];
+    p2x=xs[i+1]; p2y=ys[i+1];
+    p3x=xs[Math.min(n-1,i+2)]; p3y=ys[Math.min(n-1,i+2)];
+    d+=' C '+(p1x+(p2x-p0x)/6).toFixed(2)+' '+(p1y+(p2y-p0y)/6).toFixed(2)+', '+(p2x-(p3x-p1x)/6).toFixed(2)+' '+(p2y-(p3y-p1y)/6).toFixed(2)+', '+p2x.toFixed(2)+' '+p2y.toFixed(2);
+  }
+  return d;
 }
 function boxBlur(src,w,h,r){
   r=Math.max(1,r|0);
@@ -2558,7 +2587,7 @@ function catLine(res){
   if(!res.count) return '입자를 찾지 못했어요';
   if(res.categories.length) return res.categories.map(function(c){return c.name}).join(' · ');
   if(res.mean<200) return '에스프레소보다 고운 편';
-  if(res.mean>1400) return '프렌치프레스보다 굵은 편';
+  if(res.mean>1600) return '프렌치프레스보다 굵은 편';
   return '참고 범위 사이';
 }
 function renderResult(){
@@ -2636,17 +2665,21 @@ function histogram(res){
   var fpTxt=fp<10?fp.toFixed(1):String(Math.round(fp));
   var cutTxt=roundum(res.finesCutoffUm||FINES_FLOOR_UM);
   function chart(kind){
-    var h='<div class="g-hscroll"><div class="g-hchart" style="--n:'+n+'">', b, frac, pct, cls, ttl, hiLab;
+    var h='<div class="g-hscroll"><div class="g-hchart" style="--n:'+n+'">', b, frac, pct, cls, ttl, hiLab, fracs=[], sm, path;
     h+='<div class="g-hcols">';
     for(i=0;i<n;i++){
       b=bins[i];
       frac=kind==='count'?(b.n/maxN):(b.areaPct/maxA);
+      fracs.push(frac);
       pct=Math.max(0, Math.round(frac*100));
       cls=b.fines?' g-fine':'';
       hiLab=(overflow && i===n-1)?(Math.round(b.lo)+'+'):(Math.round(b.lo)+'–'+Math.round(b.hi));
       ttl=kind==='count'?(hiLab+'µm · '+b.n+'개'):(hiLab+'µm · '+Math.round(b.areaPct)+'%');
       h+='<span class="g-hcol'+cls+'" title="'+ttl+'"><i style="height:'+pct+'%"></i></span>';
     }
+    sm=histSmooth(fracs);
+    path=histCurvePath(sm, 1000, 100);
+    if(path) h+='<svg class="g-hcurve" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true"><path d="'+path+'"/></svg>';
     h+='</div><div class="g-haxis">';
     var ticks=HIST_LOG_TICKS, v, left, cls;
     for(i=0;i<ticks.length;i++){
@@ -2661,9 +2694,9 @@ function histogram(res){
   var h='<div class="card g-hist">';
   h+='<p class="g-fines-pct">미분 기준: '+cutTxt+'µm 이하 (자동) · 입자 양 기준 '+fpTxt+'%</p>';
   var countMedTxt=roundum(res.countMedianAll!=null?res.countMedianAll:res.rawMedian);
-  h+='<div class="g-scale-k">입자 개수 기준</div>'+chart('count');
+  h+='<div class="g-scale-k">입자 양 기준</div>'+chart('area');
+  h+='<div class="g-scale-k g-dist-k">입자 개수 기준</div>'+chart('count');
   h+='<p class="g-hcap">입자 개수 기준 중앙값 약 '+countMedTxt+'µm</p>';
-  h+='<div class="g-scale-k g-dist-k">입자 양 기준</div>'+chart('area');
   return h+'</div>';
 }
 
