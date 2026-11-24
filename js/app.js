@@ -7,7 +7,7 @@ var ROAST=['#B07A4F','#9B5E2B','#8A5326','#6E4019','#5A3214','#43281A','#2E1D14'
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function byId(id){for(var i=0;i<B.length;i++)if(B[i].id===id)return B[i]}
 function band(r){return r<=7?'high':r<=14?'mid':'low'}
-function top(t){return '<div class="top"><button class="back" onclick="appBack(\'#/\')">← 뒤로</button><h1>'+esc(t)+'</h1></div>'}
+function top(t,back){return '<div class="top"><button class="back" onclick="appBack(\''+(back||'#/')+'\')">← 뒤로</button><h1>'+esc(t)+'</h1></div>'}
 function tc(b){for(var g in CHO)if(CHO[g].indexOf(b.id)>=0)return g;return b.characters[0]}
 function imgOf(b){return b.thumb||b.image}
 function card(b,extra){return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+imgOf(b)+'" alt="" loading="lazy"><div>'+(extra&&extra.rank?'<span class="rank">'+extra.rank+'</span>':'')+'<b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span>'+(extra&&extra.why?'<span class="why">'+esc(extra.why)+'</span>':'')+'</div></button>'}
@@ -23,12 +23,64 @@ function openSheet(b){closeSheet();var d=document.createElement('div');d.id='she
  d.onclick=function(e){if(e.target===d||e.target.closest('.sx'))closeSheet()};document.addEventListener('keydown',escK);d.querySelector('.sx').focus()}
 document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-buy]');if(t){e.preventDefault();e.stopPropagation();openSheet(byId(t.getAttribute('data-buy')))}},true);
 function stopTimer(){if(timer){clearInterval(timer.h);timer=null}}
+function isStandalone(){return (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone===true}
+function isIOS(){var ua=navigator.userAgent||'';return /iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)}
+function isInAppBrowser(){return /KAKAOTALK|NAVER|Instagram|FBAN|FBAV|FB_IAB|Line\/|DaumApps|DaumDevice/i.test(navigator.userAgent||'')}
+var deferredPrompt=null;
+function hideInstallBtn(){var w=document.getElementById('installWrap');if(w)w.hidden=true}
+function appUrl(){return location.origin+location.pathname}
+function openInstallGuide(kind){
+  closeSheet();
+  var title,body;
+  if(kind==='inapp'){
+    title='이 브라우저에서는 바로 추가할 수 없어요';
+    body='<p class="install-p">카카오톡·네이버 같은 앱 속 브라우저에서는 홈 화면 추가가 막혀 있어요.</p>'+
+      '<ol class="install-ol"><li>아래 버튼으로 주소를 복사해 주세요</li><li>'+(isIOS()?'사파리':'크롬 또는 삼성 인터넷')+'에서 주소를 열어 주세요</li><li>열린 페이지에서 “홈 화면에 추가”를 선택해 주세요</li></ol>'+
+      '<button type="button" class="btn2" id="installCopy">주소 복사</button>';
+  }else if(kind==='ios'){
+    title='홈 화면에 추가';
+    body='<p class="install-p">아이폰·아이패드에서는 아래 두 단계로 추가할 수 있어요.</p>'+
+      '<ol class="install-ol"><li>화면 아래 공유 버튼(□↑)을 눌러 주세요</li><li>“홈 화면에 추가”를 선택해 주세요</li></ol>';
+  }else{
+    title='홈 화면에 추가';
+    body='<p class="install-p">브라우저 메뉴에서 추가할 수 있어요.</p>'+
+      '<ol class="install-ol"><li>화면 오른쪽 위의 메뉴 버튼(⋮)을 눌러 주세요</li><li>“홈 화면에 추가” 또는 “앱 설치”를 선택해 주세요</li></ol>';
+  }
+  var d=document.createElement('div');d.id='sheet';d.className='sheetwrap';
+  d.innerHTML='<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle"><div class="grab"></div><button type="button" class="sx" aria-label="닫기">✕</button><div class="stitle" id="installTitle">'+title+'</div>'+body+'</div>';
+  document.body.appendChild(d);
+  d.onclick=function(e){if(e.target===d||e.target.closest('.sx'))closeSheet()};
+  document.addEventListener('keydown',escK);
+  var sx=d.querySelector('.sx');if(sx)sx.focus();
+  var c=document.getElementById('installCopy');
+  if(c)c.onclick=function(){
+    var url=appUrl(),btn=c,prev=btn.textContent;
+    function ok(){btn.textContent='복사했어요';setTimeout(function(){if(btn.textContent==='복사했어요')btn.textContent=prev},1600)}
+    function fallback(){var i=document.createElement('input');i.value=url;i.setAttribute('readonly','');i.style.position='fixed';i.style.left='-9999px';document.body.appendChild(i);i.select();try{if(document.execCommand('copy'))ok()}catch(e){}document.body.removeChild(i)}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(ok).catch(fallback);
+    else fallback();
+  };
+}
+function onInstallClick(){
+  if(deferredPrompt){
+    var ev=deferredPrompt;deferredPrompt=null;
+    ev.prompt();
+    ev.userChoice.then(function(ch){if(ch&&ch.outcome==='accepted')hideInstallBtn()});
+    return;
+  }
+  if(isInAppBrowser())openInstallGuide('inapp');
+  else if(isIOS())openInstallGuide('ios');
+  else openInstallGuide('other');
+}
 function home(){app.innerHTML='<div class="brand"><h1>그냥커피 원두 가이드</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
 '<button class="bigbtn primary" onclick="location.hash=\'#/quiz/1\'">내 취향 원두 찾기</button>'+
 '<button class="bigbtn rmbtn" onclick="location.hash=\'#/roadmap\'">추천 테이스팅 로드맵<small>다양한 원두의 향미를 온전히 즐기기 위한 순서 추천</small></button>'+
 '<button class="bigbtn" onclick="location.hash=\'#/recipes\'">원두별 레시피<small>핸드드립 · 에스프레소</small></button>'+
 '<button class="bigbtn" onclick="location.hash=\'#/know-how\'">커피 노하우<small>보관 · 분쇄도</small></button>'+
-'<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기</button></div>'}
+'<button class="bigbtn" onclick="location.hash=\'#/list\'">전체 원두 보기</button>'+
+(isStandalone()?'':'<div class="install-wrap" id="installWrap"><button type="button" class="install-btn" id="installBtn">홈 화면에 추가</button></div>')+
+'</div>';
+ var b=document.getElementById('installBtn');if(b)b.onclick=onInstallClick}
 function prog(n){var s='<div class="progress">';for(var i=1;i<=2;i++)s+='<i class="'+(i<=n?'on':'')+'"></i>';return s+'</div><div class="muted">질문 '+n+' / 2</div>'}
 function opt(k,v,b,s,num){return '<button class="opt'+(st.a[k]==v?' sel':'')+'" data-k="'+k+'" data-v="'+v+'">'+(num?'<span class="num">'+num+'</span>':'')+'<div><b>'+esc(b)+'</b>'+(s?'<span>'+esc(s)+'</span>':'')+'</div></button>'}
 // 산미 '싫어해요' 분기: 고정 추천 (여기서 수정)
@@ -161,6 +213,19 @@ function catRecipeView(key,m){var c=(window.CATRECIPES||{})[key];if(!c||!MNAME[m
  var v={id:'cat-'+key,name:c.name,aging:c.aging,recipes:(c[m]||[]).map(function(r){var x={};for(var k in r)x[k]=r[k];x.method=m;return x})};
  app.innerHTML=top(MNAME[m])+'<div class="pad"><p class="q">'+esc(c.name)+'</p><p class="qsub">'+esc(c.name)+' 원두를 위한 '+MNAME[m]+'</p>'+recipe(v,st.ri)+'</div>';
  st.reRecipe=function(){catRecipeView(key,m)};bindRecipe(v)}
+function khAged(it){var h='';
+ if(it.hero){h+='<div class="kh-hl aged-hero"><p class="kh-hlt">'+esc(it.hero.title)+'</p>';
+  if(it.hero.sub)h+='<p class="kh-hls">'+khEm(it.hero.sub,it.hero.em)+'</p>';h+='</div>'}
+ if(it.benefits&&it.benefits.length){h+='<section class="kh-panel kh-panel-1"><h2 class="kh-secq"><span>'+esc(it.benefitsTitle||'')+'</span></h2><ul class="aged-plus">';
+  it.benefits.forEach(function(t,i){h+='<li><span class="idx">'+('0'+(i+1)).slice(-2)+'</span><div class="t">'+esc(t).split('\n').join('<br>')+'</div></li>'});h+='</ul></section>'}
+ if(it.process&&it.process.length){h+='<section class="kh-panel kh-panel-2"><h2 class="kh-secq"><span>'+esc(it.processTitle||'')+'</span></h2><ol class="aged-steps">';
+  it.process.forEach(function(t,i){h+='<li><span class="num" aria-hidden="true">'+(i+1)+'</span><div class="t">'+esc(t).split('\n').join('<br>')+'</div></li>'});h+='</ol></section>'}
+ if(it.closing&&it.closing.length){var lines=it.closing.slice(),last=lines.pop();
+  h+='<div class="kh-foot aged-close">';
+  if(lines.length)h+='<p class="aged-close-s">'+lines.map(function(l){return esc(l)}).join('<br>')+'</p>';
+  if(last)h+='<p class="aged-close-b">'+khEm(last,it.closingEm)+'</p>';h+='</div>'}
+ if(it.buyUrl)h+='<a class="buy aged-buy" href="'+esc(it.buyUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(it.buyLabel||'구매하기')+'</a>';
+ return h}
 function khReady(x){return (x.sections&&x.sections.length)||(x.body&&x.body.length)||!!x.tool}
 function khEm(s,em){var t=esc(s||'');if(!em)return t;var e=esc(em);return t.split(e).join('<b>'+e+'</b>')}
 function khSections(it){var h='';
@@ -178,10 +243,12 @@ function khSections(it){var h='';
  return h}
 function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x){return x.id==id})[0];if(!it){location.hash='#/know-how';return}
   if(it.tool==='grind'){grindView();return}
-  var h=top(it.title)+'<div class="pad">';
-  if(it.sections&&it.sections.length)h+=khSections(it);
+  var h=top(it.title,it.back)+'<div class="pad">';
+  if(it.layout==='aged')h+=khAged(it);
+  else if(it.sections&&it.sections.length)h+=khSections(it);
   else if(it.body&&it.body.length)h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+it.body.map(function(p){return '<p class="desc">'+esc(p)+'</p>'}).join('');
   else h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+(it.id==='grind'?'<button type="button" class="bigbtn primary g-measure-enter" onclick="location.hash=\'#/know-how/grind-measure\'">내 분쇄도 측정하기<small>사진으로 분쇄 입자 크기를 가늠해요</small></button>':'')+'<div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';
+  if(it.cta&&it.cta.href)h+='<button type="button" class="bigbtn primary aged-cta" onclick="location.hash=\''+esc(it.cta.href)+'\'">'+esc(it.cta.title)+'<small>'+esc(it.cta.desc||'')+'</small></button>';
   app.innerHTML=h+'</div>';return}
  var h=top('커피 노하우')+'<div class="pad"><p class="q">커피 노하우</p><p class="qsub">알고 싶은 주제를 골라주세요</p>';
  K.forEach(function(x){if(x.id==='grind-measure'||x.hidden)return;var sub=x.desc?('<span>'+esc(x.desc)+'</span>'):(khReady(x)?'':'<span>준비 중</span>');h+='<button class="opt" onclick="location.hash=\'#/know-how/'+x.id+'\'"><span class="num">'+esc(x.icon||'•')+'</span><div><b>'+esc(x.title)+'</b>'+sub+'</div></button>'});app.innerHTML=h+'</div>'}
@@ -196,6 +263,9 @@ function route(){st.reRecipe=null;stopTimer();closeSheet();app.classList.remove(
  var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
  if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='recipes'){if(p[1])recipesList(p[1],p[2]);else recipesHome()}else if(p[0]=='recipe')recipeView(decodeURIComponent(p[1]),p[2]);else if(p[0]=='catrecipe')catRecipeView(p[1],p[2]);else if(p[0]=='know-how')knowhow(p[1]);else if(p[0]=='grind'||p[0]=='grind-measure')grindView();else if(p[0]=='list')list(st.filter);
  else if(p[0]=='bean'){if(st.last!=p[1])st.ri=0;st.last=p[1];detail(decodeURIComponent(p[1]),p[2])}else home()}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(function(){})}
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e});
+window.addEventListener('appinstalled',function(){deferredPrompt=null;hideInstallBtn()});
 window.addEventListener('hashchange',route);route();
 window.__recommend=recommend;window.__LOWMAP=LOWMAP;window.__HIGHMAP=HIGHMAP;window.__MIDMAP=MIDMAP;
 })();

@@ -82,7 +82,46 @@
     }
    ],
    "footer": "모든 원두 상품에는\n추천 레시피카드가 동봉되니 꼭 참고!",
-   "footerEm": "추천 레시피카드"
+   "footerEm": "추천 레시피카드",
+   "cta": {
+    "title": "숙성 완료 원두",
+    "desc": "숙성의 기다림을 덜어드립니다",
+    "href": "#/know-how/aged-beans"
+   }
+  },
+  {
+   "id": "aged-beans",
+   "icon": "☕",
+   "title": "숙성 완료 원두",
+   "hidden": true,
+   "layout": "aged",
+   "back": "#/know-how/storage",
+   "hero": {
+    "title": "숙성의 기다림을 덜어드립니다",
+    "sub": "로스팅 직후 안정적인 온도에서 제대로 미리 숙성한 커피",
+    "em": "제대로 미리 숙성한 커피"
+   },
+   "benefitsTitle": "상온 숙성보다 뛰어난 점",
+   "benefits": [
+    "로스팅 후 생성된 매캐한 불향,\n쓴맛을 깔끔하게 제거",
+    "선명해지는 커피의 개성",
+    "원두의 변질 최소화"
+   ],
+   "processTitle": "프로세싱",
+   "process": [
+    "로스팅 직후 완전 밀폐되는 용기에 담기",
+    "중배전 이하 - 18도\n중강배전 이상 - 13도 유지 보관",
+    "2일후 개봉해 가스&불향 제거",
+    "4주간 온도 유지 밀봉보관후 포장"
+   ],
+   "closing": [
+    "아직 이런 숙성 원두는 그냥커피가 유일하며",
+    "더 많은 분들이 훌륭한 숙성 원두를 경험하실 수 있도록",
+    "숙성 과정을 추가 비용 없이 진행 중입니다."
+   ],
+   "closingEm": "추가 비용 없이",
+   "buyUrl": "https://mkt.shopping.naver.com/link/68b166ad2a09e05049c870ff",
+   "buyLabel": "구매하기"
   },
   {
    "id": "grind-measure",
