@@ -85,6 +85,13 @@
    "footerEm": "추천 레시피카드"
   },
   {
+   "id": "grind-measure",
+   "icon": "📏",
+   "title": "내 분쇄도 측정하기",
+   "tool": "grind",
+   "hidden": true
+  },
+  {
    "id": "grind",
    "icon": "⚙️",
    "title": "분쇄도 세팅 방법",

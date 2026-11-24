@@ -161,7 +161,7 @@ function catRecipeView(key,m){var c=(window.CATRECIPES||{})[key];if(!c||!MNAME[m
  var v={id:'cat-'+key,name:c.name,aging:c.aging,recipes:(c[m]||[]).map(function(r){var x={};for(var k in r)x[k]=r[k];x.method=m;return x})};
  app.innerHTML=top(MNAME[m])+'<div class="pad"><p class="q">'+esc(c.name)+'</p><p class="qsub">'+esc(c.name)+' 원두를 위한 '+MNAME[m]+'</p>'+recipe(v,st.ri)+'</div>';
  st.reRecipe=function(){catRecipeView(key,m)};bindRecipe(v)}
-function khReady(x){return (x.sections&&x.sections.length)||(x.body&&x.body.length)}
+function khReady(x){return (x.sections&&x.sections.length)||(x.body&&x.body.length)||!!x.tool}
 function khEm(s,em){var t=esc(s||'');if(!em)return t;var e=esc(em);return t.split(e).join('<b>'+e+'</b>')}
 function khSections(it){var h='';
  (it.sections||[]).forEach(function(sec,si){
@@ -177,15 +177,16 @@ function khSections(it){var h='';
  if(it.footer)h+='<p class="kh-foot">'+it.footer.split('\n').map(function(l){return khEm(l,it.footerEm)}).join('<br>')+'</p>';
  return h}
 function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x){return x.id==id})[0];if(!it){location.hash='#/know-how';return}
+  if(it.tool==='grind'){grindView();return}
   var h=top(it.title)+'<div class="pad">';
   if(it.sections&&it.sections.length)h+=khSections(it);
   else if(it.body&&it.body.length)h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+it.body.map(function(p){return '<p class="desc">'+esc(p)+'</p>'}).join('');
-  else h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p><div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';
+  else h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+(it.id==='grind'?'<button type="button" class="bigbtn primary g-measure-enter" onclick="location.hash=\'#/know-how/grind-measure\'">내 분쇄도 측정하기<small>사진으로 분쇄 입자 크기를 가늠해요</small></button>':'')+'<div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';
   app.innerHTML=h+'</div>';return}
  var h=top('커피 노하우')+'<div class="pad"><p class="q">커피 노하우</p><p class="qsub">알고 싶은 주제를 골라주세요</p>';
- K.forEach(function(x){h+='<button class="opt" onclick="location.hash=\'#/know-how/'+x.id+'\'"><span class="num">'+esc(x.icon||'•')+'</span><div><b>'+esc(x.title)+'</b>'+(khReady(x)?'':'<span>준비 중</span>')+'</div></button>'});app.innerHTML=h+'</div>'}
+ K.forEach(function(x){if(x.id==='grind-measure'||x.hidden)return;h+='<button class="opt" onclick="location.hash=\'#/know-how/'+x.id+'\'"><span class="num">'+esc(x.icon||'•')+'</span><div><b>'+esc(x.title)+'</b>'+(khReady(x)?'':'<span>준비 중</span>')+'</div></button>'});app.innerHTML=h+'</div>'}
 function route(){st.reRecipe=null;stopTimer();closeSheet();app.classList.remove('hasbar');app.removeAttribute('data-char');var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
- if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='recipes'){if(p[1])recipesList(p[1],p[2]);else recipesHome()}else if(p[0]=='recipe')recipeView(decodeURIComponent(p[1]),p[2]);else if(p[0]=='catrecipe')catRecipeView(p[1],p[2]);else if(p[0]=='know-how')knowhow(p[1]);else if(p[0]=='list')list(st.filter);
+ if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='recipes'){if(p[1])recipesList(p[1],p[2]);else recipesHome()}else if(p[0]=='recipe')recipeView(decodeURIComponent(p[1]),p[2]);else if(p[0]=='catrecipe')catRecipeView(p[1],p[2]);else if(p[0]=='know-how')knowhow(p[1]);else if(p[0]=='grind'||p[0]=='grind-measure')grindView();else if(p[0]=='list')list(st.filter);
  else if(p[0]=='bean'){if(st.last!=p[1])st.ri=0;st.last=p[1];detail(decodeURIComponent(p[1]),p[2])}else home()}
 window.addEventListener('hashchange',route);route();
 window.__recommend=recommend;window.__LOWMAP=LOWMAP;window.__HIGHMAP=HIGHMAP;window.__MIDMAP=MIDMAP;
