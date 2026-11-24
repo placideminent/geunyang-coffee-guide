@@ -25,7 +25,7 @@ var RANGES=[
 var S={phase:'guide', canvas:null, coin:null, auto:false, result:null, drag:null, mode:null, sheet:null, rectified:null};
 
 function gEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
-function gTop(t){return '<div class="top"><button class="back" onclick="history.length>1?history.back():location.hash=\'#/know-how\'">← 뒤로</button><h1>'+gEsc(t)+'</h1></div>'}
+function gTop(t){return '<div class="top"><button class="back" onclick="appBack(\'#/\')">← 뒤로</button><h1>'+gEsc(t)+'</h1></div>'}
 function $(id){return document.getElementById(id)}
 function appEl(){return document.getElementById('app')}
 function roundum(v){return Math.round(v/10)*10}

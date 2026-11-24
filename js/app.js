@@ -7,7 +7,7 @@ var ROAST=['#B07A4F','#9B5E2B','#8A5326','#6E4019','#5A3214','#43281A','#2E1D14'
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function byId(id){for(var i=0;i<B.length;i++)if(B[i].id===id)return B[i]}
 function band(r){return r<=7?'high':r<=14?'mid':'low'}
-function top(t){return '<div class="top"><button class="back" onclick="history.length>1?history.back():location.hash=\'\'">← 뒤로</button><h1>'+esc(t)+'</h1></div>'}
+function top(t){return '<div class="top"><button class="back" onclick="appBack(\'#/\')">← 뒤로</button><h1>'+esc(t)+'</h1></div>'}
 function tc(b){for(var g in CHO)if(CHO[g].indexOf(b.id)>=0)return g;return b.characters[0]}
 function imgOf(b){return b.thumb||b.image}
 function card(b,extra){return '<button class="bean" data-char="'+tc(b)+'" onclick="location.hash=\'#/bean/'+b.id+'\'"><img src="'+imgOf(b)+'" alt="" loading="lazy"><div>'+(extra&&extra.rank?'<span class="rank">'+extra.rank+'</span>':'')+'<b>'+esc(b.name)+'</b><span>'+esc(b.keywords.join(' · '))+'</span>'+(extra&&extra.why?'<span class="why">'+esc(extra.why)+'</span>':'')+'</div></button>'}
@@ -184,8 +184,16 @@ function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x)
   else h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+(it.id==='grind'?'<button type="button" class="bigbtn primary g-measure-enter" onclick="location.hash=\'#/know-how/grind-measure\'">내 분쇄도 측정하기<small>사진으로 분쇄 입자 크기를 가늠해요</small></button>':'')+'<div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';
   app.innerHTML=h+'</div>';return}
  var h=top('커피 노하우')+'<div class="pad"><p class="q">커피 노하우</p><p class="qsub">알고 싶은 주제를 골라주세요</p>';
- K.forEach(function(x){if(x.id==='grind-measure'||x.hidden)return;h+='<button class="opt" onclick="location.hash=\'#/know-how/'+x.id+'\'"><span class="num">'+esc(x.icon||'•')+'</span><div><b>'+esc(x.title)+'</b>'+(khReady(x)?'':'<span>준비 중</span>')+'</div></button>'});app.innerHTML=h+'</div>'}
-function route(){st.reRecipe=null;stopTimer();closeSheet();app.classList.remove('hasbar');app.removeAttribute('data-char');var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
+ K.forEach(function(x){if(x.id==='grind-measure'||x.hidden)return;var sub=x.desc?('<span>'+esc(x.desc)+'</span>'):(khReady(x)?'':'<span>준비 중</span>');h+='<button class="opt" onclick="location.hash=\'#/know-how/'+x.id+'\'"><span class="num">'+esc(x.icon||'•')+'</span><div><b>'+esc(x.title)+'</b>'+sub+'</div></button>'});app.innerHTML=h+'</div>'}
+function isGrindToolPath(p){return p[0]=='grind'||p[0]=='grind-measure'||(p[0]=='know-how'&&p[1]=='grind-measure')}
+function appBack(fallback){if(st.canBack)history.back();else location.hash=(fallback==null||fallback==='')?'#/':fallback}
+window.appBack=appBack;
+function route(){st.reRecipe=null;stopTimer();closeSheet();app.classList.remove('hasbar');app.removeAttribute('data-char');
+ if(!st.booted){st.booted=true;var raw=location.hash,first=raw.replace(/^#\/?/,'').split('/');
+  if(isGrindToolPath(first)){history.replaceState({gApp:1},'',location.pathname+location.search+'#/');history.pushState({gApp:1},'',location.pathname+location.search+raw);st.canBack=true}
+  else{try{history.replaceState({gApp:1},'',location.pathname+location.search+raw)}catch(e){}st.canBack=false}
+ }else st.canBack=true;
+ var p=location.hash.replace(/^#\/?/,'').split('/');window.scrollTo(0,0);
  if(p[0]=='quiz')quiz(+p[1]||1);else if(p[0]=='result')result();else if(p[0]=='roadmap')roadmap();else if(p[0]=='recipes'){if(p[1])recipesList(p[1],p[2]);else recipesHome()}else if(p[0]=='recipe')recipeView(decodeURIComponent(p[1]),p[2]);else if(p[0]=='catrecipe')catRecipeView(p[1],p[2]);else if(p[0]=='know-how')knowhow(p[1]);else if(p[0]=='grind'||p[0]=='grind-measure')grindView();else if(p[0]=='list')list(st.filter);
  else if(p[0]=='bean'){if(st.last!=p[1])st.ri=0;st.last=p[1];detail(decodeURIComponent(p[1]),p[2])}else home()}
 window.addEventListener('hashchange',route);route();
