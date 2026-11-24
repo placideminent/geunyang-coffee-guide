@@ -25,6 +25,7 @@ document.addEventListener('click',function(e){var t=e.target.closest&&e.target.c
 function stopTimer(){if(timer){clearInterval(timer.h);timer=null}}
 function isStandalone(){return (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone===true}
 function isIOS(){var ua=navigator.userAgent||'';return /iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)}
+function isAndroid(){return /Android/i.test(navigator.userAgent||'')}
 function isInAppBrowser(){return /KAKAOTALK|NAVER|Instagram|FBAN|FBAV|FB_IAB|Line\/|DaumApps|DaumDevice/i.test(navigator.userAgent||'')}
 var deferredPrompt=null;
 function hideInstallBtn(){var w=document.getElementById('installWrap');if(w)w.hidden=true}
@@ -41,13 +42,25 @@ function openInstallGuide(kind){
     title='홈 화면에 추가';
     body='<p class="install-p">아이폰·아이패드에서는 아래 두 단계로 추가할 수 있어요.</p>'+
       '<ol class="install-ol"><li>화면 아래 공유 버튼(□↑)을 눌러 주세요</li><li>“홈 화면에 추가”를 선택해 주세요</li></ol>';
+  }else if(kind==='android'){
+    title='홈 화면에 추가';
+    body='<div class="install-sec">'+
+      '<div class="install-sh">앱으로 설치하기</div>'+
+      '<p class="install-p">설치 중에 ‘보안 검사’나 ‘앱 검사’ 창이 뜰 수 있어요. 웹 앱을 설치할 때 나오는 정상적인 안내이니, 안심하고 설치하시면 됩니다.</p>'+
+      (deferredPrompt?'<button type="button" class="buy install-go" id="installPrompt">앱 설치하기</button>':'<p class="install-hint">브라우저 더보기 메뉴(점3개)에서 “앱 설치”를 선택해 주세요.</p>')+
+      '</div>'+
+      '<div class="install-sec install-sec-alt">'+
+      '<div class="install-sh">무설치로 홈 화면에 추가</div>'+
+      '<p class="install-p">앱으로 설치하지 않고, 바로가기만 홈 화면에 넣을 수 있어요.</p>'+
+      '<ol class="install-ol"><li>브라우저 더보기 메뉴(점3개)를 눌러 주세요.</li><li>‘현재 페이지 추가’ 선택 후 ‘홈 화면에 추가’를 선택해 주세요.</li></ol>'+
+      '</div>';
   }else{
     title='홈 화면에 추가';
     body='<p class="install-p">브라우저 메뉴에서 추가할 수 있어요.</p>'+
-      '<ol class="install-ol"><li>화면 오른쪽 위의 메뉴 버튼(⋮)을 눌러 주세요</li><li>“홈 화면에 추가” 또는 “앱 설치”를 선택해 주세요</li></ol>';
+      '<ol class="install-ol"><li>브라우저 더보기 메뉴(점3개)를 눌러 주세요.</li><li>“홈 화면에 추가” 또는 “앱 설치”를 선택해 주세요.</li></ol>';
   }
   var d=document.createElement('div');d.id='sheet';d.className='sheetwrap';
-  d.innerHTML='<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle"><div class="grab"></div><button type="button" class="sx" aria-label="닫기">✕</button><div class="stitle" id="installTitle">'+title+'</div>'+body+'</div>';
+  d.innerHTML='<div class="sheet'+(kind==='android'?' install-sheet':'')+'" role="dialog" aria-modal="true" aria-labelledby="installTitle"><div class="grab"></div><button type="button" class="sx" aria-label="닫기">✕</button><div class="stitle" id="installTitle">'+title+'</div>'+body+'</div>';
   document.body.appendChild(d);
   d.onclick=function(e){if(e.target===d||e.target.closest('.sx'))closeSheet()};
   document.addEventListener('keydown',escK);
@@ -60,16 +73,19 @@ function openInstallGuide(kind){
     if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(ok).catch(fallback);
     else fallback();
   };
-}
-function onInstallClick(){
-  if(deferredPrompt){
+  var ip=document.getElementById('installPrompt');
+  if(ip)ip.onclick=function(){
+    if(!deferredPrompt)return;
     var ev=deferredPrompt;deferredPrompt=null;
+    closeSheet();
     ev.prompt();
     ev.userChoice.then(function(ch){if(ch&&ch.outcome==='accepted')hideInstallBtn()});
-    return;
-  }
+  };
+}
+function onInstallClick(){
   if(isInAppBrowser())openInstallGuide('inapp');
   else if(isIOS())openInstallGuide('ios');
+  else if(isAndroid()||deferredPrompt)openInstallGuide('android');
   else openInstallGuide('other');
 }
 function home(){app.innerHTML='<div class="brand"><h1>그냥커피 원두 가이드</h1><p>나에게 맞는 원두와 레시피를 찾아보세요</p></div><div class="pad">'+
