@@ -35,24 +35,24 @@
   },
   "box_mm": {
     "x": 25.5,
-    "y": 63.7,
+    "y": 55.8,
     "w": 97.5,
-    "h": 132.3
+    "h": 140.2
   },
   "roi_mm": {
     "x": 27.5,
-    "y": 65.7,
+    "y": 57.8,
     "w": 93.5,
-    "h": 128.3
+    "h": 136.2
   },
   "scale_mm": null,
   "qr": {
     "url": "https://placideminent.github.io/geunyang-coffee-guide/#grind",
-    "error": "Q",
-    "version": 5,
-    "modules_incl_quiet": 45,
-    "size_mm_incl_quiet": 22.0,
-    "x_mm": 102.07,
+    "error": "M",
+    "version": 4,
+    "modules_incl_quiet": 41,
+    "size_mm_incl_quiet": 15.0,
+    "x_mm": 108.87,
     "y_mm": 23.58,
     "caption": "스캔하여 측정"
   },
