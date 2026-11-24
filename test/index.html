@@ -192,6 +192,14 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .g-stage{padding:8px;margin:0 0 14px;line-height:0;overflow:hidden}
 .g-stage canvas,.g-stage img{width:100%;height:auto;display:block;border-radius:12px;background:#fff;touch-action:none}
 .g-cap{margin:-4px 0 16px;font-size:14px}
+
+.g-particles{margin:4px 0 16px}
+.g-particles-toggle{margin:0;text-align:center}
+.g-particles-panel{margin-top:12px}
+.g-particles-panel[hidden]{display:none !important}
+.g-particles-panel .g-stage{margin-bottom:14px}
+.g-particles-panel .g-stage img{width:100%;height:auto;display:block}
+.g-particles-panel .g-cap{margin:-4px 0 0}
 .g-cat{background:var(--acc2);box-shadow:none}
 .g-cat b{display:block;font-size:20px;color:var(--acc-ink)}
 .g-cat span{display:block;color:var(--sub);font-size:14px;margin-top:4px}
@@ -2615,10 +2623,15 @@ function renderResult(){
     html+=scaleBar(res.areaMedianAll||res.areaMedian);
   }
   if(res.overlay){
-    html+='<div class="g-stage card"><img alt="측정된 입자" src="'+res.overlay+'"></div>';
     var cap=res.source==='sheet'?'초록 원은 주 입자입니다':'초록 원은 주 입자, 빨간 점선은 동전입니다';
     if(res.countFines) cap+='. 연한 표시는 미분('+roundum(res.finesCutoffUm||FINES_FLOOR_UM)+'µm 이하)입니다';
-    html+='<p class="muted g-cap">'+cap+'</p>';
+    html+='<div class="g-particles">'+
+      '<button type="button" class="btn2 g-particles-toggle" id="g-particles-toggle" aria-expanded="false" aria-controls="g-particles-panel">측정된 입자 보기</button>'+
+      '<div class="g-particles-panel" id="g-particles-panel" hidden>'+
+        '<div class="g-stage card"><img id="g-particles-img" alt="측정된 입자" src="'+res.overlay+'"></div>'+
+        '<p class="muted g-cap">'+cap+'</p>'+
+      '</div>'+
+    '</div>';
   }
   if(res.countAll) html+=histogram(res);
   html+='<p class="g-caveat">이 결과는 추정치입니다. 대표 입자크기는 미분을 포함한 입자 양 기준 중앙값입니다. 균일도는 대표 입자크기(미분 포함)를 미분 제외 개수 기준 중앙값으로 나눈 값입니다. 아래 분포는 개수와 입자 양 기준으로 함께 보여 줍니다. 뭉친 알갱이는 더 크게 보이거나 균일도가 낮아 보일 수 있습니다. 측정 용지는 100% 크기로 인쇄하고, 촬영 시 플래시를 켜 주세요.</p>'+
@@ -2626,6 +2639,19 @@ function renderResult(){
     '</div>';
   appEl().innerHTML=html;
   var btn=$('g-retry'); if(btn) btn.onclick=function(){resetTool(); renderGuide()};
+  bindParticlesToggle();
+}
+function bindParticlesToggle(){
+  var btn=$('g-particles-toggle'), panel=$('g-particles-panel');
+  if(!btn||!panel) return;
+  btn.onclick=function(){
+    var open=btn.getAttribute('aria-expanded')==='true';
+    var next=!open;
+    btn.setAttribute('aria-expanded', next?'true':'false');
+    btn.textContent=next?'측정된 입자 숨기기':'측정된 입자 보기';
+    if(next) panel.removeAttribute('hidden');
+    else panel.setAttribute('hidden','');
+  };
 }
 function scaleBar(mean){
   var pin=Math.max(0,Math.min(100, mean/AXIS_MAX*100));
