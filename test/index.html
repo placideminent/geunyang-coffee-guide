@@ -196,8 +196,8 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .g-step b{display:block;font-size:17px}
 .g-step span{color:var(--sub);font-size:15px}
 .g-step-body{flex:1;min-width:0}
-.g-step-illust{display:block;width:70%;height:auto;margin:10px auto 0;border-radius:12px;background:var(--acc3)}
-.g-step-illust-tall{width:auto;max-width:100%;max-height:210px;margin-left:auto;margin-right:auto;object-fit:contain}
+.g-step-illust{width:70%;aspect-ratio:1/1;margin:10px auto 0;border-radius:12px;background:var(--acc3);overflow:hidden}
+.g-step-illust img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
 .g-stage{padding:8px;margin:0 0 14px;line-height:0;overflow:hidden}
 .g-stage canvas,.g-stage img{width:100%;height:auto;display:block;border-radius:12px;background:#fff}
 .g-cap{margin:-4px 0 16px;font-size:14px}
@@ -2422,7 +2422,7 @@ function renderGuide(){
       '<div class="g-dlwrap"><a class="g-dl" href="assets/grind-sheet.pdf" download="그냥커피-분쇄도-측정용지.pdf">측정 용지 내려받기</a>'+
       '<img class="g-sheet-preview" src="assets/grind-sheet.png" alt="분쇄도 측정 용지 미리보기"></div>'+
       step(2,'원두가루 흩뿌리기','칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게 하고 네 귀퉁이 표시가 가려지지 않게 해주세요)','assets/grind-howto-spread.jpg?v=2')+
-      step(3,'플래시를 켜고 촬영','카메라 플래시를 켠 뒤, 용지가 틀어지지 않게 바로 위에서 네 귀퉁이 표시가 모두 나오게 찍어 주세요.','assets/grind-howto-shoot.jpg?v=1','g-step-illust-tall')+
+      step(3,'플래시를 켜고 촬영','카메라 플래시를 켠 뒤, 용지가 틀어지지 않게 바로 위에서 네 귀퉁이 표시가 모두 나오게 찍어 주세요.','assets/grind-howto-shoot.jpg?v=1')+
     '</div>'+
     '<div class="g-picks">'+
       '<input id="g-file-cam" class="g-file" type="file" accept="image/*" capture="environment">'+
@@ -2449,7 +2449,7 @@ function bindFilePicks(){
   hook('g-file-cam','g-pick-cam');
   hook('g-file-lib','g-pick-lib');
 }
-function step(n,t,s,illust,imgClass){return '<div class="card g-step"><span class="num">'+n+'</span><div class="g-step-body"><b>'+t+'</b><span>'+s+'</span>'+(illust?'<img class="g-step-illust'+(imgClass?' '+imgClass:'')+'" src="'+illust+'" alt="">':'')+'</div></div>'}
+function step(n,t,s,illust){return '<div class="card g-step"><span class="num">'+n+'</span><div class="g-step-body"><b>'+t+'</b><span>'+s+'</span>'+(illust?'<div class="g-step-illust"><img src="'+illust+'" alt=""></div>':'')+'</div></div>'}
 function enterBusy(msg){
   appEl().innerHTML=gTop('내 분쇄도 측정하기')+'<div class="pad g-page"><p class="q">'+gEsc(msg)+'</p><p class="qsub">잠시만 기다려 주세요</p></div>';
 }
