@@ -15,7 +15,7 @@ var HIST_LOG_MIN=100, HIST_LOG_MAX=2500, HIST_LOG_BINS=24, HIST_LOG_TICKS=[150,3
    임계값은 잠정값(앱에 업계 기준으로 표시하지 않음). ≤1.3 균일한 편(1 미만 포함), ≤1.6 보통, >1.6 불균일. */
 var UNIFORM_RATIO_EVEN=1.3, UNIFORM_RATIO_OK=1.6;
 var FINE_MEASURE_NOTE='모카포트보다 고운 분쇄도(에스프레소 등)는 수치 측정이 어렵습니다.';
-var SHEET={wmm:148.5, hmm:210, markerMm:10, insetMm:12, quietMm:10/7, spanX:114.5, spanY:176.0, roi:{x:27.5,y:57.8,w:93.5,h:136.2}, ids:{TL:0,TR:1,BR:2,BL:3}};
+var SHEET={wmm:148.5, hmm:210, markerMm:10, insetMm:12, quietMm:10/7, spanX:114.5, spanY:176.0, roi:{x:27.5,y:57.8,w:93.5,h:125.7}, ids:{TL:0,TR:1,BR:2,BL:3}};
 var RANGES=[
   {name:'에스프레소', lo:200, hi:400, color:'#EED9CC'},
   {name:'모카포트', lo:360, hi:660, color:'#F5EBCD'},
@@ -619,6 +619,57 @@ function rectify(srcCanvas, sheet){
   return {canvas:canvas, umPerPx:d.umPerPx, H:H, mask:mask, dw:d.dw, dh:d.dh};
 }
 
+/* 블록(약 6mm) 단위로 밝은 쪽 85% 분위값을 종이 밝기로 보고, 매끈하게 보간해 gray*235/bg 로 정규화. */
+function flattenLight(gray,w,h,pick,umPerPx){
+  var bs=Math.max(24, Math.round(6000/(umPerPx||100)));
+  var nx=Math.ceil(w/bs), ny=Math.ceil(h/bs), bg=new Float32Array(nx*ny), have=new Uint8Array(nx*ny);
+  var hist=new Int32Array(256), bx,by,x,y,i,n,k,acc,need,vals=[];
+  for(by=0;by<ny;by++) for(bx=0;bx<nx;bx++){
+    hist.fill(0); n=0;
+    for(y=by*bs;y<Math.min(h,(by+1)*bs);y+=2) for(x=bx*bs;x<Math.min(w,(bx+1)*bs);x+=2){
+      i=y*w+x; if(pick&&!pick[i]) continue; hist[gray[i]]++; n++;
+    }
+    if(n<40) continue;
+    need=n*0.85; acc=0;
+    for(k=0;k<256;k++){ acc+=hist[k]; if(acc>=need) break; }
+    bg[by*nx+bx]=k; have[by*nx+bx]=1; vals.push(k);
+  }
+  if(!vals.length) return gray;
+  vals.sort(function(a,b){return a-b});
+  var med=vals[(vals.length/2)|0], floor=Math.max(20, med*0.55), changed=true, it=0;
+  for(i=0;i<bg.length;i++) if(have[i]&&bg[i]<floor) bg[i]=floor;
+  // 빈 블록은 이웃 값으로 채움
+  while(changed&&it++<nx+ny){
+    changed=false;
+    for(by=0;by<ny;by++) for(bx=0;bx<nx;bx++){
+      i=by*nx+bx; if(have[i]) continue;
+      var s=0,c=0;
+      if(bx>0&&have[i-1]){s+=bg[i-1];c++} if(bx<nx-1&&have[i+1]){s+=bg[i+1];c++}
+      if(by>0&&have[i-nx]){s+=bg[i-nx];c++} if(by<ny-1&&have[i+nx]){s+=bg[i+nx];c++}
+      if(c){bg[i]=s/c; have[i]=2; changed=true;}
+    }
+  }
+  for(i=0;i<bg.length;i++) if(!have[i]) bg[i]=med;
+  // 3x3 평균으로 한 번 다듬기
+  var sm=new Float32Array(nx*ny);
+  for(by=0;by<ny;by++) for(bx=0;bx<nx;bx++){
+    var s2=0,c2=0,dx,dy;
+    for(dy=-1;dy<=1;dy++) for(dx=-1;dx<=1;dx++){
+      var xx=bx+dx, yy=by+dy; if(xx<0||yy<0||xx>=nx||yy>=ny) continue; s2+=bg[yy*nx+xx]; c2++;
+    }
+    sm[by*nx+bx]=s2/c2;
+  }
+  var out=new Uint8ClampedArray(w*h), fx,fy,x0,y0,x1,y1,gx,gy,b;
+  for(y=0,i=0;y<h;y++){
+    gy=(y+0.5)/bs-0.5; y0=Math.max(0,Math.min(ny-1,Math.floor(gy))); y1=Math.min(ny-1,y0+1); fy=Math.max(0,Math.min(1,gy-y0));
+    for(x=0;x<w;x++,i++){
+      gx=(x+0.5)/bs-0.5; x0=Math.max(0,Math.min(nx-1,Math.floor(gx))); x1=Math.min(nx-1,x0+1); fx=Math.max(0,Math.min(1,gx-x0));
+      b=sm[y0*nx+x0]*(1-fx)*(1-fy)+sm[y0*nx+x1]*fx*(1-fy)+sm[y1*nx+x0]*(1-fx)*fy+sm[y1*nx+x1]*fx*fy;
+      out[i]=gray[i]*235/(b>1?b:1);
+    }
+  }
+  return out;
+}
 function analyze(gray,w,h,opt){
   opt=opt||{};
   var coin=opt.coin, keep=opt.mask, umPerPx=opt.umPerPx;
@@ -642,6 +693,9 @@ function analyze(gray,w,h,opt){
       eligible[i]=1; nEli++;
     }
   }
+  /* 조명 보정: 플래시 감쇠·손 그림자로 칸 아래쪽 종이가 어두워지면 전역 임계값에서 종이 자체가 입자로 잡혀
+     거대한 덩어리(maxArea 초과)로 버려졌다. 종이 밝기를 블록별로 추정해 나눠 평탄화한 뒤 임계값을 잡는다. */
+  gray=flattenLight(gray,w,h,nEli?eligible:null,umPerPx);
   var th=otsuOn(gray, nEli?eligible:null);
   var mask=new Uint8Array(w*h);
   for(i=0;i<gray.length;i++) mask[i]=(eligible[i]&&gray[i]<th)?1:0;
@@ -841,8 +895,8 @@ function renderGuide(){
     '<p class="g-notice">'+FINE_MEASURE_NOTE+'</p>'+
     '<div class="g-steps">'+
       step(1,'측정 용지를 준비하기','A4에 2장 인쇄 후 잘라서 사용하세요. 100% 크기로 인쇄하고, 배율 맞춤(맞춤 용지)은 꼭 꺼 주세요.')+
-      '<div class="g-dlwrap"><a class="g-dl" href="assets/grind-sheet.pdf" download="그냥커피-분쇄도-측정용지.pdf">측정 용지 내려받기</a>'+
-      '<img class="g-sheet-preview" src="assets/grind-sheet.png" alt="분쇄도 측정 용지 미리보기"></div>'+
+      '<div class="g-dlwrap"><a class="g-dl" href="assets/grind-sheet.pdf?v=20261125102402" download="그냥커피-분쇄도-측정용지.pdf">측정 용지 내려받기</a>'+
+      '<img class="g-sheet-preview" src="assets/grind-sheet.png?v=20261125102402" alt="분쇄도 측정 용지 미리보기"></div>'+
       step(2,'원두가루 흩뿌리기','칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게 하고 네 귀퉁이 표시가 가려지지 않게 해주세요)')+
       step(3,'플래시를 켜고 촬영','카메라 플래시를 켠 뒤, 용지가 틀어지지 않게 바로 위에서 네 귀퉁이 표시가 모두 나오게 찍어 주세요.')+
     '</div>'+
