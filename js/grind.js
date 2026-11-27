@@ -895,8 +895,8 @@ function renderGuide(){
     '<p class="g-notice">'+FINE_MEASURE_NOTE+'</p>'+
     '<div class="g-steps">'+
       step(1,'측정 용지를 준비하기','A4에 2장 인쇄 후 잘라서 사용하세요. 100% 크기로 인쇄하고, 배율 맞춤(맞춤 용지)은 꼭 꺼 주세요.')+
-      '<div class="g-dlwrap"><a class="g-dl" href="assets/grind-sheet.pdf?v=20261127095713" download="그냥커피-분쇄도-측정용지.pdf">측정 용지 내려받기</a>'+
-      '<img class="g-sheet-preview" src="assets/grind-sheet.png?v=20261127095713" alt="분쇄도 측정 용지 미리보기"></div>'+
+      '<div class="g-dlwrap"><a class="g-dl" href="assets/grind-sheet.pdf?v=20261127103946" download="그냥커피-분쇄도-측정용지.pdf">측정 용지 내려받기</a>'+
+      '<img class="g-sheet-preview" src="assets/grind-sheet.png?v=20261127103946" alt="분쇄도 측정 용지 미리보기"></div>'+
       step(2,'원두가루 흩뿌리기','칸 안에 분쇄된 원두를 한 꼬집 정도 흩뿌려주세요(알갱이가 최대한 서로 붙지 않게 하고 네 귀퉁이 표시가 가려지지 않게 해주세요)','assets/grind-howto-spread.jpg?v=2')+
       step(3,'플래시를 켜고 촬영','카메라 플래시를 켠 뒤, 용지가 틀어지지 않게 바로 위에서 네 귀퉁이 표시가 모두 나오게 찍어 주세요.','assets/grind-howto-shoot.jpg?v=1','g-step-illust-portrait')+
     '</div>'+

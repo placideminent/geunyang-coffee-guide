@@ -229,19 +229,6 @@ function catRecipeView(key,m){var c=(window.CATRECIPES||{})[key];if(!c||!MNAME[m
  var v={id:'cat-'+key,name:c.name,aging:c.aging,recipes:(c[m]||[]).map(function(r){var x={};for(var k in r)x[k]=r[k];x.method=m;return x})};
  app.innerHTML=top(MNAME[m])+'<div class="pad"><p class="q">'+esc(c.name)+'</p><p class="qsub">'+esc(c.name)+' 원두를 위한 '+MNAME[m]+'</p>'+recipe(v,st.ri)+'</div>';
  st.reRecipe=function(){catRecipeView(key,m)};bindRecipe(v)}
-function khAged(it){var h='';
- if(it.hero){h+='<div class="kh-hl aged-hero"><p class="kh-hlt">'+esc(it.hero.title)+'</p>';
-  if(it.hero.sub)h+='<p class="kh-hls">'+khEm(it.hero.sub,it.hero.em)+'</p>';h+='</div>'}
- if(it.benefits&&it.benefits.length){h+='<section class="kh-panel kh-panel-1"><h2 class="kh-secq"><span>'+esc(it.benefitsTitle||'')+'</span></h2><ul class="aged-plus">';
-  it.benefits.forEach(function(t,i){h+='<li><span class="idx">'+('0'+(i+1)).slice(-2)+'</span><div class="t">'+esc(t).split('\n').join('<br>')+'</div></li>'});h+='</ul></section>'}
- if(it.process&&it.process.length){h+='<section class="kh-panel kh-panel-2"><h2 class="kh-secq"><span>'+esc(it.processTitle||'')+'</span></h2><ol class="aged-steps">';
-  it.process.forEach(function(t,i){h+='<li><span class="num" aria-hidden="true">'+(i+1)+'</span><div class="t">'+esc(t).split('\n').join('<br>')+'</div></li>'});h+='</ol></section>'}
- if(it.closing&&it.closing.length){var lines=it.closing.slice(),last=lines.pop();
-  h+='<div class="kh-foot aged-close">';
-  if(lines.length)h+='<p class="aged-close-s">'+lines.map(function(l){return esc(l)}).join('<br>')+'</p>';
-  if(last)h+='<p class="aged-close-b">'+khEm(last,it.closingEm)+'</p>';h+='</div>'}
- if(it.buyUrl)h+='<a class="buy aged-buy" href="'+esc(it.buyUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(it.buyLabel||'구매하기')+'</a>';
- return h}
 function khReady(x){return (x.sections&&x.sections.length)||(x.body&&x.body.length)||!!x.tool}
 function khEm(s,em){var t=esc(s||'');if(!em)return t;var e=esc(em);return t.split(e).join('<b>'+e+'</b>')}
 function khSections(it){var h='';
@@ -259,13 +246,14 @@ function khSections(it){var h='';
  return h}
 function grindPrincipleView(it){var imgs=it.images||[],h=top(it.title,it.back||'#/know-how/grind')+'<div class="gp-page">';
  imgs.forEach(function(src,i){h+='<img src="'+esc(src)+'" alt="'+(i===0?esc(it.title):'')+'"'+(i?' loading="lazy"':'')+'>'});
- app.innerHTML=h+'</div>'}
+ h+='</div>';
+ if(it.buyUrl)h+='<div class="aged-buywrap"><a class="buy aged-buy" href="'+esc(it.buyUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(it.buyLabel||'구매하기')+'</a></div>';
+ app.innerHTML=h}
 function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x){return x.id==id})[0];if(!it){location.hash='#/know-how';return}
   if(it.tool==='grind'){grindView();return}
-  if(it.layout==='grind-principle'){grindPrincipleView(it);return}
+  if(it.layout==='grind-principle'||it.layout==='aged'){grindPrincipleView(it);return}
   var h=top(it.title,it.back)+'<div class="pad">';
-  if(it.layout==='aged')h+=khAged(it);
-  else if(it.sections&&it.sections.length)h+=khSections(it);
+  if(it.sections&&it.sections.length)h+=khSections(it);
   else if(it.body&&it.body.length)h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+it.body.map(function(p){return '<p class="desc">'+esc(p)+'</p>'}).join('');
   else if(it.id==='grind') h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+'<button type="button" class="bigbtn primary g-measure-enter" onclick="location.hash=\'#/know-how/grind-measure\'">내 분쇄도 측정하기<small>사진으로 분쇄 입자 크기를 가늠해요</small></button>'+'<button type="button" class="bigbtn" onclick="location.hash=\'#/know-how/grind-principle\'">분쇄도 조절 원리</button>';
   else h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+'<div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';
