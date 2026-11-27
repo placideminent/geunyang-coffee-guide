@@ -266,6 +266,10 @@ button.buy{border:0;width:100%;font:inherit;font-weight:800;cursor:pointer}
 .g-errbox b{display:block;font-size:18px;margin:0 0 6px}
 .g-errbox p{margin:0;color:#6b3a32;font-size:15px;white-space:pre-wrap;word-break:break-word}
 .g-measure-enter{margin:0 0 16px}
+.gp-page{background:#fff;line-height:0;font-size:0}
+.gp-page img{display:block;width:100%;height:auto;margin:0;padding:0;border:0;vertical-align:top}
+.wrap:has(.gp-page){padding-bottom:0;background:#fff}
+
 .wrap:has(.g-actions){padding-bottom:0}
 .g-page.g-confirm .qsub,.g-page.g-mark .qsub{margin-bottom:12px}
 

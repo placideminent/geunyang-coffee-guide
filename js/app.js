@@ -257,13 +257,18 @@ function khSections(it){var h='';
   h+='</section>'});
  if(it.footer)h+='<p class="kh-foot">'+it.footer.split('\n').map(function(l){return khEm(l,it.footerEm)}).join('<br>')+'</p>';
  return h}
+function grindPrincipleView(it){var imgs=it.images||[],h=top(it.title,it.back||'#/know-how/grind')+'<div class="gp-page">';
+ imgs.forEach(function(src,i){h+='<img src="'+esc(src)+'" alt="'+(i===0?esc(it.title):'')+'"'+(i?' loading="lazy"':'')+'>'});
+ app.innerHTML=h+'</div>'}
 function knowhow(id){var K=window.KNOWHOW||[];if(id){var it=K.filter(function(x){return x.id==id})[0];if(!it){location.hash='#/know-how';return}
   if(it.tool==='grind'){grindView();return}
+  if(it.layout==='grind-principle'){grindPrincipleView(it);return}
   var h=top(it.title,it.back)+'<div class="pad">';
   if(it.layout==='aged')h+=khAged(it);
   else if(it.sections&&it.sections.length)h+=khSections(it);
   else if(it.body&&it.body.length)h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+it.body.map(function(p){return '<p class="desc">'+esc(p)+'</p>'}).join('');
-  else h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+(it.id==='grind'?'<button type="button" class="bigbtn primary g-measure-enter" onclick="location.hash=\'#/know-how/grind-measure\'">내 분쇄도 측정하기<small>사진으로 분쇄 입자 크기를 가늠해요</small></button>':'')+'<div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';
+  else if(it.id==='grind') h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+'<button type="button" class="bigbtn primary g-measure-enter" onclick="location.hash=\'#/know-how/grind-measure\'">내 분쇄도 측정하기<small>사진으로 분쇄 입자 크기를 가늠해요</small></button>'+'<button type="button" class="bigbtn" onclick="location.hash=\'#/know-how/grind-principle\'">분쇄도 조절 원리</button>';
+  else h+='<p class="q">'+esc(it.icon||'')+' '+esc(it.title)+'</p>'+'<div class="card empty"><div class="ico">📝</div><b>내용 준비 중</b><p>곧 그냥커피의 노하우를 알려드릴게요.</p></div>';
   if(it.cta&&it.cta.href)h+='<button type="button" class="bigbtn primary aged-cta" onclick="location.hash=\''+esc(it.cta.href)+'\'">'+esc(it.cta.title)+'<small>'+esc(it.cta.desc||'')+'</small></button>';
   app.innerHTML=h+'</div>';return}
  var h=top('커피 노하우')+'<div class="pad"><p class="q">커피 노하우</p><p class="qsub">알고 싶은 주제를 골라주세요</p>';
